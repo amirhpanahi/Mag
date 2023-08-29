@@ -1,0 +1,54 @@
+﻿@model Mag.Models.Dto.Settings.SettingFotterDto
+<!-- footer  -->
+<footer class="bg-dark px-5 pt-3">
+    <div class="container-fluid">
+        <div class="row text-light py-4">
+            <div class="col-lg-7 col-sm-8">
+                <h4 class="pb-3  text-light text-center">
+                    درباره ما
+                </h4>
+                <p class="lh-1">
+                    @Model.TextForFooter
+                </p>
+            </div>
+            <div class="col-lg-2 col-sm-4">
+                <h4 class="pb-3 text-light text-center">
+                    صفحات
+                </h4>
+                <ul class="list-unstyled text-center">
+                    @foreach (var item in Model.FooterMenu)
+                    {
+                        @Html.Raw(item)
+                    }
+                </ul>
+            </div>
+            <div class="col-lg-3 col-sm-12">
+                <h4  class="pb-3 text-light text-center">
+                    فضای مجازی
+                </h4>
+                @Model.Permissions
+
+                <ul class="list-inline text-center mt-4">
+                    @foreach (var item in Model.SocialMedia)
+                    {
+                        <li class="list-inline-item">
+                            <a href="@item.Value"><i class="@(item.Key=="gmail"?"fa-solid":"fab") @(item.Key=="gmail"?"fa-g":"fa-"+item.Key) @(item.Key=="gmail"?"":"fa-2x")
+                                @(item.Key=="telegram"|| item.Key=="twitter"|| item.Key=="facebook"|| item.Key=="linkdin"?"text-primary":"")
+                                @(item.Key=="instagram" || item.Key=="youtube"?"text-danger":"")
+                                @(item.Key=="whatsapp"?"text-success":"")
+                                footer-iconnn" aria-hidden="true"></i></a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-center">
+                <p class="text-light">
+                    @Model.CopyrightText
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End of footer  -->

@@ -1,0 +1,30 @@
+﻿@model List<Mag.Areas.Admin.Models.Dto.News.NewsCardDto>
+
+@foreach (var item in Model)
+    {
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <figure class="snip1493" style="border-radius: 10px;">
+                        <div class="image"><img src="~/@item.IndexImageAddress" alt="@item.IndexImageAddressAlt" title="@item.IndexImageAddressTitle" style="width: 300px;height: 200px;"/></div>
+                        <figcaption>
+                            <div class="date"><span class="day">@item.PublishNewsDatePersianDay</span><span class="month">@item.PublishNewsDatePersianmonth</span></div>
+                            <h3>@item.Title</h3>
+                            <p>
+        
+                                You know what we need, Hobbes? We need an attitude. Yeah, you can't be cool if you don't have an attitude.
+                            </p>
+                            <footer>
+                                <div class="views"><i class="fa-regular fa-heart text-danger"></i>2,907</div> 
+                                <div class="love"><i class="ion-heart"></i>623</div>
+                                <div class="comments"><i class="ion-chatboxes"></i>23</div>
+                            </footer>
+                        </figcaption>
+                        <a href="/News/@item.Slug"></a>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    }
+
+

@@ -1,0 +1,124 @@
+﻿/* utility */
+.lh-1 {
+    line-height: 30px !important;
+}
+
+.lh-2 {
+    line-height: 35px;
+}
+
+.underline {
+    width: 500px;
+    border: 3px solid #eee;
+    background-color: #eee;
+    border-radius: 5px;
+    margin: auto;
+}
+
+.underline-dark {
+    border: 3px solid #888;
+    background-color: #888;
+}
+/* End of utility */
+/* navbar */
+.Nav-menU {
+    background-color: darkslategray;
+    padding: 15px;
+    transition: all .7s;
+}
+
+.Menu-iteM {
+    color: #eee;
+    font-size: 17px;
+    transition: color .5s;
+}
+
+    .Menu-iteM:hover {
+        color: #70aed2;
+    }
+
+.Line1, .Line2, .Line3 {
+    width: 23px;
+    height: 3px;
+    margin: 5px;
+    transition: all .4s;
+}
+
+.change .Line1 {
+    transform: rotate(-45deg) translate(-5px,6px);
+}
+
+.change .Line2 {
+    opacity: 0;
+}
+
+.change .Line3 {
+    transform: rotate(45deg) translate(-5px,-6px);
+}
+
+.custom-navbar {
+    padding: 5px 30px;
+    background: linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6));
+}
+
+/* End of navbar */
+/* End of header  */
+/* carousel  */
+.carousel {
+    background-color: white;
+}
+
+.carousel-cell {
+    width: 30%;
+    height: 400px;
+    margin-right: 10px;
+    background: #8C8;
+    border-radius: 5px;
+    counter-increment: carousel-cell;
+}
+.flickity-viewport {
+    background-color: whitesmoke;
+}
+/* End of carousel  */
+
+@media only screen and (max-width: 767px) {
+    #ForMarginMain {
+        margin-top:20px !important;
+    }
+
+    .underline {
+        width: 250px;
+    }
+
+    .fixed-top {
+        position: relative;
+    }
+}
+
+
+/* Footer  */
+.footer-iconnn {
+    cursor: pointer;
+    transition: all .5s;
+    font-size :30px !important;
+}
+
+.footer-iconnn:hover {
+    font-size: 40px !important;
+}
+
+.footer-link {
+    color: #000;
+}
+
+.footer-link {
+    color: #eee;
+    font-size: 15px;
+    transition: all .3s;
+}
+
+    .footer-link:hover {
+        color: #70aed2;
+        text-decoration: none;
+    }
+/* End of Footer  */

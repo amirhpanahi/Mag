@@ -1,0 +1,122 @@
+﻿@using Mag.Common
+@model IEnumerable<Mag.Areas.Admin.Models.Dto.Category.CategoryListDto>
+@{
+    ViewData["Title"] = "دسته بندی ها";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var Colors = new string[]
+                    {
+                "warning","primary","info","success","danger","dark"
+                    };
+}
+<br>
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">
+            <div class="d-flex align-items-center position-relative my-1">
+                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+                <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="جستجو کاربران">
+            </div>
+        </h3>
+        <div class="card-toolbar">
+            <button type="button" class="btn btn-sm btn-light">
+                <a href="/admin/category/add" style="font-size:15px">افزودن دسته بندی جدید</a>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="vertical-align: middle;text-align: center;">
+                            نام دسته بندی
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                            توضیحات
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                            لینک(نامک)
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                            دسته بالایی
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                            عکس دسته بندی
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                            نمایش در صفحه اصلی
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                            فعال بودن
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="vertical-align: middle;text-align: center;">
+                                @item.Name
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;">
+                                @Html.DisplayFor(modelItem => item.Slug)
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;">
+                                <input name="ParentId" value="@item.ParentId" type="hidden" />
+                                @{
+                                    for (var i = 0; i < item.NameParentId.Count; i++)
+                                    {
+                                        if (item.ParentId == item.NameParentId.ElementAt(i).Key)
+                                        {
+                                            @item.NameParentId.ElementAt(i).Value
+                                        }
+                                    }
+                                }
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;">
+                                @if (item.PicAddress != null)
+                                {
+                                    <div class="symbol symbol-50px">
+                                        <img src=~/@item.PicAddress alt="@item.PicAlt" title="@item.PicTitle" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    string fName = item.Name.Substring(0, 1);
+                                    var sum = Utility.CalculateAsciiSum(item.Name);
+                                    var Color = Convert.ToInt32(Math.Ceiling((double)sum % 6));
+                                    <div class="symbol symbol-50px">
+                                        <div class="symbol-label fs-2 fw-semibold bg-@Colors[Color] text-inverse-@Colors[Color]">@fName</div>
+                                    </div>
+                                }
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;" dir="ltr">
+                                <input asp-for="@item.IsShowMainPage" class="form-check-input " type="checkbox" disabled style="border-color: gray;" />
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;" dir="ltr">
+                                <input asp-for="@item.IsActive" class="form-check-input" type="checkbox" disabled style="border-color: gray;" />
+                            </td>
+                            <td width="140px">
+                                <div class="col-sm-6">
+                                    <a href="/Admin/Category/Edit/@item.Id" class="badge badge-success mb-1 py-4" style="width:67px;height:20px;justify-content: center;">ویرایش</a>
+                                    <a href="/Admin/Category/Details/@item.Id" class="badge badge-info  mb-1 py-4" style="width:67px;height:20px;justify-content: center;">جزییات</a>
+                                    @*@Html.ActionLink("جزییات", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                                    <a href="/Admin/Category/Delete/@item.Id" class="badge badge-danger py-4" style="width:67px;height:20px;justify-content: center;">حذف کاربر</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+    </div>
+</div>

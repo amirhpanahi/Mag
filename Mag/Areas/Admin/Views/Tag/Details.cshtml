@@ -1,0 +1,74 @@
+﻿@using Mag.Common
+@model Mag.Areas.Admin.Models.Dto.Tag.TagListDto
+
+@{
+    ViewData["Title"] = "جزییات برچسب";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var Colors = new string[]
+                    {
+                "warning","primary","info","success","danger","dark"
+                    };
+}
+<br>
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">جزییات برچسب (@Model.Name)</h3>
+        <div class="card-toolbar">
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row"></>
+            <div class="col-md-2"></div>
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group pb-4">
+                    <label asp-for="Name" class="control-label pb-1" style="font-size:16px">نام دسته بندی</label>
+                    <input asp-for="Name" class="form-control" readonly />
+                </div>
+                <div class="form-group pb-4">
+                    <label asp-for="Slug" class="control-label pb-1" style="font-size:16px">لینک(نامک)</label>
+                    <input asp-for="Slug" class="form-control" readonly />
+                </div>
+                <div class="form-group pb-4">
+                    <label asp-for="Description" class="control-label pb-1" style="font-size:16px">توضیحات</label>
+                    <input asp-for="Description" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group pb-4">
+                    <label asp-for="ParentId" class="control-label " style="font-size:16px;display: block;">عکس نقش</label>
+                    @if (Model.PicAddress != null)
+                    {
+                        <div class="symbol symbol-50px">
+                            <img src=~/@Model.PicAddress alt="@Model.PicAlt" title="@Model.PicTitle" />
+                        </div>
+                    }
+                    else
+                    {
+                        string fName = Model.Name.Substring(0, 1);
+                        var sum = Utility.CalculateAsciiSum(Model.Name);
+                        var Color = Convert.ToInt32(Math.Ceiling((double)sum % 6));
+                        <div class="symbol symbol-50px">
+                            <div class="symbol-label fs-2 fw-semibold bg-@Colors[Color] text-inverse-@Colors[Color]">@fName</div>
+                        </div>
+                    }
+                </div>
+                <div class="form-group pb-4">
+                    <label asp-for="PicAlt" class="control-label pb-1" style="font-size:16px">Altعکس</label>
+                    <input asp-for="PicAlt" class="form-control" readonly />
+                </div>
+                <div class="form-group pb-4">
+                    <label asp-for="PicTitle" class="control-label pb-1" style="font-size:16px">Titleعکس</label>
+                    <input asp-for="PicTitle" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+    </div>
+    <div class="card-footer">
+        <a href="/admin/tag/index" style="font-size:18px">بازگشت به لیست</a>
+    </div>
+</div>
+
+

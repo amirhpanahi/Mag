@@ -1,0 +1,71 @@
+﻿@using Mag.Common
+@model Mag.Areas.Admin.Models.Dto.User.UserListDto
+@{
+    var Colors = new string[]
+                {
+            "warning","primary","info","success","danger","dark"
+                };
+}
+
+<div b-r6so7zx28k="" class="app-navbar-item ms-1 ms-md-3" id="kt_header_user_menu_toggle">
+    <!--begin::Menu wrapper-->
+    <div b-r6so7zx28k="" class="cursor-pointer symbol symbol-55px symbol-md-55px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" style="margin-left:110px">
+        @if (Model == null)
+        {
+            <img b-r6so7zx28k="" src="assets/media/avatars/300-1.jpg" alt="user">
+        }
+        else
+        {
+            @if (Model.PicAddress != null)
+            {
+                <div class="symbol symbol-50px">
+                    <img src=~/@Model.PicAddress alt="@Model.PicAlt" title="@Model.PicTitle" />
+                </div>
+            }
+            else
+            {
+                string fName = Model.FirstName.Substring(0, 1);
+                string lName = Model.LastName.Substring(0, 1);
+                var Color = (Utility.CalculateSum(Model.PhoneNumber) % 6);
+                <div class="symbol symbol-50px">
+                    <div class="symbol-label fs-2 fw-semibold bg-@Colors[Color] text-inverse-@Colors[Color]">@fName @lName</div>
+                </div>
+
+            }
+        }
+    </div>
+    <!--begin::کاربر account menu-->
+    <div b-r6so7zx28k="" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true" style="">
+        <!--begin::Menu item-->
+        <div b-r6so7zx28k="" class="menu-item px-3">
+            <div b-r6so7zx28k="" class="menu-content d-flex align-items-center justify-content-center px-3">
+                <!--begin::Avatar-->
+                <!--end::Avatar-->
+                <!--begin::کاربرname-->
+                <div b-r6so7zx28k="" class="d-flex flex-column">
+                    <div b-r6so7zx28k="" class="fw-bold d-flex align-items-center fs-5">
+                        @Model.FirstName @Model.LastName
+                    </div>
+                    <text b-r6so7zx28k="" class="fw-semibold text-muted text-hover-primary fs-7">@Model.Email</text>
+                </div>
+                <!--end::کاربرname-->
+            </div>
+        </div>
+        <!--end::Menu item-->
+        <!--begin::Menu separator-->
+        <div b-r6so7zx28k="" class="separator my-2"></div>
+        <!--end::Menu separator-->
+        <!--begin::Menu item-->
+        <div b-r6so7zx28k="" class="menu-item px-5">
+            <a b-r6so7zx28k="" href="/Profile/index" class="menu-link px-5">پروفایل من</a>
+        </div>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        <div b-r6so7zx28k="" class="menu-item px-5">
+            <a b-r6so7zx28k="" href="/Account/Logout" class="menu-link px-5">خروج</a>
+        </div>
+        <!--end::Menu item-->
+    </div>
+    <!--end::کاربر account menu-->
+    <!--end::Menu wrapper-->
+</div>

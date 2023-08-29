@@ -1,0 +1,138 @@
+﻿@using Mag.Common
+@model Mag.Areas.Admin.Models.Dto.News.NewsDeleteDto
+
+@{
+    ViewData["Title"] = "حذف خبر";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var Colors = new string[]
+        {
+            "warning","primary","info","success","danger","dark"
+        };
+}
+<br>
+@*<h1 style="font-size:22px">حذف کاربر</h1>
+
+<hr />
+<h1 style="font-size:20px">میخواهید این کاربر را حذف کنید؟</h1>
+<br>*@
+
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">حذف خبر</h3>
+        <div class="card-toolbar">
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                @if (ViewBag.Message != null)
+                {
+                    <div class="alert alert-danger">
+                        <text>@ViewBag.Message</text>
+                    </div>
+                }
+                <form action="/Admin/News/Delete" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Id" type="hidden" class="form-control" />
+                    <div class="form-group pb-4">
+                        <label asp-for="Title" class="control-label pb-1" style="font-size:16px">نام</label>
+                        <input asp-for="Title" class="form-control" readonly/>
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group pb-4">
+                        <label asp-for="DescriptionHtmlEditor" class="control-label pb-1" style="font-size:16px">توضیحات(Html Editor)</label>
+                        @if (Model.DescriptionHtmlEditor != null)
+                        {
+                            <div style="border-radius: 16px;border: 1px solid #ccc!important;padding: 15px 15px;min-height:100px">
+                            @Html.Raw(Model.DescriptionHtmlEditor)
+                            </div>
+                        }
+                        else{
+                            <div style="border-radius: 16px;border: 1px solid #ccc!important;padding: 15px 15px;min-height:100px">
+                            </div>
+                        }
+                        
+                    </div>
+                    <div class="form-group pb-4">
+                        <label asp-for="CategoryId" class="control-label pb-1" style="font-size:16px">دسته بندی ها</label>
+                        @*<select asp-for="ParentId" asp-items="Model.CategoryTags" class="form-control form-select" data-control="select2" data-placeholder="دسته بندی خود را وارد کنید"></select>*@
+                        <select disabled asp-for="CategoryId" asp-items="@Model.Categories"  class="form-select form-select-lg form-select-solid" data-control="select2" data-close-on-select="false" data-placeholder="دسته بندی را انتخاب کنید" data-allow-clear="true" multiple="multiple"> </select>
+                        <span asp-for="CategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group pb-4">
+                        <label asp-for="Tags" class="control-label pb-1" style="font-size:16px">برچسب ها</label>
+                        @*<select asp-for="ParentId" asp-items="Model.CategoryTags" class="form-control form-select" data-control="select2" data-placeholder="دسته بندی خود را وارد کنید"></select>*@
+                        <select disabled asp-for="TagId" asp-items="Model.Tags" class="form-select form-select-lg form-select-solid" data-control="select2" data-close-on-select="false" data-placeholder="تگ را انتخاب کنید" data-allow-clear="true" multiple="multiple"> </select>
+                        <span asp-for="Tags" class="text-danger"></span>
+                    </div>
+                    <div class="form-group pb-4">
+                        @if (Model.IndexImageAddress != null)
+                            {
+                                <div class="symbol symbol-100px d-flex justify-content-center">
+                                    <img src=~/@Model.IndexImageAddress alt="@Model.IndexImageAlt" title="@Model.IndexImageTitle" />
+                                </div>
+                            }
+                            else
+                            {
+                                string fName = Model.Title.Substring(0, 1);
+                                var Color = (Utility.CalculateAsciiSum(Model.Title) % 6);
+                                <div class="symbol symbol-100px d-flex justify-content-center">
+                                    <div class="symbol-label fs-2 fw-semibold bg-@Colors[Color] text-inverse-@Colors[Color]">@fName</div>
+                                </div>
+                            
+                            }
+                    </div>
+                    <div class="form-group d-flex justify-content-center">
+
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
+                            حذف خبر
+                        </button>
+                    <!--begin::modal-->
+                        <div class="modal fade" tabindex="-1" id="kt_modal_1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title">حذف خبر</h3>
+                        
+                                        <!--begin::Close-->
+                                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                        </div>
+                                        <!--end::Close-->
+                                    </div>
+                        
+                                    <div class="modal-body">
+                                        <p>مطمئن هستید که میخواهید @Model.Title را حذف کنید؟</p>
+                                    </div>
+                        
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                        <button type="submit" class="btn btn-danger">ثبت تغییرات</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!--end::modal-->
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a href="/admin/news/index" style="font-size:18px">بازگشت به لیست</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        var input2 = document.querySelector("#kt_tagify_2");
+        var keys = new Tagify(input2);
+    </script>
+}
+

@@ -1,0 +1,386 @@
+﻿@model Mag.Areas.Admin.Models.Dto.Settings.SettingsDto
+@using Newtonsoft.Json
+@{
+    ViewData["Title"] = "تنظیمات سایت";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    //List<int> nums = new List<int>()
+    //{
+    //    1,5,6,9,8
+    //};
+    //string num = JsonConvert.SerializeObject(nums);
+    //var nums2 = JsonConvert.DeserializeObject<List<int>>(num);
+}
+<!--begin::Toolbar-->
+<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+            <!--begin::Title-->
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">تنظیمات</h1>
+            <!--end::Title-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">ادمین</a>
+                </li>
+                <!--end::آیتم-->
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                </li>
+                <!--end::آیتم-->
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item text-muted">تنظیمات</li>
+                <!--end::آیتم-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+    </div>
+    <!--end::Toolbar container-->
+</div>
+<!--end::Toolbar-->
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">
+            تنظیمات
+        </h3>
+        <div class="card-toolbar">
+        </div>
+    </div>
+    <div class="card-body">
+        <form action="/Admin/Settings" method="post" enctype="multipart/form-data">
+            @if (Model != null)
+            {
+                <input type="hidden" asp-for="Id" />
+            }
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="form-group pb-4">
+                            <label asp-for="SiteName" class="control-label pb-1" style="font-size:16px">نام سایت</label>
+                            <input asp-for="SiteName" class="form-control" />
+                            <span asp-validation-for="SiteName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group pb-4">
+                            <label asp-for="Title" class="control-label pb-1" style="font-size:16px">عنوان سایت</label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="LogoAddress" class="control-label pb-1" style="font-size:16px">لوگو سایت</label>
+                                <input asp-for="LogoAddress" type="file" class="form-control" name="LogoFile" accept=".png,.jpg,.jpeg,.gif" />
+                                <span asp-validation-for="LogoAddress" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="FavIconAddress" class="control-label pb-1" style="font-size:16px">فاوآیکون</label>
+                                <input asp-for="FavIconAddress" type="file" class="form-control" name="FavIconFile" accept=".ico" />
+                                <span asp-validation-for="FavIconAddress" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="SeoDescription" class="control-label pb-1" style="font-size:16px">توضیحات سئو</label>
+                                <textarea asp-for="SeoDescription" class="form-control" style="height: 100px;"></textarea>
+                                <span asp-validation-for="SeoDescription" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="KeyWords" class="form-label pb-1" style="font-size:16px">کلمات کلیدی</label>
+                                <input class="form-control form-control-solid" placeholder="تایپ کنید و اینتر بزنبد" value="@Model.KeyWords" id="kt_tagify_2" />
+                                <input type="hidden" asp-for="KeyWords" id="keysName" />
+                                <span asp-validation-for="KeyWords" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="ScriptHeader" class="control-label pb-1" style="font-size:16px">تگ های اضافی هدر (استایل اسکریپت)</label>
+                                <textarea asp-for="ScriptHeader" class="form-control" style="height: 200px;"></textarea>
+                                <span asp-validation-for="ScriptHeader" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="ScriptFooter" class="control-label pb-1" style="font-size:16px">تگ های اضافی فوتر (اسکریپت)</label>
+                                <textarea asp-for="ScriptFooter" class="form-control" style="height: 200px;"></textarea>
+                                <span asp-validation-for="ScriptFooter" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row ">
+                        <label class="control-label pb-1" style="font-size:16px">شبکه های اجتماعی:</label>
+                        <div class="row mb-5">
+                            <div class="col-xl-3 d-flex align-items-center" style="font-size: 14px;">
+                                <i class="fa-brands fa-instagram text-dark" style="padding-left: 5px;font-size: 25px;"></i>اینستاگرام
+                            </div>
+                            <div class="col-xl-7">
+                                <input asp-for="InstagramLink" class="form-control my-2" placeholder="لینک را وارد نمایید" />
+                            </div>
+                            <div class="col-xl-2 d-flex align-items-center">
+                                <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                    <input asp-for="Instagram" class="form-check-input h-30px w-50px" type="checkbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-xl-3 d-flex align-items-center" style="font-size: 14px;">
+                                <i class="fa-brands fa-twitter text-dark" style="padding-left: 5px;font-size: 25px;"></i>توئیتر
+                            </div>
+                            <div class="col-xl-7">
+                                <input asp-for="TwitterLink" class="form-control my-2" placeholder="لینک را وارد نمایید" />
+                            </div>
+                            <div class="col-xl-2 d-flex align-items-center">
+                                <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                    <input asp-for="Twitter" class="form-check-input h-30px w-50px" type="checkbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-xl-3 d-flex align-items-center" style="font-size: 14px;">
+                                <i class="fa-brands fa-facebook text-dark" style="padding-left: 5px;font-size: 25px;"></i>فیسبوک
+                            </div>
+                            <div class="col-xl-7">
+                                <input asp-for="FacebookLink" class="form-control my-2" placeholder="لینک را وارد نمایید" />
+                            </div>
+                            <div class="col-xl-2 d-flex align-items-center">
+                                <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                    <input asp-for="Facebook" class="form-check-input h-30px w-50px" type="checkbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-xl-3 d-flex align-items-center" style="font-size: 14px;">
+                                <i class="fa-brands fa-whatsapp text-dark" style="padding-left: 5px;font-size: 25px;"></i>واتساپ
+                            </div>
+                            <div class="col-xl-7">
+                                <input asp-for="WhatsappLink" class="form-control my-2" placeholder="لینک را وارد نمایید" />
+                            </div>
+                            <div class="col-xl-2 d-flex align-items-center">
+                                <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                    <input asp-for="Whatsapp" class="form-check-input h-30px w-50px" type="checkbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-xl-3 d-flex align-items-center" style="font-size: 14px;">
+                                <i class="fa-brands fa-telegram text-dark" style="padding-left: 5px;font-size: 25px;"></i>تلگرام
+                            </div>
+                            <div class="col-xl-7">
+                                <input asp-for="TelegramLink" class="form-control my-2" placeholder="لینک را وارد نمایید" />
+                            </div>
+                            <div class="col-xl-2 d-flex align-items-center">
+                                <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                    <input asp-for="Telegram" class="form-check-input h-30px w-50px" type="checkbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-xl-3 d-flex align-items-center" style="font-size: 14px;">
+                                <i class="fa-brands fa-youtube text-dark" style="padding-left: 5px;font-size: 25px;"></i>یوتیوب
+                            </div>
+                            <div class="col-xl-7">
+                                <input asp-for="YoutubeLink" class="form-control my-2" placeholder="لینک را وارد نمایید" />
+                            </div>
+                            <div class="col-xl-2 d-flex align-items-center">
+                                <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                    <input asp-for="Youtube" class="form-check-input h-30px w-50px" type="checkbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-xl-3 d-flex align-items-center" style="font-size: 14px;">
+                                <i class="fa-brands fa-linkedin text-dark" style="padding-left: 5px;font-size: 25px;"></i>لینکدین
+                            </div>
+                            <div class="col-xl-7">
+                                <input asp-for="LinkedinLink" class="form-control my-2" placeholder="لینک را وارد نمایید" />
+                            </div>
+                            <div class="col-xl-2 d-flex align-items-center">
+                                <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                    <input asp-for="Linkedin" class="form-check-input h-30px w-50px" type="checkbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-xl-3 d-flex align-items-center" style="font-size: 14px;">
+                                <i class="fa-solid fa-g text-dark" style="padding-left: 5px;font-size: 25px;"></i>جیمیل
+                            </div>
+                            <div class="col-xl-7">
+                                <input asp-for="GmailLink" class="form-control my-2" placeholder="لینک را وارد نمایید" />
+                            </div>
+                            <div class="col-xl-2 d-flex align-items-center">
+                                <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                    <input asp-for="Gmail" class="form-check-input h-30px w-50px" type="checkbox" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 d-flex justify-content-center mt-8">
+                    <p class="text-primary" style="font-size: 20px;">تنظیمات فوتر</p>
+                </div>
+                <hr class="text-primary" style="height: 2px;">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="row ">
+                            <div class="col-12 d-flex justify-content-center">
+                                ستون اول
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group pb-4">
+                                <label asp-for="TextForFooter" class="control-label pb-1" style="font-size:16px">متن در فوتر</label>
+                                <textarea asp-for="TextForFooter" class="form-control" style="height: 200px;"></textarea>
+                                <span asp-validation-for="TextForFooter" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row mb-4">
+                            <div class="col-12 d-flex justify-content-center">
+                                ستون دوم
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row" id="PlaceForElement">
+                                <input type="hidden" asp-for="FooterMenu" id="FooterMenu" />
+                                @{
+                                    var Links = JsonConvert.DeserializeObject<List<string>>(Model.FooterMenu);
+                                }
+                                @if (Links.Count != 0)
+                                {
+                                    foreach (var item in Links)
+                                    {
+                                        <input class="form-control mt-2 InputMenuFooter" type="text" placeholder="برای حذف کردن،مقدار را وارد نکنید" value="@item"  id="inputid1"/><br />
+                                    }
+                                }
+                            </div>
+                            <div class="col-12 d-flex justify-content-center mt-2">
+                                <a class="btn btn-icon btn-info rounded-circle" onclick="createElements()" style="width: 30px;height: 30px;"><i class="fa-solid fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                ستون سوم
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group pb-4">
+                                <label asp-for="Permissions" class="control-label pb-1" style="font-size:16px">کد مربوط به مجوزات</label>
+                                <textarea asp-for="Permissions" class="form-control" style="height: 200px;"></textarea>
+                                <span asp-validation-for="Permissions" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group pb-4">
+                        <label asp-for="CopyrightText" class="control-label pb-1" style="font-size:16px">متن کپی رایت:</label>
+                        <input asp-for="CopyrightText" class="form-control" />
+                        <span asp-validation-for="CopyrightText" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-sm-12 d-flex justify-content-center">
+                    <button type="submit" onclick="getCommaSeparatedValues()" class="btn btn-success" id="btnSeo">
+                        ذخیره
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-footer">
+    </div>
+</div>
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    <script>
+
+        var input2 = document.querySelector("#kt_tagify_2");
+        var keys = new Tagify(input2);
+
+
+        document.getElementById("btnSeo").addEventListener("click", function() {
+            var StrKeys ="";
+            keys.value.forEach(function(key) {
+                StrKeys += key.value + ","
+            });
+            document.getElementById("keysName").value = StrKeys;
+        });
+
+        let inputCounter = 1
+        function createElements() {
+        const container = document.getElementById('PlaceForElement');
+
+
+        // ایجاد یک تکست باکس
+        const textBox = document.createElement('input');
+        textBox.type = 'text';
+        textBox.name = 'inputlinka'+ "" + inputCounter;
+        textBox.placeholder = 'کد را وارد کنید...';
+        textBox.classList.add('form-control' , 'mt-2' ,'InputMenuFooter');
+        textBox.setAttribute('data-custom-attribute', 'مقدار دیگر ویژگی');
+        container.appendChild(textBox);
+
+        // ایجاد دکمه حذف
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'حذف';
+        deleteButton.classList.add('mt-1','mx-auto');
+        deleteButton.onclick = function() {
+            container.removeChild(textBox);
+            container.removeChild(deleteButton);
+        };
+        deleteButton.style.width = '70px';
+        deleteButton.style.height = '30px';
+        deleteButton.style.color = 'red';
+        deleteButton.style.borderRadius = '20px';
+        container.appendChild(deleteButton);
+
+        inputCounter++;
+        }
+
+
+        function getCommaSeparatedValues() {
+            const inputElements = document.querySelectorAll('.InputMenuFooter'); 
+            let values = [];
+
+            inputElements.forEach(inputElement => {
+                const inputValue = inputElement.value.trim();
+                if (inputValue !== '') {
+                    values.push(inputValue);
+                }
+            });
+
+            //const commaSeparatedValues = values.join(', ');
+            document.getElementById("FooterMenu").value = JSON.stringify(values);
+        }
+
+    </script>
+
+    }
+}

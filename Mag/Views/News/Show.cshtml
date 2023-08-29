@@ -1,0 +1,21 @@
+﻿@model Mag.Areas.Admin.Models.Dto.News.NewsListDto
+@{
+    ViewData["Title"] = "لیست اخبار";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row mt-8">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10">
+        <div class="row">
+            @await Component.InvokeAsync("Card",new { Slug = @Model.Slug })
+        </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+</div>
+
+@section css{
+    <link rel="stylesheet" href="~/assets/css/Layoutcss/ShowNews.css?v=1">
+}

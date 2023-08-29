@@ -1,0 +1,108 @@
+﻿@using Mag.Common
+@model IEnumerable<Mag.Areas.Admin.Models.Dto.News.NewsListDto>
+@{
+    ViewData["Title"] = "اخبار در انتظار تایید";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var Colors = new string[]
+                            {
+                "warning","primary","info","success","danger","dark"
+                            };
+}
+<br>
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">
+            <div class="d-flex align-items-center position-relative my-1">
+                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+                <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="جستجو خبر">
+            </div>
+        </h3>
+        <div class="card-toolbar">
+            لیست اخبار رد شده
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="vertical-align: middle;text-align: center;">
+                            عنوان خبر
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                            لینک (نامک)
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                            تصویر شاخص
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                            نویسنده خبر
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                           دسته بندی ها
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                           فعال بودن
+                        </th>
+                        <th style="vertical-align: middle;text-align: center;">
+                           وضیعیت
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="vertical-align: middle;text-align: center;">
+                                @item.Title
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;">
+                                @Html.DisplayFor(modelItem => item.Slug)
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;">
+                                @if (item.IndexImageAddress != null)
+                                {
+                                    <div class="symbol symbol-50px">
+                                        <img src=~/@item.IndexImageAddress alt="@item.IndexImageAddressAlt" title="@item.IndexImageAddressTitle" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    string fName = item.Title.Substring(0, 1);
+                                    var sum = Utility.CalculateAsciiSum(item.Title);
+                                    var Color = Convert.ToInt32(Math.Ceiling((double)sum % 6));
+                                    <div class="symbol symbol-50px">
+                                        <div class="symbol-label fs-2 fw-semibold bg-@Colors[Color] text-inverse-@Colors[Color]">@fName</div>
+                                    </div>
+                                }
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;">
+                                @Html.DisplayFor(modelItem => item.WriterId)
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;">
+                                @Html.DisplayFor(modelItem => item.Categories)
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;">
+                                  <input asp-for="@item.IsActive" class="form-check-input " type="checkbox" disabled style="border-color:gray;" />
+                            </td>
+                            <td style="vertical-align: middle;text-align: center;">
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td width="140px">
+                                <div class="col-sm-6">
+                                    <a href="/Admin/News/Details/@item.Id" class="badge badge-info mb-1 py-4" style="width:67px;height:20px;justify-content: center;">نمایش جزییات</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+    </div>
+</div>

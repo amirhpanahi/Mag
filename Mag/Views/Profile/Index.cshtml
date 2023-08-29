@@ -1,0 +1,419 @@
+﻿@using Mag.Common
+@using Mag.Models.Entities
+@model Tuple<User,List<Mag.Areas.Admin.Models.Dto.News.NewsListDto>,string?,int?>
+@{
+    ViewData["Title"] = " پروفایل کاربر";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Colors = new string[]
+                                                                                {
+                "warning","primary","info","success","danger","dark"
+                                                                                };
+}
+<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+            <!--begin::Title-->
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">پروفایل @Model.Item1.FirstName عزیز</h1>
+            <!--end::Title-->
+        </div>
+        <!--end::Page title-->
+    </div>
+    <!--end::Toolbar container-->
+</div>
+@*----------------------------------------------------*@
+<div id="kt_app_content" class="app-content flex-column-fluid" style="padding-bottom: 0px;">
+    <!--begin::Content container-->
+    <div id="kt_app_content_container" class="app-container container-xxl">
+        <!--begin::Navbar-->
+        <div class="card mb-5 mb-xl-10">
+            <div class="card-body pt-9 pb-0">
+                <!--begin::Details-->
+                <div class="d-flex flex-wrap flex-sm-nowrap">
+                    <!--begin: Pic-->
+                    <div class="me-7 mb-4">
+                        @if (Model.Item1.PicAddress != null)
+                        {
+                            <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                                <img src=~/@Model.Item1.PicAddress alt="@Model.Item1.PicAlt" title="@Model.Item1.PicTitle" />
+                                <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
+                            </div>
+                        }
+                        else
+                        {
+                            string fName = Model.Item1.FirstName.Substring(0, 1);
+                            string lName = Model.Item1.LastName.Substring(0, 1);
+                            var Color = (Utility.CalculateSum(Model.Item1.PhoneNumber) % 6);
+                            <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                                <div class="symbol-label fs-2 fw-semibold bg-@Colors[Color] text-inverse-@Colors[Color]">@fName @lName</div>
+                                <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
+                            </div>
+
+                        }
+                    </div>
+                    <!--end::Pic-->
+                    <!--begin::Info-->
+                    <div class="flex-grow-1">
+                        <!--begin::Title-->
+                        <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                            <!--begin::user-->
+                            <div class="d-flex flex-column">
+                                <!--begin::نام-->
+                                <div class="d-flex align-items-center mb-2">
+                                    <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">@Model.Item1.LastName</a>
+                                    <a href="#">
+                                        <i class="ki-duotone ki-verify fs-1 text-primary">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </a>
+                                </div>
+                                <!--end::نام-->
+                                <!--begin::Info-->
+                                <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
+                                    <p href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                                        <i class="ki-duotone ki-profile-circle fs-4 me-1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                        </i>@Model.Item3
+                                    </p>
+                                    <p href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-3 mb-2">
+                                        <i class="ki-duotone ki-sms fs-4 me-1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>@Model.Item1.Email
+                                    </p>
+                                </div>
+                                <!--end::Info-->
+                            </div>
+                            <!--end::user-->
+                        </div>
+                        <!--end::Title-->
+                        <!--begin::Stats-->
+                        <div class="d-flex flex-wrap flex-stack">
+                            <!--begin::Wrapper-->
+                            <div class="d-flex flex-column flex-grow-1 pe-8">
+                                <!--begin::Stats-->
+                                <div class="d-flex flex-wrap">
+                                    <!--begin::Stat-->
+                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                        <!--begin::شماره کارت-->
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="4500" data-kt-countup-prefix="$" data-kt-initialized="1">@Model.Item2.Count</div>
+                                        </div>
+                                        <!--end::شماره کارت-->
+                                        <!--begin::Tags-->
+                                        <div class="fw-semibold fs-6 text-gray-400 d-flex align-items-center justify-content-center">تعداد خبر</div>
+                                        <!--end::Tags-->
+                                    </div>
+                                    <!--end::Stat-->
+                                    <!--begin::Stat-->
+                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                        <!--begin::شماره کارت-->
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="80" data-kt-initialized="1">80</div>
+                                        </div>
+                                        <!--end::شماره کارت-->
+                                        <!--begin::Tags-->
+                                        <div class="fw-semibold fs-6 text-gray-400 d-flex align-items-center justify-content-center">تعداد کامنت</div>
+                                        <!--end::Tags-->
+                                    </div>
+                                    <!--end::Stat-->
+                                </div>
+                                <!--end::Stats-->
+                            </div>
+                            <!--end::Wrapper-->
+                            <!--begin::پردازش-->
+                            <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
+                                <div class="d-flex justify-content-between w-100 mt-auto mb-2">
+                                    <span class="fw-semibold fs-6 text-gray-400">تکمیل پروفایل</span>
+                                    @if (Model.Item1.EmailConfirmed == true && Model.Item1.PhoneNumberConfirmed == true)
+                                    {
+                                        <span class="fw-bold fs-6">100%</span>
+                                    }
+                                    else if (Model.Item1.EmailConfirmed == true)
+                                    {
+                                        <span class="fw-bold fs-6">80%</span>
+                                    }
+                                    else if (Model.Item1.EmailConfirmed != true && Model.Item1.PhoneNumberConfirmed != true)
+                                    {
+                                        <span class="fw-bold fs-6">60%</span>
+                                    }
+
+                                </div>
+                                <div class="h-5px mx-3 w-100 bg-light mb-3">
+                                    @if (Model.Item1.EmailConfirmed == true && Model.Item1.PhoneNumberConfirmed == true)
+                                    {
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                                        </div>
+                                    }
+                                    else if (Model.Item1.EmailConfirmed == true)
+                                    {
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%"></div>
+                                        </div>
+                                    }
+                                    else if (Model.Item1.EmailConfirmed != true && Model.Item1.PhoneNumberConfirmed != true)
+                                    {
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <!--end::پردازش-->
+                        </div>
+                        <!--end::Stats-->
+                    </div>
+                    <!--end::Info-->
+                </div>
+                <!--end::Details-->
+            </div>
+        </div>
+        <!--end::Navbar-->
+        <!--begin::details نمایش-->
+        <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+            <!--begin::کارت header-->
+            <div class="card-header cursor-pointer">
+                <!--begin::کارت title-->
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">جزییات پروفایل</h3>
+                </div>
+                <!--end::کارت title-->
+                <!--begin::Actions-->
+                <a href="/Profile/Edit" class="btn btn-sm btn-primary align-self-center">ویرایش پروفایل</a>
+                <!--end::Actions-->
+            </div>
+            <!--begin::کارت header-->
+            <!--begin::کارت body-->
+            <div class="card-body p-9">
+                <!--begin::Row-->
+                <div class="row mb-7">
+                    <!--begin::Tags-->
+                    <label class="col-lg-4 fw-semibold text-muted">نام کامل</label>
+                    <!--end::Tags-->
+                    <!--begin::Col-->
+                    <div class="col-lg-8">
+                        <span class="fw-bold fs-6 text-gray-800">@Model.Item1.FirstName @Model.Item1.LastName</span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Row-->
+                <!--begin::Input group-->
+                <div class="row mb-7">
+                    <!--begin::Tags-->
+                    <label class="col-lg-4 fw-semibold text-muted">
+                        شماره تماس
+                        <span class="ms-1" data-bs-toggle="tooltip" aria-label="شماره تلفن باید فعال باشد" data-bs-original-title="شماره تلفن باید فعال باشد" data-kt-initialized="1">
+                            <i class="ki-duotone ki-information fs-7">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                            </i>
+                        </span>
+                    </label>
+                    <!--end::Tags-->
+                    <!--begin::Col-->
+                    <div class="col-lg-8">
+                        <span class="fw-bold fs-6 text-gray-800 me-2">@Model.Item1.PhoneNumber</span>
+                        @if (Model.Item1.PhoneNumberConfirmed == true)
+                        {
+                            <span class="badge badge-success">تایید شده</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">تایید نشده</span>  <span class="badge badge-primary"><a href="" style="color:white">برای تایید کلیک کنید</a></span>
+                        }
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Input group-->
+                <!--begin::Input group-->
+                <div class="row mb-7">
+                    <!--begin::Tags-->
+                    <label class="col-lg-4 fw-semibold text-muted">ایمیل</label>
+                    <!--end::Tags-->
+                    <!--begin::Col-->
+                    <div class="col-lg-8 ">
+                        <span class="fw-bold fs-6 text-gray-800">@Model.Item1.Email</span>
+                        @if (Model.Item1.EmailConfirmed == true)
+                        {
+                            <span class="badge badge-success">تایید شده</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">تایید نشده</span>  <span class="badge badge-primary"><a href="/Profile/SendEmail" style="color:white">برای تایید کلیک کنید</a></span>
+                        }
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Input group-->
+            </div>
+            <!--end::کارت body-->
+        </div>
+        <!--end::details نمایش-->
+    </div>
+    <!--end::Content container-->
+</div>
+@*----------------------------------------------------*@
+<div id="kt_app_content" class="app-content flex-column-fluid">
+    <!--begin::Content container-->
+    <div id="kt_app_content_container" class="app-container container-xxl">
+        <!--begin::Navbar-->
+        <!--end::Navbar-->
+        <!--begin::Login sessions-->
+        <div class="card mb-5 mb-lg-10">
+            <!--begin::کارت header-->
+            <div class="card-header">
+                <!--begin::Heading-->
+                <div class="card-title">
+                    <h3>5 پیام آخر این کاربر</h3>
+                </div>
+                <!--end::Heading-->
+                <!--begin::Toolbar-->
+                <div class="card-toolbar">
+                    @if(Model.Item4 == 0){
+                        <a href="/Profile/RequestForWriting?userId=@Model.Item1.Id" class="btn btn-primary">درخواست برای نوشتن خبر</a>
+                    }
+                    else
+                    {
+                        <a href="/News/Add" class="btn btn-primary">نوشتن خبر جدید</a>
+                    }
+                    
+                </div>
+                <!--end::Toolbar-->
+            </div>
+            <!--end::کارت header-->
+            <!--begin::کارت body-->
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th style="vertical-align: middle;text-align: center;">
+                                    عنوان خبر
+                                </th>
+                                <th style="vertical-align: middle;text-align: center;">
+                                    لینک (نامک)
+                                </th>
+                                <th style="vertical-align: middle;text-align: center;">
+                                    تصویر شاخص
+                                </th>
+                                <th style="vertical-align: middle;text-align: center;">
+                                    نویسنده خبر
+                                </th>
+                                <th style="vertical-align: middle;text-align: center;">
+                                    دسته بندی ها
+                                </th>
+                                <th style="vertical-align: middle;text-align: center;">
+                                    فعال بودن
+                                </th>
+                                <th style="vertical-align: middle;text-align: center;">
+                                    وضیعیت
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Item2)
+                            {
+                                <tr>
+                                    <td style="vertical-align: middle;text-align: center;">
+                                        @item.Title
+                                    </td>
+                                    <td style="vertical-align: middle;text-align: center;">
+                                        @Html.DisplayFor(modelItem => item.Slug)
+                                    </td>
+                                    <td style="vertical-align: middle;text-align: center;">
+                                        @if (item.IndexImageAddress != null)
+                                        {
+                                            <div class="symbol symbol-50px">
+                                                <img src=~/@item.IndexImageAddress alt="@item.IndexImageAddressAlt" title="@item.IndexImageAddressTitle" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            string fName = item.Title.Substring(0, 1);
+                                            var sum = Utility.CalculateAsciiSum(item.Title);
+                                            var Color = Convert.ToInt32(Math.Ceiling((double)sum % 6));
+                                            <div class="symbol symbol-50px">
+                                                <div class="symbol-label fs-2 fw-semibold bg-@Colors[Color] text-inverse-@Colors[Color]">@fName</div>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td style="vertical-align: middle;text-align: center;">
+                                        @Html.DisplayFor(modelItem => item.WriterId)
+                                    </td>
+                                    <td style="vertical-align: middle;text-align: center;">
+                                        @Html.DisplayFor(modelItem => item.Categories)
+                                    </td>
+                                    <td style="vertical-align: middle;text-align: center;">
+                                        <input asp-for="@item.IsActive" class="form-check-input " type="checkbox" disabled style="border-color:gray;" />
+                                    </td>
+                                    <td style="vertical-align: middle;text-align: center;">
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td style="vertical-align: middle;text-align: center;">
+                                        @if (item.Status == StatusName.Publish || item.Status == StatusName.Draft)
+                                        {
+                                            <!--begin::Menu wrapper-->
+                                            <div>
+                                                <!--begin::Toggle-->
+                                        <button type="button" class="btn btn-light rotate" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="30px, 30px" style="width:75px;height:30px;justify-content: center;margin-left: 10px;">
+                                                    عملیات
+                                                    <i class="ki-duotone ki-down fs-3 rotate-180 ms-3 me-0"></i>
+                                                </button>
+                                                <!--end::Toggle-->
+                                                <!--begin::Menu-->
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px" data-kt-menu="true">
+                                                    <div class="list-group p-2" style="background-color:lavender">
+                                                        <a href="/News/Edit/@item.Id" class="badge badge-success mb-1 py-4" style="width:67px;height:20px;justify-content: center;">ویرایش</a>
+                                                        <a href="/News/Details/@item.Id" class="badge badge-primary  mb-1 py-4" style="width:67px;height:20px;justify-content: center;">جزییات</a>
+                                                    </div>
+                                                </div>
+                                                <!--end::Menu-->
+                                        </div>
+                                            <!--end::Dropdown wrapper-->
+                                        }
+                                        else
+                                        {
+                                            <a href="/News/Details/@item.Id" class="badge badge-info  mb-1 py-4" style="width:67px;height:20px;justify-content: center;margin-left: 10px;">جزییات</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <ul class="pagination">
+                    <li class="page-item previous disabled"><a href="#" class="page-link"><i class="previous"></i></a></li>
+                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item "><a href="#" class="page-link">2</a></li>
+                    <li class="page-item "><a href="#" class="page-link">3</a></li>
+                    <li class="page-item "><a href="#" class="page-link">4</a></li>
+                    <li class="page-item "><a href="#" class="page-link">5</a></li>
+                    <li class="page-item "><a href="#" class="page-link">6</a></li>
+                    <li class="page-item next"><a href="#" class="page-link"><i class="next"></i></a></li>
+                </ul>
+            </div>
+            <!--end::کارت body-->
+        </div>
+        <!--end::Login sessions-->
+        <!--begin::کارت-->
+        <!--end::کارت-->
+    </div>
+    <!--end::Content container-->
+</div>
+
+
+<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true" style="margin-left:50px">
+    <i class="ki-duotone ki-arrow-up">
+        <span class="path1"></span>
+        <span class="path2"></span>
+    </i>
+</div>

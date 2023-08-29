@@ -1,0 +1,118 @@
+﻿@model Mag.Areas.Admin.Models.Dto.Category.CategoryAddDto
+
+@{
+    ViewData["Title"] = "اضافه کردن دسته بندی";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br>
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">اضافه کردن دسته بندی</h3>
+        <div class="card-toolbar">
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <form action="/admin/category/Add" method="post" enctype="multipart/form-data">
+                    <br>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="Name" class="control-label pb-1" style="font-size:16px">نام دسته بندی</label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="ParentId" class="control-label pb-1" style="font-size:16px">دسته بندی مادر</label>
+                                <select asp-for="ParentId" asp-items="Model.CategoryTags" class="form-control form-select" data-control="select2" data-placeholder="دسته بندی خود را وارد کنید"></select>
+                                <span asp-for="ParentId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="Description" class="control-label pb-1" style="font-size:16px">توضیحات</label>
+                                <input asp-for="Description" class="form-control" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="PicAddress" class="control-label pb-1" style="font-size:16px"> عکس</label>
+                                <input type="file" name="file" asp-for="PicAddress" class="form-control" accept=".png,.jpg,.jpeg,.gif"/>
+                                <span asp-validation-for="PicAddress" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="PicAlt" class="control-label pb-1" style="font-size:16px">Alt عکس</label>
+                                <input asp-for="PicAlt" class="form-control" />
+                                <span asp-validation-for="PicAlt" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="PicTitle" class="control-label pb-1" style="font-size:16px">Title عکس</label>
+                                <input asp-for="PicTitle" class="form-control" />
+                                <span asp-for="PicTitle" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="Slug" class="control-label pb-1" style="font-size:16px">لینک(نامک)</label>
+                                <input asp-for="Slug" class="form-control" />
+                                <span asp-validation-for="Slug" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row mt-9">
+                                <div class="col-md-6">
+                                    <div class="fv-row mb-8 d-flex align-item-center">
+                                        <label asp-for="IsShowMainPage" class="control-label pb-1" style="font-size:16px;padding-left: 5px;"></label>
+                                        <input type="checkbox" asp-for="IsShowMainPage" class="form-check-input h-30px w-30px" />
+                                        <span asp-validation-for="IsShowMainPage" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch form-check-custom form-check-solid">
+                                        <label asp-for="IsActive" class="form-check-label pb-1 pl-1" style="font-size:16px;padding-left: 15px;">
+                                            فعال بودن
+                                        </label>
+                                        <input asp-for="IsActive" class="form-check-input h-30px w-50px" type="checkbox" id="IsActive" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group d-flex justify-content-center">
+                            <input type="submit" value="ثبت دسته بندی" class="btn btn-success" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a href="/admin/category/index" style="font-size:18px">بازگشت به لیست</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

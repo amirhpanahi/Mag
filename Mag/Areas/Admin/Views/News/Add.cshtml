@@ -1,0 +1,171 @@
+﻿@model Mag.Areas.Admin.Models.Dto.News.NewsAddDto
+
+@{
+    ViewData["Title"] = "اضافه کردن خبر";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br>
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">اضافه کردن خبر</h3>
+        <div class="card-toolbar">
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <form action="/Admin/News/Add" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="KeyWords" id="keysName" />
+                    <br>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="Title" class="control-label pb-1" style="font-size:16px">نام خبر</label>
+                                <input asp-for="Title" class="form-control" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="Slug" class="control-label pb-1" style="font-size:16px">لینک(نامک)</label>
+                                <input asp-for="Slug" class="form-control" />
+                                <span asp-validation-for="Slug" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <div class="form-group pb-4">
+                                <label asp-for="DescriptionHtmlEditor" class="control-label pb-1" style="font-size:16px">توضیحات(Html Editor)</label>
+                                <textarea asp-for="DescriptionHtmlEditor" class="form-control" id="AddNewsEditor"></textarea>
+                                <span asp-validation-for="DescriptionHtmlEditor" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="DescriptionSeo" class="control-label pb-1" style="font-size:16px">توضیحات سئو</label>
+                                <input asp-for="DescriptionSeo" class="form-control" />
+                                <span asp-validation-for="DescriptionSeo" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <div class="mb-0">
+                                    <label class="form-label">کلمات کلیدی</label>
+                                    <input class="form-control form-control-solid" placeholder="تایپ کنید و اینتر بزنبد" value="" id="kt_tagify_2"/>
+                                </div>  
+                                @*<label asp-for="KeyWords" class="control-label pb-1" style="font-size:16px">کلمات کلیدی</label>
+                                <input asp-for="KeyWords" class="form-control" />
+                                <span asp-for="KeyWords" class="text-danger"></span>*@  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="VideoFile" class="control-label pb-1" style="font-size:16px">بارگذاری ویدیو</label>
+                                <input type="file" name="VideoFile" asp-for="VideoFile" class="form-control" accept="video/*" />
+                                <p class="secondary" style="margin-bottom: 0px;">حداکثر سایز آپلود ویدیو 100 مگابایت</p>
+                                <span asp-validation-for="VideoFile" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="indexImageFile" class="control-label pb-1" style="font-size:16px">تصویر شاخص</label>
+                                <input type="file" name="indexImageFile" asp-for="indexImageFile" class="form-control" accept=".png,.jpg,.jpeg,.gif" />
+                                <p class="secondary" style="margin-bottom: 0px;">حداکثر سایز آپلود عکس 5 مگابایت</p>
+                                <span asp-validation-for="indexImageFile" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="Categories" class="control-label pb-1" style="font-size:16px">دسته بندی ها</label>
+                                @*<select asp-for="ParentId" asp-items="Model.CategoryTags" class="form-control form-select" data-control="select2" data-placeholder="دسته بندی خود را وارد کنید"></select>*@
+                                <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select form-select-lg form-select-solid" data-control="select2" data-close-on-select="false" data-placeholder="دسته بندی را انتخاب کنید" data-allow-clear="true" multiple="multiple"> </select>
+                                <span asp-for="Categories" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group pb-4">
+                                <label asp-for="Tags" class="control-label pb-1" style="font-size:16px">برچسب ها</label>
+                                @*<select asp-for="ParentId" asp-items="Model.CategoryTags" class="form-control form-select" data-control="select2" data-placeholder="دسته بندی خود را وارد کنید"></select>*@
+                                <select asp-for="TagId" asp-items="Model.Tags" class="form-select form-select-lg form-select-solid" data-control="select2" data-close-on-select="false" data-placeholder="تگ را انتخاب کنید" data-allow-clear="true" multiple="multiple"> </select>
+                                <span asp-for="Tags" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5 d-flex justify-content-center">
+                        <div class="col-md-5 border p-2">
+                            <div class="row d-flex justify-content-center mb-4">
+                                <div class="col-md-12 d-flex justify-content-center">
+                                    <div class="form-check form-switch form-check-custom form-check-solid d-flex justify-content-center">
+                                    <label asp-for="IsActive" class="form-check-label pb-1 pl-1" style="font-size:16px;padding-left: 15px;color: black;">
+                                        وضعیت فعال بودن خبر
+                                    </label>
+                                    <input asp-for="IsActive" class="form-check-input h-30px w-50px" type="checkbox" id="IsActive" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-12 d-flex justify-content-center">
+                                    @*<button type="submit" class="btn mx-1" style="background-color: darkkhaki; " v>نمایش خبر</button>*@
+                                    <button name="Publish" value="Publish" class="btn btn-success mx-1" id="SubmitBtn">ثبت خبر</button>
+                                    <button name="Draft" value="Draft" class="btn btn-warning mx-1" id="DraftBtn">پیش نویس</button>
+                                    @*<button class="btn btn-danger mx-1" >حذف</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a href="/admin/News/index" style="font-size:18px">بازگشت به لیست</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#AddNewsEditor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+
+         
+        var input2 = document.querySelector("#kt_tagify_2");
+        var keys = new Tagify(input2);
+
+        document.getElementById("SubmitBtn").addEventListener("click", function() {
+            var StrKeys ="";
+            keys.value.forEach(function(key) {
+                StrKeys += key.value + "," 
+            });
+            document.getElementById("keysName").value = StrKeys; 
+        });
+
+        document.getElementById("DraftBtn").addEventListener("click", function() {
+            var StrKeys ="";
+            keys.value.forEach(function(key) {
+                StrKeys += key.value + "," 
+            });
+            document.getElementById("keysName").value = StrKeys; 
+        });
+
+
+    </script>
+
+    }
+}

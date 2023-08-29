@@ -1,0 +1,24 @@
+/* external css: flickity.css */
+
+* { box-sizing: border-box; }
+
+
+
+.carousel {
+  /*background: white;*/
+}
+
+.carousel-cell {
+  width: 30%;
+  height: 300px;
+  margin-right: 10px;
+  background: #8C8;
+  border-radius: 5px;
+  counter-increment: carousel-cell;
+}
+.flickity-viewport{
+    border-radius:10px;
+}
+
+/* cell number */
+

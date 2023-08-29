@@ -1,0 +1,187 @@
+﻿@model Mag.Areas.Admin.Models.Dto.Home.BannersDto
+@{
+    ViewData["Title"] = "صفحه اصلی";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row" style="">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-2">
+        <div class="col-md-12">
+            <div style="height: 673px;background-color: rebeccapurple;background: url(../../../@Model.Banner1Address);box-shadow: 7px 8px 50px #555;max-width: 370px;background-size: cover;border-radius:7px">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="height: 140px;background-color: rebeccapurple;background: url(../../../@Model.Banner2Address);box-shadow: 7px 8px 50px #555;background-size: cover;border-radius:7px">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <div style="height: 518px;background-color: rebeccapurple;background: url(../../../@Model.Banner3Address);box-shadow: 7px 8px 50px #555;background-size: cover;border-radius:15px">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6 ">
+                        <div style="height: 250px;background-color: rebeccapurple;background: url(../../../@Model.Banner4Address);box-shadow: 7px 8px 50px #555;background-size: cover;border-radius:15px">
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div style="height: 250px;background-color: rebeccapurple;background: url(../../../@Model.Banner5Address);box-shadow: 7px 8px 50px #555;background-size: cover;border-radius:15px">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5"> 
+                    <div class="col-md-6">
+                        <div style="height: 250px;background-color: rebeccapurple;background: url(../../../@Model.Banner6Address);box-shadow: 7px 8px 50px #555;background-size: cover;border-radius:15px">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="height: 250px;background-color: rebeccapurple;background: url(../../../@Model.Banner7Address);box-shadow: 7px 8px 50px #555;background-size: cover;border-radius:15px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+</div>
+@*-------------Line-------------*@
+@*<div class="row mt-5">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+    <div class="row">
+    <div class="col-md-1 col-sm-0 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 13px;">
+    اخبار منتخب
+    </div>
+    <div class="col-md-10">
+    <hr />
+    </div>
+    <div class="col-md-1 col-sm-0 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 11px;">
+    مشاهده بیشتر
+    </div>
+    </div>
+    </div>
+    <div class="col-md-1"></div>
+    </div>*@
+<div class="underline underline-dark" style="margin-top: 50px;margin-bottom: 50px;"></div>
+@*-------------EndLine-------------*@
+@*-------------carousel-------------*@
+<div class="row mt-5">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10" style="padding-left: 0px;padding-right: 0px">
+        <div class="carousel">
+            <div class="carousel-cell" style="background-color: rebeccapurple;background: url(../../../Media/Carousel/1.jpg);background-size: cover;"></div>
+            <div class="carousel-cell"></div>
+            <div class="carousel-cell"></div>
+            <div class="carousel-cell"></div>
+            <div class="carousel-cell"></div>
+            <div class="carousel-cell"></div>
+            <div class="carousel-cell"></div>
+            <div class="carousel-cell"></div>
+            <div class="carousel-cell"></div>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+</div>
+@*-------------Endcarousel-------------*@
+@*-------------Line-------------*@
+@*<div class="row mt-5">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+    <div class="row">
+    <div class="col-md-1 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 13px;">
+    آخرین اخبار
+    </div>
+    <div class="col-md-10">
+    <hr />
+    </div>
+    <div class="col-md-1 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 11px;">
+    مشاهده بیشتر
+    </div>
+    </div>
+    </div>
+    <div class="col-md-1"></div>
+    </div>*@
+<div class="underline underline-dark" style="margin-top: 70px;margin-bottom: 50px;"></div>
+@*-------------EndLine-------------*@
+<div class="row mt-4">
+    <div class="col-md-1">
+    </div> 
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="container pb-4" style="direction:ltr">
+                            <h1 class="h1" id="pageHeaderTitle">دسته بندی اخبار</h1> 
+                            @await Component.InvokeAsync("CategoryForIndexPage")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12 mb-5">
+                        <img src="~/assets/media/Home/Adv1.gif" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-5">
+                        <img src="~/assets/media/Home/Adv2.gif" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-5">
+                        <img src="~/assets/media/Home/Adv3.gif" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-5">
+                        <img src="~/assets/media/Home/Adv1.gif" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-5">
+                        <img src="~/assets/media/Home/Adv2.gif" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+</div>
+
+
+<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true" style="margin-left:50px">
+    <i class="ki-duotone ki-arrow-up">
+        <span class="path1"></span>
+        <span class="path2"></span>
+    </i>
+</div>
+
+
+@section Scripts{
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+      var carousel = document.querySelector('.carousel');
+
+      // Initialize Flickity carousel with wrapAround option
+      var flkty = new Flickity(carousel, {
+        wrapAround: true,
+        // Add other options here if needed
+      });
+    });
+</script>
+}
+@section css{
+    <link rel="stylesheet" href="~/assets/css/Layoutcss/CategoriesCard.css" />
+}
