@@ -1,4 +1,5 @@
-﻿using Mag.Areas.Admin.Models.Dto.News;
+﻿using Mag.Areas.Admin.Models.Dto.Comment;
+using Mag.Areas.Admin.Models.Dto.News;
 using Mag.Data;
 using Mag.Models.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -19,11 +20,24 @@ namespace Mag.ViewComponents
         {
             var FindNews = _dbContext.News.FirstOrDefault(p => p.Slug == slug);
             var FindUser = await _userManager.FindByIdAsync(FindNews.WriterId);
+            var ParentIdCategories = _dbContext.CategoryTags.Where(x => x.Type == "Category" && x.ParentId == 1 && x.Id != 1).Select(p => p.Id).ToList();
+            var pcName = _dbContext.CategoryTags.FirstOrDefault(p => p.Id==GetParentIdCategory(FindNews.Categories, ParentIdCategories));
+            var ListComments = _dbContext.Comments.Where(p => p.Status == Comment.StatusName.Publish && p.NewsId == FindNews.Id).Select(p => new CommentListDto
+            {
+                Id = p.Id,
+                NewsId = p.NewsId,
+                UserId = p.UserId,
+                CommentText = p.CommentText,
+                RegisterDate = p.RegisterDate,
+                RegisterDatePersian = p.RegisterDatePersian,
+                ParentId = p.ParentId,
+            }).ToList();
 
             var news = new NewsCardDto
             {
                 Title = FindNews.Title,
                 Slug = FindNews.Slug,
+                ParentCategory = pcName == null ? "سایر" : pcName.Name,
                 IndexImageAddress = FindNews.IndexImageAddress,
                 IndexImageAddressAlt = FindNews.IndexImageAddressAlt,
                 IndexImageAddressTitle = FindNews.IndexImageAddressTitle,
@@ -33,7 +47,9 @@ namespace Mag.ViewComponents
                 PublishNewsDatePersianYear = getYear(FindNews.PublishNewsDatePersian),
                 PublishNewsDatePersianTime = getTime(FindNews.PublishNewsDatePersian),
                 UserImage = FindUser.PicAddress,
-                UserFullName = FindUser.FirstName +" "+ FindUser.LastName
+                UserFullName = FindUser.FirstName +" "+ FindUser.LastName,
+                Comments = ListComments,
+                NewsSummary = FindNews.NewsSummary == null?" ":FindNews.NewsSummary,
             };
 
             return View(news);
@@ -102,6 +118,22 @@ namespace Mag.ViewComponents
             var SeprateDayMonth = date.Split(" ");
             var GetDayTime = SeprateDayMonth[1].Split(":");
             return GetDayTime[0]+":"+GetDayTime[1];
+        }
+        static int GetParentIdCategory(string Categories,List<int>? ParentidCategories)
+        {
+            var splitCategories = Categories.Split(",");
+            
+            foreach (var CatId in splitCategories)
+            {
+                foreach (var CatParentId in ParentidCategories)
+                {
+                    if (Convert.ToInt32(CatId) == CatParentId)
+                    {
+                        return Convert.ToInt32(CatId);
+                    }
+                }
+            }
+            return 0;
         }
     }
 }

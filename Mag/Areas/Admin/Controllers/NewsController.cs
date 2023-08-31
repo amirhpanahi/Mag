@@ -62,7 +62,8 @@ namespace Mag.Areas.Admin.Controllers
                 DraftTimePersain = FindNews.DraftNewsDatePersian,
                 RegisterDatePersian = FindNews.RegisterNewsDatePersian,
                 DescriptionSeo = FindNews.DescriptionSeo,
-                DescriptionHtmlEditor = FindNews.DescriptionHtmlEditor
+                DescriptionHtmlEditor = FindNews.DescriptionHtmlEditor,
+                NewsSummary = FindNews.NewsSummary == null ? " " : FindNews.NewsSummary
             };
 
             ViewBag.StatusName = FindNews.Status.ToString();
@@ -195,12 +196,13 @@ namespace Mag.Areas.Admin.Controllers
                     IsActive = model.IsActive,
                     Status = Draft == null ? StatusName.Publish : StatusName.Draft,
                     CountSeeNews = model.CountSeeNews,
+                    NewsSummary = model.NewsSummary,    
                 };
 
                 await _DbContext.News.AddAsync(NewNews);
                 await _DbContext.SaveChangesAsync();
 
-                return RedirectToAction("Index", "News", new { Areas = "Admin" });
+                return Redirect("/Admin/News/index");
             }
             return View(model);
         }
@@ -271,6 +273,7 @@ namespace Mag.Areas.Admin.Controllers
                 DescriptionHtmlEditor = FindNews.DescriptionHtmlEditor,
                 IndexImageAlt = FindNews.IndexImageAddressAlt,
                 IndexImageTitle = FindNews.IndexImageAddressTitle,
+                NewsSummary = FindNews.NewsSummary == null ? " ":FindNews.NewsSummary
             };
             return View(EditNews);
         }
@@ -288,12 +291,15 @@ namespace Mag.Areas.Admin.Controllers
             var TagsId = new StringBuilder();
             var CategoriesId = new StringBuilder();
 
-            if (model.TagId != null && model.CategoryId != null)
+            if (model.TagId != null)
             {
                 foreach (var item in model.TagId)
                 {
                     TagsId.Append($"{item},");
                 }
+            }
+            if (model.CategoryId != null)
+            {
                 foreach (var item in model.CategoryId)
                 {
                     CategoriesId.Append($"{item},");
@@ -371,6 +377,7 @@ namespace Mag.Areas.Admin.Controllers
                 NewsFind.IsActive = model.IsActive;
                 NewsFind.Status = Draft == null ? StatusName.Publish : StatusName.Draft;
                 NewsFind.CountSeeNews = model.CountSeeNews;
+                NewsFind.NewsSummary = model.NewsSummary;   
 
                 _DbContext.Entry(NewsFind).State = EntityState.Modified;
                 await _DbContext.SaveChangesAsync();

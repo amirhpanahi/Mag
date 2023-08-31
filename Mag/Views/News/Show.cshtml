@@ -1,4 +1,4 @@
-﻿@model Mag.Areas.Admin.Models.Dto.News.NewsListDto
+﻿@model Mag.Areas.Admin.Models.Dto.News.NewsCardDto
 @{
     ViewData["Title"] = "لیست اخبار";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,4 +18,23 @@
 
 @section css{
     <link rel="stylesheet" href="~/assets/css/Layoutcss/ShowNews.css?v=1">
+}
+@section Scripts{
+    <script>
+        function updateCharacterCount() {
+            const inputElement = document.getElementById('textInput');
+            const charCountLabel = document.getElementById('charCountLabel');
+            
+            const enteredText = inputElement.value;
+            const charCount = enteredText.length;
+
+            charCountLabel.textContent = charCount + '/1000';
+
+            // اگر تعداد کاراکترها بیش از 1000 باشد، محدودیت را اعمال کنید
+            if (charCount > 1000) {
+                inputElement.value = enteredText.substring(0, 1000);
+                charCountLabel.textContent = '1000/1000';
+            }
+        }
+    </script>
 }

@@ -1,10 +1,39 @@
 ﻿.Detalis {
     color: gray;
-    font-size: 11px;
+    font-size: 10px;
     margin-bottom: 0px;
     margin-right: 5px;
 }
-
+.CategoryLink {
+    color: #0075e7;
+    font-weight: bold;
+}
+.CommentsInNews {
+    border-radius: 16px;
+    border: 1px solid #ccc !important; 
+    padding: 15px 15px;
+    margin-bottom: 5px
+}
+.CommentsInNewsText{
+    font-size:13px;
+    margin-bottom:0px;
+}
+.CommentsInNewsDtl {
+    font-size: 10px;
+    margin-bottom: 0px;
+}
+.TitleH1 {
+    word-spacing: 3px;
+    line-height: 40px;
+}
+.textNews {
+    height: 100%;
+    width: 100%;
+    line-height: 30px;
+}
+.NewsSummary {
+    font-size: 11px;
+}
 @media (min-width: 320px) and (max-width: 480px) {
     .imgNews {
         width: 300px;
@@ -23,7 +52,7 @@
 @media (min-width: 481px) and (max-width: 768px) {
     .imgNews {
         width: 400px;
-        height: 200px;
+        height: 250px;
         object-fit: cover;
         border-radius: 15px;
     }
@@ -39,41 +68,40 @@
 @media (min-width: 769px) and (max-width: 1024px) {
     .imgNews {
         width: 309px;
-        height: 200px;
+        height: 300px;
         object-fit: cover;
         border-radius: 15px;
     }
-
-    .ad {
-        display: none
+    .VideoAdv {
+        width: 100px;
+        height: 100px;
     }
 }
 @media (min-width: 1025px) and (max-width: 1200px) {
     .imgNews {
         width: 300px;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 15px;
-    }
-
-    .ad {
-        display: none
-    }
-}
-@media (min-width: 1201px){
-    .imgNews {
-        width: 600px;
         height: 300px;
         object-fit: cover;
         border-radius: 15px;
     }
-
-    .titleNews {
-        margin-top: 50px;
+    .VideoAdv {
+        width: 150px;
+        height: 150px;
     }
 
-    .textNews {
-        height: 100%;
-        width: 100%;
+}
+@media (min-width: 1201px){
+    .imgNews {
+        width: 600px;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 15px;
+    }
+    .titleNews {
+        margin-top: 100px;
+    }
+    .VideoAdv {
+        width: 200px;
+        height: 200px;
     }
 }

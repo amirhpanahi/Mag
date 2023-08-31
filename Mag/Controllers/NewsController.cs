@@ -30,17 +30,66 @@ namespace Mag.Controllers
             };  
             return View(model);
         }
-
+        #region ShowNews
         [HttpGet]
         [Route("News/{slug}")]
         public IActionResult Show(string slug) 
         {
-            var model = new NewsListDto
+            var model = new NewsCardDto
             {
                 Slug = slug
             };
             return View(model);
         }
+        [HttpPost]
+        [Route("News/{slug}")]
+        public async Task<IActionResult> Show(NewsCardDto model)
+        {
+            var findNews = _DbContext.News.FirstOrDefault(p => p.Slug == model.Slug);
+            if (model.CommentText == null || model.CommentText.Trim().Length == 0)
+            {
+                ModelState.AddModelError("CommentText","لطفا مقدار خالی وارد ننمایید");
+                var CardsModel = new NewsCardDto
+                {
+                    Slug = model.Slug
+                };
+                return View(CardsModel);
+            }
+            if (model.CommentText.Trim().Length > 1000)
+            {
+                ModelState.AddModelError("CommentText", "اندازه بیشتر از 1000 کاراکتر است");
+                var CardsModel = new NewsCardDto
+                {
+                    Slug = model.Slug
+                };
+                return View(CardsModel);
+            }
+
+            if (ModelState.IsValid)
+            {
+                var NewComment = new Comment
+                {
+                    UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                    NewsId = findNews.Id,
+                    CommentText = model.CommentText,
+                    RegisterDate = DateTime.Now,
+                    RegisterDatePersian = Utility.ConvertToPersian(DateTime.Now),
+                    ParentId = 0,
+                    Status = Comment.StatusName.WaitingForConfirm
+                };
+
+                await _DbContext.Comments.AddAsync(NewComment);
+                await _DbContext.SaveChangesAsync();
+                return Redirect($"/News/{model.Slug}");
+            }
+
+            var Cards = new NewsCardDto
+            {
+                Slug = model.Slug
+            };
+            return View(Cards);
+        }
+        #endregion
 
         #region Category
         [HttpGet]
@@ -57,6 +106,7 @@ namespace Mag.Controllers
 
         #region Add
         [HttpGet]
+        [Route("User/News/Add")]
         public IActionResult Add()
         {
             var categories = new List<SelectListItem>(
@@ -81,13 +131,14 @@ namespace Mag.Controllers
                 Tags = Tags
             });
         }
+        [Route("User/News/Add")]
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 111148393)]//110
         public async Task<IActionResult> Add(NewsAddDto model, string? Draft, string? Publish)
         {
             if (model == null)
             {
-                return Redirect("/News/Add");
+                return Redirect("/User/News/Add");
             }
 
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -180,18 +231,22 @@ namespace Mag.Controllers
                     IsActive = model.IsActive,
                     Status = Publish == "Publish" ? StatusName.WaitingForConfirm : StatusName.Draft,
                     CountSeeNews = model.CountSeeNews,
+                    NewsSummary = model.NewsSummary,
                 };
 
                 await _DbContext.News.AddAsync(NewNews);
                 await _DbContext.SaveChangesAsync();
 
-                return RedirectToAction("Index", "News");
+                return RedirectToAction("Index", "Profile");
             }
             return View(model);
         }
         #endregion
 
+
         #region Edit
+        [HttpGet]
+        [Route("User/NewsEdit/{id}")]
         public IActionResult Edit(int id)
         {
 
@@ -263,11 +318,13 @@ namespace Mag.Controllers
                 DescriptionHtmlEditor = FindNews.DescriptionHtmlEditor,
                 IndexImageAlt = FindNews.IndexImageAddressAlt,
                 IndexImageTitle = FindNews.IndexImageAddressTitle,
+                NewsSummary = FindNews.NewsSummary == null ? " " : FindNews.NewsSummary
             };
             return View(EditNews);
         }
 
         [HttpPost]
+        [Route("User/NewsEdit")]
         [RequestFormLimits(MultipartBodyLengthLimit = 111148393)]//110
         public async Task<IActionResult> Edit(NewsEditDto model, string? Draft, string? Publish)
         {
@@ -281,12 +338,15 @@ namespace Mag.Controllers
             var TagsId = new StringBuilder();
             var CategoriesId = new StringBuilder();
 
-            if (model.TagId != null && model.CategoryId != null)
+            if (model.TagId != null )
             {
                 foreach (var item in model.TagId)
                 {
                     TagsId.Append($"{item},");
                 }
+            }
+            if (model.CategoryId != null)
+            {
                 foreach (var item in model.CategoryId)
                 {
                     CategoriesId.Append($"{item},");
@@ -362,6 +422,7 @@ namespace Mag.Controllers
                 NewsFind.IsActive = model.IsActive;
                 NewsFind.Status = Publish == "Publish" ? StatusName.WaitingForConfirm : StatusName.Draft;
                 NewsFind.CountSeeNews = model.CountSeeNews;
+                NewsFind.NewsSummary = model.NewsSummary;
 
                 _DbContext.Entry(NewsFind).State = EntityState.Modified;
                 await _DbContext.SaveChangesAsync();

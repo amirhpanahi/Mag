@@ -1,6 +1,6 @@
 ﻿@model List<Mag.Areas.Admin.Models.Dto.Comment.CommentListDto>
 @{
-    ViewData["Title"] = "کامنت های منتشر شده";
+    ViewData["Title"] = "کامنت های رد شده";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <br>
@@ -16,7 +16,7 @@
             </div>
         </h3>
         <div class="card-toolbar">
-            لیست نظرات منتشر شده
+            لیست نظرات رد شده
         </div>
     </div>
     <div class="card-body">
@@ -56,7 +56,6 @@
                                 @Html.DisplayFor(modelItem => item.RegisterDatePersian)
                             </td>
                             <td width="140px">
-                                <a href="/Admin/Comment/Edit/@item.Id" class="badge badge-success mb-1 py-4" style="width:67px;height:20px;justify-content: center;">ویرایش</a>
                                 <a href="/Admin/Comment/Details/@item.Id" class="badge badge-info  mb-1 py-4" style="width:67px;height:20px;justify-content: center;">جزییات</a>
                             </td>
                         </tr>

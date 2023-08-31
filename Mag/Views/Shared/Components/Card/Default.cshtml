@@ -4,32 +4,42 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-5 titleNews">
-            <p>
-                فناوری ایران
-            </p>
-            <h1>
-                گزارش یکتانت: ۸۰ درصد کاربران ایرانی از فیلترشکن استفاده می‌کنند
+            @if (Model.ParentCategory == "سایر")
+            {
+                <p class="CategoryLink">@Model.ParentCategory</p>
+            }
+            else
+            {
+                <p><a href="/News/Category/@Model.ParentCategory" class="CategoryLink">@Model.ParentCategory</a> </p>
+            }
+            <h1 class="TitleH1">
+                @Model.Title
             </h1>
-            <p>
-                گزارش ۱۴۰۱ یکتانت نشان می‌دهد میزان بازدیدها از تبلیغات آنلاین در پلتفرم‌های فیلترشده و سایت‌های ایرانی در روزهای اوج اختلالات اینترنت، کاهش شدیدی داشته است.
+            <p class="NewsSummary">
+                @Model.NewsSummary
             </p>
-            <div class="d-flex align-items-center">
-                <div class="symbol symbol-35px symbol-circle"  aria-label="میلاد مرادی">
-                    <img alt="Pic" src="~/@Model.UserImage">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                    <div class="symbol symbol-35px symbol-circle">
+                        <img alt="Pic" src="~/@Model.UserImage">
+                    </div>
+                    <p class="Detalis">
+                        نوشته شده توسط @Model.UserFullName | @Model.PublishNewsDatePersianDay @Model.PublishNewsDatePersianmonth @Model.PublishNewsDatePersianYear | @Model.PublishNewsDatePersianTime
+                    </p>
                 </div>
-                <p class="Detalis">
-                    نوشته شده توسط @Model.UserFullName | @Model.PublishNewsDatePersianDay @Model.PublishNewsDatePersianmonth @Model.PublishNewsDatePersianYear | @Model.PublishNewsDatePersianTime
-                </p>
+                <div class="d-flex align-items-center">
+                    <a href="#"><i class="fa-regular fa-heart text-danger"></i></a>
+                </div>
             </div>
         </div>
-        <div class="col-md-7 ShowNews">
+        <div class="col-md-7 ShowNews text-center">
             <img src="~/@Model.IndexImageAddress" class="imgNews" />
         </div>
     </div>
-    <div class="row mt-5">
+    <div class="row mt-5 ">
         <div class="col-md-7">
             @if (Model.DescriptionHtmlEditor != null)
-            {
+            {   
                 <div class="textNews">
                     @Html.Raw(Model.DescriptionHtmlEditor)
                 </div>
@@ -40,11 +50,99 @@
                 </div>
             }
         </div>
-        <div class="col-md-3 ad">
+        <div class="col-md-2 ad">
             <div class="row">
-                <div class="col-md-12" style="background-color:aqua;height:500px">
+                <div class="col-md-12">
+                    <video src="~/assets/media/Home/a1.webm" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
                 </div>
-                <div class="col-md-12" style="background-color:brown;height:500px">
+                <div class="col-md-12">
+                    <video src="~/assets/media/Home/a3.webm" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                </div>
+                <div class="col-md-12">
+                    <video src="~/assets/media/Home/a2.webm" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                </div>
+                <div class="col-md-12">
+                    <video src="~/assets/media/Home/a4.webm" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                </div>
+                <div class="col-md-12">
+                    <video src="~/assets/media/Home/a2.webm" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-2 ad">
+        </div>
+
+        <div class="col-md-1 ad">
+        </div>
+    </div>
+    <div class="row mt-5  d-flex justify-content-center">
+        <div class="col-md-7 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">دیدگاه های موجود</h3>
+                    <div class="card-toolbar">
+                    </div>
+                </div>
+                <div class="card-body card-scroll h-400px">
+                    @if (Model.Comments.Count == 0)
+                    {
+                        <p>دیدگاهی موجود نیست</p>
+                    }
+                    else
+                    {
+                        foreach (var item in Model.Comments)
+                        {
+                            <div class="CommentsInNews">
+                                <p class="CommentsInNewsText">@item.CommentText</p>
+                                <hr />
+                                <div class="d-flex justify-content-between">
+                                    <p class="CommentsInNewsDtl">@item.UserId</p>
+                                    <p class="CommentsInNewsDtl">@item.RegisterDatePersian</p>
+                                </div>
+                            </div>
+
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 mb-3">
+            <div class="card shadow-sm pb-5">
+                <div class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible">
+                    <h3 class="card-title">ارسال دیدگاه</h3>
+                    <div class="card-toolbar rotate-180">
+                        <i class="ki-duotone ki-down fs-1"></i>
+                    </div>
+                </div>
+                <div id="kt_docs_card_collapsible" class="collapse show">
+                    <div class="card-body">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form action="/News/@Model.Slug" method="post">
+                                <input type="hidden" asp-for="Id" name="Id" />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group pb-4">
+                                            <label asp-for="CommentText" class="control-label pb-1" style="font-size:16px">متن دیدگاه</label>
+                                            <textarea asp-for="CommentText" class="form-control" style="height:230px" id="textInput" oninput="updateCharacterCount()"></textarea>
+                                            <span asp-validation-for="CommentText" class="text-danger"></span>
+                                            <label id="charCountLabel">0 / 1000</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-md-12 d-flex justify-content-center">
+                                        <button name="Publish" value="Publish" class="btn btn-success mx-1" id="SubmitBtn">ثبت دیدگاه</button>
+                                    </div>
+                                </div>
+                            </form>
+                        }
+                        else
+                        {
+                            <h5 class="text-danger text-center font-weight-bolder">لطفا وارد شوید</h5>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

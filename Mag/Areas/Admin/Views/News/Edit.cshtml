@@ -52,6 +52,15 @@
                         </div>
                     </div>
                     <div class="row mb-5">
+                        <div class="col-md-12">
+                            <div class="form-group pb-4">
+                                <label asp-for="NewsSummary" class="control-label pb-1" style="font-size:16px">خلاصه خبر</label>
+                                <textarea asp-for="NewsSummary" class="form-control"></textarea>
+                                <span asp-validation-for="NewsSummary" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
                         <div class="col-md-6">
                             <div class="form-group pb-4">
                                 <label asp-for="DescriptionSeo" class="control-label pb-1" style="font-size:16px">توضیحات سئو</label>

@@ -4,6 +4,7 @@ using Mag.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mag.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230830143905_DeleteFiledIsActiveAndIsDeleteInCommentTbl")]
+    partial class DeleteFiledIsActiveAndIsDeleteInCommentTbl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,9 +167,6 @@ namespace Mag.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("KeyWords")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NewsSummary")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("PublishNewsDate")

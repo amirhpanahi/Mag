@@ -1,12 +1,7 @@
-﻿@using Mag.Common
-@model IEnumerable<Mag.Areas.Admin.Models.Dto.News.NewsListDto>
+﻿@model List<Mag.Areas.Admin.Models.Dto.Comment.CommentListDto>
 @{
-    ViewData["Title"] = "اخبار در انتظار تایید";
+    ViewData["Title"] = "کامنت های در انتظار تایید";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    var Colors = new string[]
-                                    {
-                "warning","primary","info","success","danger","dark"
-                                    };
 }
 <br>
 <div class="card shadow-sm">
@@ -17,11 +12,11 @@
                     <span class="path1"></span>
                     <span class="path2"></span>
                 </i>
-                <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="جستجو خبر">
+                <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="جستجو تگ">
             </div>
         </h3>
         <div class="card-toolbar">
-            لیست اخبار در انتظار تایید
+            لیست نظرات در انتظار تایید
         </div>
     </div>
     <div class="card-body">
@@ -30,25 +25,16 @@
                 <thead class="thead-light">
                     <tr>
                         <th style="vertical-align: middle;text-align: center;">
-                            عنوان خبر
+                            نام خبر
                         </th>
                         <th style="vertical-align: middle;text-align: center;">
-                            لینک (نامک)
+                            نام نویسنده
                         </th>
                         <th style="vertical-align: middle;text-align: center;">
-                            تصویر شاخص
+                            متن کامنت
                         </th>
                         <th style="vertical-align: middle;text-align: center;">
-                            نویسنده خبر
-                        </th>
-                        <th style="vertical-align: middle;text-align: center;">
-                            دسته بندی ها
-                        </th>
-                        <th style="vertical-align: middle;text-align: center;">
-                            فعال بودن
-                        </th>
-                        <th style="vertical-align: middle;text-align: center;">
-                            وضیعیت
+                            تاریخ ثبت فارسی
                         </th>
                         <th></th>
                     </tr>
@@ -62,45 +48,22 @@
                     {
                         <tr>
                             <td style="vertical-align: middle;text-align: center;">
-                                @item.Title
+                                @Html.DisplayFor(modelItem => item.NewsId)
                             </td>
                             <td style="vertical-align: middle;text-align: center;">
-                                @Html.DisplayFor(modelItem => item.Slug)
+                                @Html.DisplayFor(modelItem => item.UserId)
                             </td>
                             <td style="vertical-align: middle;text-align: center;">
-                                @if (item.IndexImageAddress != null)
-                                {
-                                    <div class="symbol symbol-50px">
-                                        <img src=~/@item.IndexImageAddress alt="@item.IndexImageAddressAlt" title="@item.IndexImageAddressTitle" />
-                                    </div>
-                                }
-                                else
-                                {
-                                    string fName = item.Title.Substring(0, 1);
-                                    var sum = Utility.CalculateAsciiSum(item.Title);
-                                    var Color = Convert.ToInt32(Math.Ceiling((double)sum % 6));
-                                    <div class="symbol symbol-50px">
-                                        <div class="symbol-label fs-2 fw-semibold bg-@Colors[Color] text-inverse-@Colors[Color]">@fName</div>
-                                    </div>
-                                }
+                                @Html.DisplayFor(modelItem => item.CommentText)
                             </td>
                             <td style="vertical-align: middle;text-align: center;">
-                                @Html.DisplayFor(modelItem => item.WriterId)
-                            </td>
-                            <td style="vertical-align: middle;text-align: center;">
-                                @Html.DisplayFor(modelItem => item.Categories)
-                            </td>
-                            <td style="vertical-align: middle;text-align: center;">
-                                <input asp-for="@item.IsActive" class="form-check-input " type="checkbox" disabled style="border-color:gray;" />
-                            </td>
-                            <td style="vertical-align: middle;text-align: center;">
-                                @Html.DisplayFor(modelItem => item.Status)
+                                @Html.DisplayFor(modelItem => item.RegisterDatePersian)
                             </td>
                             <td width="140px">
                                 <div class="col-sm-6">
-                                    <a href="/Admin/News/Details/@item.Id" class="badge badge-info mb-1 py-4" style="width:67px;height:20px;justify-content: center;">جزییات</a>
+                                    <a href="/Admin/Comment/Details/@item.Id" class="badge badge-info mb-1 py-4" style="width:67px;height:20px;justify-content: center;">جزییات</a>
                                  <div class="form-group d-flex justify-content-center">
-                                        <a href="/Admin/News/ConfirmByAdmin/@item.Id" class="badge badge-success  mb-1 py-4" style="width:67px;height:20px;justify-content: center;" data-bs-toggle="modal" data-bs-target="#kt_modal_@counter1">تایید خبر</a>
+                                        <a  class="badge badge-success  mb-1 py-4" style="width:67px;height:20px;justify-content: center;" data-bs-toggle="modal" data-bs-target="#kt_modal_@counter1">تایید نطر</a>
                                         <!--begin::modal-->
                                     <div class="modal fade" tabindex="-1" id="kt_modal_@counter1">
                                             <div class="modal-dialog">
@@ -116,12 +79,12 @@
                                                 </div>
 
                                                     <div class="modal-body">
-                                                        <p>میخواهید این خبر را تایید کنید؟</p>
+                                                        <p>میخواهید این نظر را تایید کنید؟</p>
                                                     </div>
 
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
-                                                        <a href="/Admin/News/ConfirmByAdmin/@item.Id" class="btn btn-success">تایید خبر</a>
+                                                        <a href="/Admin/Comment/ConfirmByAdmin/@item.Id" class="btn btn-success">تایید خبر</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -129,13 +92,13 @@
                                         <!--end::modal-->
                                 </div>
                                 <div class="form-group d-flex justify-content-center">
-                                        <a href="/Admin/News/RejectedByAdmin/@item.Id" class="badge badge-danger py-4" style="width:67px;height:20px;justify-content: center;" data-bs-toggle="modal" data-bs-target="#kt_modal_@counter2">رد خبر</a>
+                                        <a class="badge badge-danger py-4" style="width:67px;height:20px;justify-content: center;" data-bs-toggle="modal" data-bs-target="#kt_modal_@counter2">رد خبر</a>
                                         <!--begin::modal-->
                                     <div class="modal fade" tabindex="-1" id="kt_modal_@counter2">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h3 class="modal-title">رد خبر</h3>
+                                                        <h3 class="modal-title">رد نظر</h3>
 
                                                         <!--begin::Close-->
                                                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -145,12 +108,12 @@
                                                 </div>
 
                                                     <div class="modal-body">
-                                                        <p>میخواهید این خبر را رد کنید؟</p>
+                                                        <p>میخواهید این نظر را رد کنید؟</p>
                                                     </div>
 
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
-                                                        <a href="/Admin/News/RejectedByAdmin/@item.Id" class="btn btn-danger">رد خبر</a>
+                                                        <a href="/Admin/Comment/RejectedByAdmin/@item.Id" class="btn btn-danger">رد خبر</a>
                                                     </div>
                                                 </div>
                                             </div>

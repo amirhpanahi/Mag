@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Mag.ViewComponents
 {
-    public class CardsforEachCategoryViewComponent : ViewComponent
+    public class CardsforEachCategoryViewComponent : ViewComponent 
     {
         private readonly DataBaseContext _dbContext;
         public CardsforEachCategoryViewComponent(DataBaseContext dataBaseContext)
@@ -28,7 +28,8 @@ namespace Mag.ViewComponents
                     IndexImageAddressAlt = p.IndexImageAddressAlt,
                     IndexImageAddressTitle = p.IndexImageAddressTitle,
                     PublishNewsDatePersianDay = getDay(p.PublishNewsDatePersian),
-                    PublishNewsDatePersianmonth = getmonth(p.PublishNewsDatePersian)
+                    PublishNewsDatePersianmonth = getmonth(p.PublishNewsDatePersian),
+                    NewsSummary = p.NewsSummary == null ? " " : p.NewsSummary,
                 }).ToList();
             }
             else
@@ -41,7 +42,8 @@ namespace Mag.ViewComponents
                     IndexImageAddressAlt = p.IndexImageAddressAlt,
                     IndexImageAddressTitle = p.IndexImageAddressTitle,
                     PublishNewsDatePersianDay = getDay(p.PublishNewsDatePersian),
-                    PublishNewsDatePersianmonth = getmonth(p.PublishNewsDatePersian)
+                    PublishNewsDatePersianmonth = getmonth(p.PublishNewsDatePersian),
+                    NewsSummary = p.NewsSummary == null ? " " : p.NewsSummary,
                 }).ToList();
             }
             return View(listnews);

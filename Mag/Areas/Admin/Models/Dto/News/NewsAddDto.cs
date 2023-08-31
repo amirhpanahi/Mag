@@ -5,6 +5,7 @@ namespace Mag.Areas.Admin.Models.Dto.News
 {
     public class NewsAddDto
     {
+        public string NewsSummary { get; set; }
         public string Title { get; set; }
         public string? Slug { get; set; }
         public string? DescriptionHtmlEditor { get; set; }

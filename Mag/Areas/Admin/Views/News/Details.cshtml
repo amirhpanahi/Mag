@@ -122,6 +122,24 @@
         <div class="row mb-5 d-flex justify-content-center">
             <div class="col-md-10">
                 <div class="form-group pb-4">
+                    <label asp-for="NewsSummary" class="control-label pb-1" style="font-size:16px">خلاصه خبر</label>
+                    @if (Model.NewsSummary != null)
+                    {
+                        <div style="border-radius: 16px;border: 1px solid #ccc!important;padding: 15px 15px;min-height:100px">
+                        @Html.Raw(Model.NewsSummary)
+                        </div>
+                    }
+                    else{
+                        <div style="border-radius: 16px;border: 1px solid #ccc!important;padding: 15px 15px;min-height:100px">
+                        </div>
+                    }
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5 d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="form-group pb-4">
                     <label asp-for="DescriptionHtmlEditor" class="control-label pb-1" style="font-size:16px">توضیحات(Html Editor)</label>
                     @if (Model.DescriptionHtmlEditor != null)
                     {
