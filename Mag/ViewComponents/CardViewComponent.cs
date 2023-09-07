@@ -47,6 +47,7 @@ namespace Mag.ViewComponents
 
             var news = new NewsCardDto
             {
+                Id = FindNews.Id,
                 Title = FindNews.Title,
                 Slug = FindNews.Slug,
                 ParentCategory = pcName == null ? "سایر" : pcName.Name,

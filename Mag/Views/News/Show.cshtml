@@ -49,6 +49,7 @@
             });
         }
         function NoneOwnSelf() {
+            const NewsId = @Model.Id;
             // console.log("like")
             // $.post("Like/News", { "NewsId": 2 }, function (data) {
             //     alert("success");
@@ -58,7 +59,7 @@
             $.ajax({
                 type: "POST",
                 url: "Like/News",
-                data: { "NewsId": @Model.Id , "CountOfLike": CountOfLike },
+                data: { "NewsId": NewsId, "CountOfLike": CountOfLike },
                 success: function (response) {
                     var separatedValues = response.split(',');
                     const likebtn = document.getElementById('LikeHeart');
@@ -70,6 +71,46 @@
                     alert(response.responseText);
                 },
                 error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+        function SubmitComment() {
+            const NewsId = @Model.Id;
+
+            const IdCommentWriter = document.getElementById('IdCommentWriter');
+            const IdCommentWriterValue = IdCommentWriter.value;
+
+            const textInput = document.getElementById('textInput');
+            const textInputValue = textInput.value;
+            console.log(textInputValue)
+
+            $.ajax({
+                type:"POST",
+                url:"api/submitComment",
+                data: { "IdCommentWriter": IdCommentWriterValue, "TextComment": textInputValue, "NewsId": NewsId },
+                success: function (response) {
+                    if (response != "error") {
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            confirmButtonText: "تایید",
+                        })
+                        textInput.value = "";
+                    }
+                    else {
+                        Swal.fire({
+                            title: 'دیدگاه شما ثبت نشد،فرمت وارد شده صحیح نیست',
+                            icon: 'warning',
+                            confirmButtonText: "تایید",
+                        })
+                    }
+                    
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                eror: function (response) {
                     alert(response.responseText);
                 }
             });

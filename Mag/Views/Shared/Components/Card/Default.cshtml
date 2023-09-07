@@ -27,8 +27,8 @@
                         نوشته شده توسط @Model.UserFullName | @Model.PublishNewsDatePersianDay @Model.PublishNewsDatePersianmonth @Model.PublishNewsDatePersianYear | @Model.PublishNewsDatePersianTime
                     </p>
                 </div>
-                <div class="d-flex align-items-center">
-                    @if (!User.Identity.IsAuthenticated)  
+                <div class="d-flex align-items-center LikeColection">
+                    @if (!User.Identity.IsAuthenticated)
                     {
                         <div class="d-flex align-items-center">
                             <span id="NumberOfLike">@Model.CountOfLike</span>
@@ -37,7 +37,7 @@
                     }
                     else
                     {
-                        if (Model.LikeStatus == "" || Model.LikeStatus=="None") 
+                        if (Model.LikeStatus == "" || Model.LikeStatus == "None")
                         {
                             <div class="d-flex align-items-center">
                                 <span id="NumberOfLike">@Model.CountOfLike</span>
@@ -94,7 +94,7 @@
                 }
             </div>
         </div>
-        <div class="col-md-2 ad">
+        <div class="col-md-2 ad-gif">
             <div class="row">
                 <div class="col-md-12">
                     <video src="~/assets/media/Home/a1.webm" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
@@ -114,7 +114,7 @@
 
             </div>
         </div>
-        <div class="col-md-3 ad">
+        <div class="col-md-3 NewaRelational">
             @await Component.InvokeAsync("TenNewNews")
             @await Component.InvokeAsync("TenNewNewsCategory",new { PId = Model.ParentCategoryId })
         </div>
@@ -162,24 +162,22 @@
                     <div class="card-body">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <form action="/News/@Model.Slug" method="post">
-                                <input type="hidden" asp-for="Id" name="Id" />
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group pb-4">
-                                            <label asp-for="CommentText" class="control-label pb-1" style="font-size:16px">متن دیدگاه</label>
-                                            <textarea asp-for="CommentText" class="form-control" style="height:230px" id="textInput" oninput="updateCharacterCount()"></textarea>
-                                            <span asp-validation-for="CommentText" class="text-danger"></span>
-                                            <label id="charCountLabel">0 / 1000</label>
-                                        </div>
+                            <input type="hidden" value="@ViewBag.userIdVisitor" id="IdCommentWriter"  />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group pb-4">
+                                        <label asp-for="CommentText" class="control-label pb-1" style="font-size:16px">متن دیدگاه</label>
+                                        <textarea asp-for="CommentText" class="form-control" style="height:230px" id="textInput" oninput="updateCharacterCount()"></textarea>
+                                        <span asp-validation-for="CommentText" class="text-danger"></span>
+                                        <label id="charCountLabel">0 / 1000</label>
                                     </div>
                                 </div>
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-md-12 d-flex justify-content-center">
-                                        <button type="submit" class="btn btn-success mx-1">ثبت دیدگاه</button>
-                                    </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-12 d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-success mx-1" onclick="SubmitComment()">ثبت دیدگاه</button>
                                 </div>
-                            </form>
+                            </div>
                         }
                         else
                         {

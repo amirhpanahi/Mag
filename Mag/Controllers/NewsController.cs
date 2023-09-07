@@ -31,6 +31,7 @@ namespace Mag.Controllers
             };
             return View(model);
         }
+
         #region ShowNews
         [HttpGet]
         [Route("News/{slug}")]
@@ -50,28 +51,20 @@ namespace Mag.Controllers
             };
             return View(model);
         }
+        #endregion
+
         [HttpPost]
-        [Route("News/{slug}")]
-        public async Task<IActionResult> Show(NewsCardDto model)
+        [Route("api/submitComment")]
+        public async Task<string> SubmitComment(string IdCommentWriter,string TextComment,int NewsId)
         {
-            var findNews = _DbContext.News.FirstOrDefault(p => p.Slug == model.Slug);
-            if (model.CommentText == null || model.CommentText.Trim().Length == 0)
+            var findNews = _DbContext.News.FirstOrDefault(p => p.Id == NewsId);
+            if (TextComment == null || TextComment.Trim().Length == 0)
             {
-                ModelState.AddModelError("CommentText", "لطفا مقدار خالی وارد ننمایید");
-                var CardsModel = new NewsCardDto
-                {
-                    Slug = model.Slug
-                };
-                return View(CardsModel);
+                return "error";
             }
-            if (model.CommentText.Trim().Length > 1000)
+            if (TextComment.Length > 1000)
             {
-                ModelState.AddModelError("CommentText", "اندازه بیشتر از 1000 کاراکتر است");
-                var CardsModel = new NewsCardDto
-                {
-                    Slug = model.Slug
-                };
-                return View(CardsModel);
+                return "error";
             }
 
             if (ModelState.IsValid)
@@ -80,25 +73,19 @@ namespace Mag.Controllers
                 {
                     UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
                     NewsId = findNews.Id,
-                    CommentText = model.CommentText,
+                    CommentText = TextComment,
                     RegisterDate = DateTime.Now,
                     RegisterDatePersian = Utility.ConvertToPersian(DateTime.Now),
                     ParentId = 0,
                     Status = Comment.StatusName.WaitingForConfirm
                 };
-
                 await _DbContext.Comments.AddAsync(NewComment);
                 await _DbContext.SaveChangesAsync();
-                return Redirect($"/News/{model.Slug}");
+                return "دیدگاه شما ثبت شد لطفا منتظر تایید آن بمانید";
             }
-
-            var Cards = new NewsCardDto
-            {
-                Slug = model.Slug
-            };
-            return View(Cards);
+            return "UnKnow";
         }
-        #endregion
+        
 
         #region Category
         [HttpGet]
