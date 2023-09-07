@@ -8,7 +8,7 @@
     </div>
     <div class="col-md-10">
         <div class="row">
-            @await Component.InvokeAsync("Card",new { Slug = @Model.Slug })
+            @await Component.InvokeAsync("Card",new { Slug = @Model.Slug ,UserIdVisitor=ViewBag.userIdVisitor})
         </div>
     </div>
     <div class="col-md-1">
@@ -28,13 +28,17 @@
             //     alert("success");
             //     alert(data);
             // });
+            var CountOfLike = document.getElementById('NumberOfLike').innerHTML
             $.ajax({
                 type: "POST",
                 url: "Like/News",
-                data: { "NewsId": @Model.Id },
+                data: { "NewsId": @Model.Id, "CountOfLike": CountOfLike },
                 success: function (response) {
+                    var separatedValues = response.split(',');
                     const likebtn = document.getElementById('LikeHeart');
-                    likebtn.classList = response;
+                    likebtn.classList = separatedValues[0];
+                    const NumberOfLikeSPN = document.getElementById('NumberOfLike');
+                    NumberOfLikeSPN.innerHTML = separatedValues[1];
                 },
                 failure: function (response) {
                     alert(response.responseText);
@@ -50,13 +54,17 @@
             //     alert("success");
             //     alert(data);
             // });
+            var CountOfLike = document.getElementById('NumberOfLike').innerHTML
             $.ajax({
                 type: "POST",
                 url: "Like/News",
-                data: { "NewsId": @Model.Id },
+                data: { "NewsId": @Model.Id , "CountOfLike": CountOfLike },
                 success: function (response) {
+                    var separatedValues = response.split(',');
                     const likebtn = document.getElementById('LikeHeart');
-                    likebtn.classList = response;
+                    likebtn.classList = separatedValues[0];
+                    const NumberOfLikeSPN = document.getElementById('NumberOfLike');
+                    NumberOfLikeSPN.innerHTML = separatedValues[1];
                 },
                 failure: function (response) {
                     alert(response.responseText);

@@ -6,6 +6,7 @@ using Mag.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Text;
 
 namespace Mag.ViewComponents
@@ -19,13 +20,17 @@ namespace Mag.ViewComponents
             _dbContext = dataBaseContext;
             _userManager = userManager;
         }
-        public async Task<IViewComponentResult> InvokeAsync(string slug)
+        public async Task<IViewComponentResult> InvokeAsync(string slug,string UserIdVisitor)
         {
             var FindNews =await _dbContext.News.FirstOrDefaultAsync(p => p.Slug == slug);
             var FindUser = await _userManager.FindByIdAsync(FindNews.WriterId);
             var ParentIdCategories = _dbContext.CategoryTags.Where(x => x.Type == "Category" && x.ParentId == 1 && x.Id != 1).Select(p => p.Id).ToList();
             var pcName =await _dbContext.CategoryTags.FirstOrDefaultAsync(p => p.Id == GetParentIdCategory(FindNews.Categories, ParentIdCategories));
-            var Like = await _dbContext.Likes.FirstOrDefaultAsync(p => p.NewsId == FindNews.Id && p.UserId == FindUser.Id);
+
+            var Like = new Like();
+            if (UserIdVisitor != null)
+                 Like = await _dbContext.Likes.FirstOrDefaultAsync(p => p.NewsId == FindNews.Id && p.UserId == UserIdVisitor);
+
             var NumberOfLike = await _dbContext.Likes.Where(p=>p.NewsId == FindNews.Id && p.StatusLike==StatusLike.Like).CountAsync();
 
             var ListComments = _dbContext.Comments.Where(p => p.Status == Comment.StatusName.Publish && p.NewsId == FindNews.Id).Select(p => new CommentListDto

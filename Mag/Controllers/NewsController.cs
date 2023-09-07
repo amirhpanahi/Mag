@@ -16,7 +16,7 @@ namespace Mag.Controllers
     {
         private readonly DataBaseContext _DbContext;
         private readonly IFileUploadService _fileUpload;
-        public NewsController(DataBaseContext dataBaseContext,IFileUploadService fileUploadService)
+        public NewsController(DataBaseContext dataBaseContext, IFileUploadService fileUploadService)
         {
             _DbContext = dataBaseContext;
             _fileUpload = fileUploadService;
@@ -28,19 +28,25 @@ namespace Mag.Controllers
             var model = new NewsListDto
             {
                 Slug = slug
-            };  
+            };
             return View(model);
         }
         #region ShowNews
         [HttpGet]
         [Route("News/{slug}")]
-        public async Task<IActionResult> Show(string slug) 
+        public async Task<IActionResult> Show(string slug)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userIdVisitor = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                ViewBag.userIdVisitor=userIdVisitor;
+            }
             var findNews = await _DbContext.News.FirstOrDefaultAsync(x => x.Slug == slug);
             var model = new NewsCardDto
             {
                 Id = findNews.Id,
-                Slug = slug
+                Slug = slug,
+                CountOfLike = await _DbContext.Likes.Where(p => p.NewsId == findNews.Id && p.StatusLike == StatusLike.Like).CountAsync()
             };
             return View(model);
         }
@@ -51,7 +57,7 @@ namespace Mag.Controllers
             var findNews = _DbContext.News.FirstOrDefault(p => p.Slug == model.Slug);
             if (model.CommentText == null || model.CommentText.Trim().Length == 0)
             {
-                ModelState.AddModelError("CommentText","لطفا مقدار خالی وارد ننمایید");
+                ModelState.AddModelError("CommentText", "لطفا مقدار خالی وارد ننمایید");
                 var CardsModel = new NewsCardDto
                 {
                     Slug = model.Slug
@@ -96,7 +102,7 @@ namespace Mag.Controllers
 
         #region Category
         [HttpGet]
-        [Route("News/Category/{slug}")] 
+        [Route("News/Category/{slug}")]
         public IActionResult Category(string slug)
         {
             var model = new NewsListDto
@@ -345,7 +351,7 @@ namespace Mag.Controllers
             var TagsId = new StringBuilder();
             var CategoriesId = new StringBuilder();
 
-            if (model.TagId != null )
+            if (model.TagId != null)
             {
                 TagsId.Append(",");
                 foreach (var item in model.TagId)
@@ -445,10 +451,10 @@ namespace Mag.Controllers
         #region LikeNewsAjax
         [HttpPost]
         [Route("Like/News")]
-        public async Task<string> LikeNews(int NewsId)
+        public async Task<string> LikeNews(int NewsId,int CountOfLike)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var FindLike =await _DbContext.Likes.FirstOrDefaultAsync(p => p.NewsId == NewsId && p.UserId == userId);
+            var FindLike = await _DbContext.Likes.FirstOrDefaultAsync(p => p.NewsId == NewsId && p.UserId == userId);
 
             if (FindLike != null)
             {
@@ -457,14 +463,14 @@ namespace Mag.Controllers
                     FindLike.StatusLike = StatusLike.None;
                     _DbContext.Entry(FindLike).State = EntityState.Modified;
                     await _DbContext.SaveChangesAsync();
-                    return "fa-regular fa-heart text-danger";
+                    return $"fa-regular fa-heart text-danger,{CountOfLike-=1}";
                 }
                 else
                 {
                     FindLike.StatusLike = StatusLike.Like;
                     _DbContext.Entry(FindLike).State = EntityState.Modified;
                     await _DbContext.SaveChangesAsync();
-                    return "fa-solid fa-heart text-danger";
+                    return $"fa-solid fa-heart text-danger,{CountOfLike+1}";
                 }
             }
             else
@@ -477,7 +483,7 @@ namespace Mag.Controllers
                 };
                 await _DbContext.Likes.AddAsync(AddLike);
                 await _DbContext.SaveChangesAsync();
-                return "fa-solid fa-heart text-danger";
+                return $"fa-solid fa-heart text-danger,{CountOfLike+1}";
             }
         }
         #endregion
