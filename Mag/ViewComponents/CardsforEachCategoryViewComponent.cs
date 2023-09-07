@@ -20,7 +20,7 @@ namespace Mag.ViewComponents
             var listnews = new List<NewsCardDto>();
             if (slug != null && categoryfind != null)
             {
-                listnews = _dbContext.News.Where(p => p.PublishNewsDatePersian != null && p.Categories.Contains(categoryfind.Id.ToString())).Select(p => new NewsCardDto
+                listnews = _dbContext.News.Where(p => p.PublishNewsDatePersian != null && ("," + p.Categories + ",").Contains("," + categoryfind.Id + ",")).Select(p => new NewsCardDto
                 {
                     Title = p.Title,
                     Slug = p.Slug,

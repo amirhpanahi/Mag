@@ -18,11 +18,18 @@ namespace Mag.Areas.Admin.Models.Dto.News
         public string? RegisterDatePersian { get; set; }
         public string? DraftTimePersain { get; set; }
         public string? WriterId { get; set; }
+        public FullnameUser? WriterName { get; set; }
+
         public bool IsActive { get; set; }
         public StatusName? Status { get; set; }
         public int? CountSeeNews { get; set; }
         public string? IndexImageAddressAlt { get; set; }
         public string? IndexImageAddressTitle { get; set; }
-        
+        public List<string>? CategoriesName { get; set; }
+    }
+    public class FullnameUser
+    {
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
     }
 }

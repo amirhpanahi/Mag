@@ -3,6 +3,7 @@ using Mag.Common;
 using Mag.Data;
 using Mag.Models.Entities;
 using Mag.Services.FileUploadService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,16 +17,19 @@ namespace Mag.Areas.Admin.Controllers
     {
         private readonly DataBaseContext _DbContext;
         private readonly IFileUploadService _fileUpload;
-        public NewsController(DataBaseContext dataBaseContext, IFileUploadService fileUploadService)
+        private readonly UserManager<User> _userManager;
+        public NewsController(DataBaseContext dataBaseContext, IFileUploadService fileUploadService,
+            UserManager<User> userManager)
         {
             _DbContext = dataBaseContext;
             _fileUpload = fileUploadService;
+            _userManager = userManager;
         }
 
         #region Index
         public IActionResult Index()
         {
-            var ListNews = _DbContext.News.Where(p => p.Status ==StatusName.Publish).Select(p => new NewsListDto
+            var ListNews = _DbContext.News.Where(p => p.Status == StatusName.Publish).Select(p => new NewsListDto
             {
                 Id = p.Id,
                 Title = p.Title,
@@ -34,11 +38,26 @@ namespace Mag.Areas.Admin.Controllers
                 IndexImageAddressAlt = p.IndexImageAddressAlt,
                 IndexImageAddressTitle = p.IndexImageAddressTitle,
                 WriterId = p.WriterId,
+                WriterName = _DbContext.Users.Where(q => q.Id == p.WriterId).Select(q => new FullnameUser { FirstName = q.FirstName,LastName = q.LastName}).First(),
                 Categories = p.Categories,
                 IsActive = p.IsActive,
                 Status = p.Status,
             }).ToList();
+
+            List<int> Categories = new List<int>();
+            foreach (var item in ListNews)
+            {
+                if (item.Categories != "")
+                {
+                    item.Categories = item.Categories.Trim(',');
+                    var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+                    Categories.AddRange(splitcat);
+                }
+            }
+            var Cats = _DbContext.CategoryTags.Where(p => Categories.Contains(p.Id)).ToList();
+            ViewBag.Categories = Cats;
             return View(ListNews);
+
         }
         #endregion 
 
@@ -109,15 +128,20 @@ namespace Mag.Areas.Admin.Controllers
             var TagsId = new StringBuilder();
             var CategoriesId = new StringBuilder();
 
-            if (model.TagId != null && model.CategoryId != null)
+            if (model.CategoryId != null)
             {
-                foreach (var item in model.TagId)
-                {
-                    TagsId.Append($"{item},");
-                }
+                CategoriesId.Append(",");
                 foreach (var item in model.CategoryId)
                 {
                     CategoriesId.Append($"{item},");
+                }
+            }
+            if (model.TagId != null)
+            {
+                TagsId.Append(",");
+                foreach (var item in model.TagId)
+                {
+                    TagsId.Append($"{item},");
                 }
             }
 
@@ -138,7 +162,7 @@ namespace Mag.Areas.Admin.Controllers
                 if (model.indexImageFile.ContentType == "image/png" || model.indexImageFile.ContentType == "image/jpg" ||
                     model.indexImageFile.ContentType == "image/jpeg" || model.indexImageFile.ContentType == "image/gif")
                 {
-                    stringImagePath = $"Media/News/" + await _fileUpload.UploadFileAsync(model.indexImageFile, model.Title, "News");
+                    stringImagePath = $"Media/News/" + await _fileUpload.UploadFileAsync(model.indexImageFile, model.Title, "News", "Video");
                 }
                 else
                 {
@@ -186,8 +210,8 @@ namespace Mag.Areas.Admin.Controllers
                     IndexImageAddress = stringImagePath,
                     IndexImageAddressAlt = model.Title,
                     IndexImageAddressTitle = model.Title,
-                    RegisterNewsDate =  DateTime.Now,
-                    RegisterNewsDatePersian =Utility.ConvertToPersian(DateTime.Now),
+                    RegisterNewsDate = DateTime.Now,
+                    RegisterNewsDatePersian = Utility.ConvertToPersian(DateTime.Now),
                     PublishNewsDate = Publish == "Publish" ? DateTime.Now : null,
                     PublishNewsDatePersian = Publish == "Publish" ? Utility.ConvertToPersian(DateTime.Now) : null,
                     DraftNewsDate = Draft == "Draft" ? DateTime.Now : null,
@@ -196,7 +220,7 @@ namespace Mag.Areas.Admin.Controllers
                     IsActive = model.IsActive,
                     Status = Draft == null ? StatusName.Publish : StatusName.Draft,
                     CountSeeNews = model.CountSeeNews,
-                    NewsSummary = model.NewsSummary,    
+                    NewsSummary = model.NewsSummary,
                 };
 
                 await _DbContext.News.AddAsync(NewNews);
@@ -273,7 +297,7 @@ namespace Mag.Areas.Admin.Controllers
                 DescriptionHtmlEditor = FindNews.DescriptionHtmlEditor,
                 IndexImageAlt = FindNews.IndexImageAddressAlt,
                 IndexImageTitle = FindNews.IndexImageAddressTitle,
-                NewsSummary = FindNews.NewsSummary == null ? " ":FindNews.NewsSummary
+                NewsSummary = FindNews.NewsSummary == null ? " " : FindNews.NewsSummary
             };
             return View(EditNews);
         }
@@ -291,18 +315,20 @@ namespace Mag.Areas.Admin.Controllers
             var TagsId = new StringBuilder();
             var CategoriesId = new StringBuilder();
 
-            if (model.TagId != null)
-            {
-                foreach (var item in model.TagId)
-                {
-                    TagsId.Append($"{item},");
-                }
-            }
             if (model.CategoryId != null)
             {
+                CategoriesId.Append(",");
                 foreach (var item in model.CategoryId)
                 {
                     CategoriesId.Append($"{item},");
+                }
+            }
+            if (model.TagId != null)
+            {
+                TagsId.Append(",");
+                foreach (var item in model.TagId)
+                {
+                    TagsId.Append($"{item},");
                 }
             }
 
@@ -344,7 +370,7 @@ namespace Mag.Areas.Admin.Controllers
                 }
                 if (model.VideoFile.ContentType == "video/mp4" || model.VideoFile.ContentType == "video/wmv")
                 {
-                    stringVideoPath = await _fileUpload.UploadFileAsync(model.VideoFile, model.Title, "News");
+                    stringVideoPath = await _fileUpload.UploadFileAsync(model.VideoFile, model.Title, "News", "Video");
                 }
                 else
                 {
@@ -365,11 +391,11 @@ namespace Mag.Areas.Admin.Controllers
                 NewsFind.DescriptionHtmlEditor = model.DescriptionHtmlEditor;
                 NewsFind.DescriptionSeo = model.DescriptionSeo == null ? model.Title : model.DescriptionSeo;
                 NewsFind.KeyWords = model.KeyWords == null ? null : model.KeyWords;
-                NewsFind.VideoAddress = stringVideoPath;
+                NewsFind.VideoAddress = model.VideoFile == null ? NewsFind.VideoAddress : $"Media/News/video/{stringVideoPath}";
                 NewsFind.IndexImageAddress = model.indexImageFile == null ? NewsFind.IndexImageAddress : $"Media/News/{stringImagePath}";
                 NewsFind.IndexImageAddressAlt = model.IndexImageAlt == null ? model.Title : model.IndexImageAlt;
                 NewsFind.IndexImageAddressTitle = model.IndexImageTitle == null ? model.Title : model.IndexImageTitle;
-                NewsFind.PublishNewsDate = Publish == "Publish" && NewsFind.PublishNewsDate==null ? DateTime.Now : NewsFind.RegisterNewsDate;
+                NewsFind.PublishNewsDate = Publish == "Publish" && NewsFind.PublishNewsDate == null ? DateTime.Now : NewsFind.RegisterNewsDate;
                 NewsFind.PublishNewsDatePersian = Publish == "Publish" && NewsFind.PublishNewsDatePersian == null ? Utility.ConvertToPersian(DateTime.Now) : NewsFind.RegisterNewsDatePersian;
                 NewsFind.DraftNewsDate = Draft == "Draft" && NewsFind.DraftNewsDate == null ? DateTime.Now : NewsFind.DraftNewsDate;
                 NewsFind.DraftNewsDatePersian = Draft == "Draft" && NewsFind.DraftNewsDatePersian == null ? Utility.ConvertToPersian(DateTime.Now) : NewsFind.DraftNewsDatePersian;
@@ -377,7 +403,7 @@ namespace Mag.Areas.Admin.Controllers
                 NewsFind.IsActive = model.IsActive;
                 NewsFind.Status = Draft == null ? StatusName.Publish : StatusName.Draft;
                 NewsFind.CountSeeNews = model.CountSeeNews;
-                NewsFind.NewsSummary = model.NewsSummary;   
+                NewsFind.NewsSummary = model.NewsSummary;
 
                 _DbContext.Entry(NewsFind).State = EntityState.Modified;
                 await _DbContext.SaveChangesAsync();
@@ -400,7 +426,7 @@ namespace Mag.Areas.Admin.Controllers
                 {
                     Text = p.Name,
                     Value = p.Id.ToString()
-                 }).ToList());
+                }).ToList());
 
             var Tags = new List<SelectListItem>(
                 _DbContext.CategoryTags.Where(x => x.Type == "Tag").Select(p => new SelectListItem
@@ -471,14 +497,14 @@ namespace Mag.Areas.Admin.Controllers
         #endregion
 
         #region ConfirmNews
-        public async Task<IActionResult> ConfirmByAdmin(int Id) 
+        public async Task<IActionResult> ConfirmByAdmin(int Id)
         {
             var NewsFind = _DbContext.News.FirstOrDefault(p => p.Id == Id);
             if (NewsFind != null)
             {
                 NewsFind.Status = StatusName.Publish;
                 NewsFind.PublishNewsDate = DateTime.Now;
-                NewsFind.PublishNewsDatePersian = Utility.ConvertToPersian(DateTime.Now) ;
+                NewsFind.PublishNewsDatePersian = Utility.ConvertToPersian(DateTime.Now);
 
                 _DbContext.Entry(NewsFind).State = EntityState.Modified;
                 await _DbContext.SaveChangesAsync();
@@ -532,7 +558,7 @@ namespace Mag.Areas.Admin.Controllers
         public async Task<IActionResult> RejectedByAdmin(int Id)
         {
             var NewsFind = _DbContext.News.FirstOrDefault(p => p.Id == Id);
-            if (NewsFind !=null)
+            if (NewsFind != null)
             {
                 NewsFind.Status = StatusName.RejectedByAdmin;
                 NewsFind.RejecteNewsDate = DateTime.Now;
@@ -588,5 +614,15 @@ namespace Mag.Areas.Admin.Controllers
             return View(ListNews);
         }
         #endregion 
+
+        private List<string> GetCategoriesName(string Cats)
+        {
+            List<string> listCat = new List<string>();
+            var splitcat = Cats.Split(",");
+            int[] intCat = splitcat.Select(int.Parse).ToArray();
+
+            var findtag = _DbContext.CategoryTags.Where(p => intCat.Contains(p.Id)).ToList();
+            return listCat;
+        }
     }
 }

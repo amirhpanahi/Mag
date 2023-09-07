@@ -35,6 +35,7 @@
     <Folder Include="wwwroot\Media\Logo\" />
     <Folder Include="wwwroot\Media\Icon\" />
     <Folder Include="wwwroot\Media\Banners\" />
+    <Folder Include="wwwroot\Media\News\Video\" />
     <Folder Include="wwwroot\Media\Tags\" />
   </ItemGroup>
 

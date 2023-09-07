@@ -15,5 +15,6 @@ namespace Mag.Data
         public DbSet<Settings> Settings { get; set; }
         public DbSet<Banners> Banners { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Like> Likes { get; set; }
     }
 }

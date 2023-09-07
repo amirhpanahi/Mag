@@ -9,11 +9,11 @@ namespace Mag.Services.FileUploadService
         {
             _environment = environment;
         }
-        public async Task<string> UploadFileAsync(IFormFile file,string UserName,string folderName)
+        public async Task<string> UploadFileAsync(IFormFile file, string UserName, string folderName, string? SubFolderName)
         {
-            var fileName = Guid.NewGuid().ToString() + "$" + UserName +"$"+ file.FileName;
-            var FilePath = Path.Combine(_environment.ContentRootPath, @"wwwroot\Media\"+folderName, fileName);
-            var StreamFile = new FileStream(FilePath,FileMode.Create);
+            var fileName = Guid.NewGuid().ToString() + "$" + UserName + "$" + file.FileName;
+            var FilePath = Path.Combine(_environment.ContentRootPath, @"wwwroot\Media\" + folderName + (SubFolderName != null ? @"\" + SubFolderName : null), fileName);
+            var StreamFile = new FileStream(FilePath, FileMode.Create);
             await file.CopyToAsync(StreamFile);
             return fileName;
         }

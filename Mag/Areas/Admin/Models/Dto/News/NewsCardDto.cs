@@ -12,9 +12,13 @@ namespace Mag.Areas.Admin.Models.Dto.News
         public string? Slug { get; set; }
         public string? DescriptionHtmlEditor { get; set; }
         public string? DescriptionSeo { get; set; }
+        public string? LikeStatus { get; set; }
+        public int CountOfLike { get; set; }     
         public string? KeyWords { get; set; }
         public string? ParentCategory { get; set; }
-        public string? Tags { get; set; }
+        public int? ParentCategoryId { get; set; }
+        public string? ParentCategorySlug { get; set; }
+        public List<string>? Tags { get; set; }
         public string? VideoAddress { get; set; }
         public string? IndexImageAddress { get; set; }
         public string? RegisterDatePersian { get; set; }

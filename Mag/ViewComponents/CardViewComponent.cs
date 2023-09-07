@@ -1,32 +1,39 @@
 ﻿using Mag.Areas.Admin.Models.Dto.Comment;
 using Mag.Areas.Admin.Models.Dto.News;
+using Mag.Areas.Admin.Models.Dto.Tag;
 using Mag.Data;
 using Mag.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace Mag.ViewComponents
 {
-    public class CardViewComponent : ViewComponent 
+    public class CardViewComponent : ViewComponent
     {
         private readonly DataBaseContext _dbContext;
         private readonly UserManager<User> _userManager;
-        public CardViewComponent(DataBaseContext dataBaseContext,UserManager<User> userManager)
+        public CardViewComponent(DataBaseContext dataBaseContext, UserManager<User> userManager)
         {
             _dbContext = dataBaseContext;
             _userManager = userManager;
         }
         public async Task<IViewComponentResult> InvokeAsync(string slug)
         {
-            var FindNews = _dbContext.News.FirstOrDefault(p => p.Slug == slug);
+            var FindNews =await _dbContext.News.FirstOrDefaultAsync(p => p.Slug == slug);
             var FindUser = await _userManager.FindByIdAsync(FindNews.WriterId);
             var ParentIdCategories = _dbContext.CategoryTags.Where(x => x.Type == "Category" && x.ParentId == 1 && x.Id != 1).Select(p => p.Id).ToList();
-            var pcName = _dbContext.CategoryTags.FirstOrDefault(p => p.Id==GetParentIdCategory(FindNews.Categories, ParentIdCategories));
+            var pcName =await _dbContext.CategoryTags.FirstOrDefaultAsync(p => p.Id == GetParentIdCategory(FindNews.Categories, ParentIdCategories));
+            var Like = await _dbContext.Likes.FirstOrDefaultAsync(p => p.NewsId == FindNews.Id && p.UserId == FindUser.Id);
+            var NumberOfLike = await _dbContext.Likes.Where(p=>p.NewsId == FindNews.Id && p.StatusLike==StatusLike.Like).CountAsync();
+
             var ListComments = _dbContext.Comments.Where(p => p.Status == Comment.StatusName.Publish && p.NewsId == FindNews.Id).Select(p => new CommentListDto
             {
                 Id = p.Id,
                 NewsId = p.NewsId,
                 UserId = p.UserId,
+                WriterName = _dbContext.Users.Where(x => x.Id == p.UserId).Select(x => x.FirstName + " " + x.LastName).First(),
                 CommentText = p.CommentText,
                 RegisterDate = p.RegisterDate,
                 RegisterDatePersian = p.RegisterDatePersian,
@@ -38,7 +45,10 @@ namespace Mag.ViewComponents
                 Title = FindNews.Title,
                 Slug = FindNews.Slug,
                 ParentCategory = pcName == null ? "سایر" : pcName.Name,
+                ParentCategoryId = pcName == null ? null : pcName.Id,
+                ParentCategorySlug = pcName.Slug,
                 IndexImageAddress = FindNews.IndexImageAddress,
+                VideoAddress = FindNews.VideoAddress == null ? null : FindNews.VideoAddress,
                 IndexImageAddressAlt = FindNews.IndexImageAddressAlt,
                 IndexImageAddressTitle = FindNews.IndexImageAddressTitle,
                 DescriptionHtmlEditor = FindNews.DescriptionHtmlEditor,
@@ -47,20 +57,23 @@ namespace Mag.ViewComponents
                 PublishNewsDatePersianYear = getYear(FindNews.PublishNewsDatePersian),
                 PublishNewsDatePersianTime = getTime(FindNews.PublishNewsDatePersian),
                 UserImage = FindUser.PicAddress,
-                UserFullName = FindUser.FirstName +" "+ FindUser.LastName,
+                UserFullName = FindUser.FirstName + " " + FindUser.LastName,
                 Comments = ListComments,
-                NewsSummary = FindNews.NewsSummary == null?" ":FindNews.NewsSummary,
+                NewsSummary = FindNews.NewsSummary == null ? " " : FindNews.NewsSummary,
+                Tags = FindNews.Tags == "" ? null : GetTags(FindNews.Tags),
+                LikeStatus = Like==null ? "" : Like.StatusLike.ToString(),
+                CountOfLike = NumberOfLike
             };
 
             return View(news);
         }
-        static string getDay(string date)
+        private string getDay(string date)
         {
             var SeprateDayMonth = date.Split(" ");
             var GetDayMonth = SeprateDayMonth[0].Split("/");
             return GetDayMonth[2];
         }
-        static string getmonth(string date)
+        private string getmonth(string date)
         {
             var SeprateDayMonth = date.Split(" ");
             var GetDayMonth = SeprateDayMonth[0].Split("/");
@@ -107,33 +120,51 @@ namespace Mag.ViewComponents
             }
             return Retmonth;
         }
-        static string getYear(string date)
+        private string getYear(string date)
         {
             var SeprateDayMonth = date.Split(" ");
             var GetDayMonth = SeprateDayMonth[0].Split("/");
             return GetDayMonth[0];
         }
-        static string getTime(string date)
+        private string getTime(string date)
         {
             var SeprateDayMonth = date.Split(" ");
             var GetDayTime = SeprateDayMonth[1].Split(":");
-            return GetDayTime[0]+":"+GetDayTime[1];
+            return GetDayTime[0] + ":" + GetDayTime[1];
         }
-        static int GetParentIdCategory(string Categories,List<int>? ParentidCategories)
+        private int GetParentIdCategory(string Categories, List<int>? ParentidCategories)
         {
             var splitCategories = Categories.Split(",");
-            
+
             foreach (var CatId in splitCategories)
             {
-                foreach (var CatParentId in ParentidCategories)
+                if (CatId != "")
                 {
-                    if (Convert.ToInt32(CatId) == CatParentId)
+                    foreach (var CatParentId in ParentidCategories)
                     {
-                        return Convert.ToInt32(CatId);
+                        if (Convert.ToInt32(CatId) == CatParentId)
+                        {
+                            return Convert.ToInt32(CatId);
+                        }
                     }
                 }
             }
             return 0;
+        }
+        private List<string> GetTags(string tags)
+        {
+            var listTag = new List<string>();
+            var splitTags = tags.Split(",");
+
+            foreach (var Tag in splitTags)
+            {
+                if (Tag != "")
+                {
+                    var findtag = _dbContext.CategoryTags.FirstOrDefault(p => p.Id == Convert.ToInt32(Tag));
+                    listTag.Add(findtag.Name);
+                }
+            }
+            return listTag;
         }
     }
 }

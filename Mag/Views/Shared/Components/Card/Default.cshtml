@@ -10,7 +10,7 @@
             }
             else
             {
-                <p><a href="/News/Category/@Model.ParentCategory" class="CategoryLink">@Model.ParentCategory</a> </p>
+                <p><a href="/News/Category/@Model.ParentCategorySlug" class="CategoryLink">@Model.ParentCategory</a> </p>
             }
             <h1 class="TitleH1">
                 @Model.Title
@@ -28,7 +28,30 @@
                     </p>
                 </div>
                 <div class="d-flex align-items-center">
-                    <a href="#"><i class="fa-regular fa-heart text-danger"></i></a>
+                    @if (!User.Identity.IsAuthenticated)  
+                    {
+                        <div class="d-flex align-items-center">
+                            <span id="NumberOfLike">@Model.CountOfLike</span>
+                            <span class="likeSpan" id="kt_docs_sweetalert_state_warning_for_Like"><i class="fa-regular fa-heart text-danger"></i></span>
+                        </div>
+                    }
+                    else
+                    {
+                        if (Model.LikeStatus == "" || Model.LikeStatus=="None") 
+                        {
+                            <div class="d-flex align-items-center">
+                                <span id="NumberOfLike">@Model.CountOfLike</span>
+                                <span class="likeSpan" onclick="LikeNewsOwnSelf()"><i class="fa-regular fa-heart text-danger" id="LikeHeart"></i></span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="d-flex align-items-center">
+                                <span id="NumberOfLike">@Model.CountOfLike</span>
+                                <span class="likeSpan" onclick="NoneOwnSelf()"><i class="fa-solid fa-heart text-danger" id="LikeHeart"></i></span>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>
@@ -38,17 +61,38 @@
     </div>
     <div class="row mt-5 ">
         <div class="col-md-7">
-            @if (Model.DescriptionHtmlEditor != null)
-            {   
-                <div class="textNews">
+            <div class="textNews">
+                @if (Model.DescriptionHtmlEditor != null)
+                {
+
                     @Html.Raw(Model.DescriptionHtmlEditor)
-                </div>
-            }
-            else
-            {
-                <div style="border-radius: 16px;border: 1px solid #ccc!important;padding: 15px 15px;min-height:100px">
-                </div>
-            }
+
+                }
+                else
+                {
+                    <div style="border-radius: 16px;border: 1px solid #ccc!important;padding: 15px 15px;min-height:100px">
+                    </div>
+                }
+                @if (Model.VideoAddress != null)
+                {
+                    <div class="text-center">
+                        <video controls class="NewsVideo">
+                            <source src="~/@Model.VideoAddress" type="video/mp4">
+                        </video>
+                    </div>
+                }
+                @if (Model.Tags != null)
+                {
+                    <div class="mt-3">
+                        @foreach (var item in Model.Tags)
+                        {
+                            <span class="SpanTag mx-1">
+                                @item
+                            </span>
+                        }
+                    </div>
+                }
+            </div>
         </div>
         <div class="col-md-2 ad">
             <div class="row">
@@ -70,10 +114,9 @@
 
             </div>
         </div>
-        <div class="col-md-2 ad">
-        </div>
-
-        <div class="col-md-1 ad">
+        <div class="col-md-3 ad">
+            @await Component.InvokeAsync("TenNewNews")
+            @await Component.InvokeAsync("TenNewNewsCategory",new { PId = Model.ParentCategoryId })
         </div>
     </div>
     <div class="row mt-5  d-flex justify-content-center">
@@ -97,7 +140,7 @@
                                 <p class="CommentsInNewsText">@item.CommentText</p>
                                 <hr />
                                 <div class="d-flex justify-content-between">
-                                    <p class="CommentsInNewsDtl">@item.UserId</p>
+                                    <p class="CommentsInNewsDtl">@item.WriterName</p>
                                     <p class="CommentsInNewsDtl">@item.RegisterDatePersian</p>
                                 </div>
                             </div>
@@ -133,7 +176,7 @@
                                 </div>
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-md-12 d-flex justify-content-center">
-                                        <button name="Publish" value="Publish" class="btn btn-success mx-1" id="SubmitBtn">ثبت دیدگاه</button>
+                                        <button type="submit" class="btn btn-success mx-1">ثبت دیدگاه</button>
                                     </div>
                                 </div>
                             </form>

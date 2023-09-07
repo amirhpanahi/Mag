@@ -8,9 +8,9 @@
     color: #0075e7;
     font-weight: bold;
 }
-.CommentsInNews {
+.CommentsInNews { 
     border-radius: 16px;
-    border: 1px solid #ccc !important; 
+    border: 3px solid #ccc !important; 
     padding: 15px 15px;
     margin-bottom: 5px
 }
@@ -30,9 +30,41 @@
     height: 100%;
     width: 100%;
     line-height: 30px;
+    font-size: 14px;
 }
 .NewsSummary {
     font-size: 11px;
+    word-spacing: 1px;
+}
+.SpanTag {
+    border-radius: 6px;
+    padding: 5px;
+    background-color: #ddd;
+    font-size: 10px;
+}
+.rectangle {
+    width: 10px;
+    height: 25px;
+    border-radius:3px;
+    display:inline-block;
+    background: #ff6a00;
+    margin-left:6px
+}
+.BesideRectangle {
+    font-size: 18px;
+    font-weight: bold;
+    color:#070b36
+}
+.imageForTenCommponent{
+    margin-left:10px
+}
+.TextForTenCommponent { 
+    color: #1647d5 ;
+    font-size: 12px;
+}
+.likeSpan {
+    cursor:pointer;
+    margin-right:7px;
 }
 @media (min-width: 320px) and (max-width: 480px) {
     .imgNews {
@@ -41,12 +73,18 @@
         object-fit: cover;
         border-radius: 15px;
     }
-
+    .NewsVideo{
+        width:600px
+    }
     .ad {
         display: none
     }
     .titleNews {
         margin-top: 0px;
+    }
+    .NewsVideo {
+        width: 310px;
+        border-radius: 10px;
     }
 }
 @media (min-width: 481px) and (max-width: 768px) {
@@ -64,6 +102,10 @@
     .titleNews {
         margin-top: 0px;
     }
+    .NewsVideo {
+        width: 450px;
+        border-radius: 10px;
+    }
 }
 @media (min-width: 769px) and (max-width: 1024px) {
     .imgNews {
@@ -75,6 +117,10 @@
     .VideoAdv {
         width: 100px;
         height: 100px;
+    }
+    .NewsVideo {
+        width: 400px;
+        border-radius: 10px;
     }
 }
 @media (min-width: 1025px) and (max-width: 1200px) {
@@ -88,20 +134,52 @@
         width: 150px;
         height: 150px;
     }
-
+    .NewsVideo {
+        width: 500px;
+        border-radius: 10px;
+    }
 }
-@media (min-width: 1201px){
+@media (min-width: 1025px) and (max-width: 1440px) {
     .imgNews {
         width: 600px;
         height: 350px;
         object-fit: cover;
         border-radius: 15px;
     }
+
     .titleNews {
         margin-top: 100px;
     }
+
     .VideoAdv {
         width: 200px;
         height: 200px;
+    }
+
+    .NewsVideo {
+        width: 550px;
+        border-radius: 10px;
+    }
+}
+@media (min-width: 1441px) {
+    .imgNews {
+        width: 600px;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 15px;
+    }
+
+    .titleNews {
+        margin-top: 100px;
+    }
+
+    .VideoAdv {
+        width: 200px;
+        height: 200px;
+    }
+
+    .NewsVideo {
+        width: 550px;
+        border-radius: 10px;
     }
 }

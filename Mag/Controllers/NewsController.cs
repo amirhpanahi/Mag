@@ -1,4 +1,5 @@
-﻿using Mag.Areas.Admin.Models.Dto.News;
+﻿using Mag.Areas.Admin.Models.Dto.Like;
+using Mag.Areas.Admin.Models.Dto.News;
 using Mag.Common;
 using Mag.Data;
 using Mag.Models.Entities;
@@ -33,10 +34,12 @@ namespace Mag.Controllers
         #region ShowNews
         [HttpGet]
         [Route("News/{slug}")]
-        public IActionResult Show(string slug) 
+        public async Task<IActionResult> Show(string slug) 
         {
+            var findNews = await _DbContext.News.FirstOrDefaultAsync(x => x.Slug == slug);
             var model = new NewsCardDto
             {
+                Id = findNews.Id,
                 Slug = slug
             };
             return View(model);
@@ -146,12 +149,17 @@ namespace Mag.Controllers
             var TagsId = new StringBuilder();
             var CategoriesId = new StringBuilder();
 
-            if (model.TagId != null && model.CategoryId != null)
+            if (model.TagId != null)
             {
+                TagsId.Append(",");
                 foreach (var item in model.TagId)
                 {
                     TagsId.Append($"{item},");
                 }
+            }
+            if (model.CategoryId != null)
+            {
+                CategoriesId.Append(",");
                 foreach (var item in model.CategoryId)
                 {
                     CategoriesId.Append($"{item},");
@@ -196,7 +204,7 @@ namespace Mag.Controllers
                 }
                 if (model.VideoFile.ContentType == "video/mp4" || model.VideoFile.ContentType == "video/wmv")
                 {
-                    stringVideoPath = $"Media/News/" + await _fileUpload.UploadFileAsync(model.VideoFile, model.Title, "News");
+                    stringVideoPath = $"Media/News/Video" + await _fileUpload.UploadFileAsync(model.VideoFile, model.Title, "News", "Video");
                 }
                 else
                 {
@@ -242,7 +250,6 @@ namespace Mag.Controllers
             return View(model);
         }
         #endregion
-
 
         #region Edit
         [HttpGet]
@@ -340,6 +347,7 @@ namespace Mag.Controllers
 
             if (model.TagId != null )
             {
+                TagsId.Append(",");
                 foreach (var item in model.TagId)
                 {
                     TagsId.Append($"{item},");
@@ -347,6 +355,7 @@ namespace Mag.Controllers
             }
             if (model.CategoryId != null)
             {
+                CategoriesId.Append(",");
                 foreach (var item in model.CategoryId)
                 {
                     CategoriesId.Append($"{item},");
@@ -391,7 +400,7 @@ namespace Mag.Controllers
                 }
                 if (model.VideoFile.ContentType == "video/mp4" || model.VideoFile.ContentType == "video/wmv")
                 {
-                    stringVideoPath = await _fileUpload.UploadFileAsync(model.VideoFile, model.Title, "News");
+                    stringVideoPath = await _fileUpload.UploadFileAsync(model.VideoFile, model.Title, "News", "Video");
                 }
                 else
                 {
@@ -412,7 +421,7 @@ namespace Mag.Controllers
                 NewsFind.DescriptionHtmlEditor = model.DescriptionHtmlEditor;
                 NewsFind.DescriptionSeo = model.DescriptionSeo == null ? model.Title : model.DescriptionSeo;
                 NewsFind.KeyWords = model.KeyWords == null ? null : model.KeyWords;
-                NewsFind.VideoAddress = stringVideoPath;
+                NewsFind.VideoAddress = model.VideoFile == null ? NewsFind.VideoAddress : $"Media/News/Video/{stringVideoPath}";
                 NewsFind.IndexImageAddress = model.indexImageFile == null ? NewsFind.IndexImageAddress : $"Media/News/{stringImagePath}";
                 NewsFind.IndexImageAddressAlt = model.IndexImageAlt == null ? model.Title : model.IndexImageAlt;
                 NewsFind.IndexImageAddressTitle = model.IndexImageTitle == null ? model.Title : model.IndexImageTitle;
@@ -433,6 +442,45 @@ namespace Mag.Controllers
         }
         #endregion
 
-        
+        #region LikeNewsAjax
+        [HttpPost]
+        [Route("Like/News")]
+        public async Task<string> LikeNews(int NewsId)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var FindLike =await _DbContext.Likes.FirstOrDefaultAsync(p => p.NewsId == NewsId && p.UserId == userId);
+
+            if (FindLike != null)
+            {
+                if (FindLike.StatusLike == StatusLike.Like)
+                {
+                    FindLike.StatusLike = StatusLike.None;
+                    _DbContext.Entry(FindLike).State = EntityState.Modified;
+                    await _DbContext.SaveChangesAsync();
+                    return "fa-regular fa-heart text-danger";
+                }
+                else
+                {
+                    FindLike.StatusLike = StatusLike.Like;
+                    _DbContext.Entry(FindLike).State = EntityState.Modified;
+                    await _DbContext.SaveChangesAsync();
+                    return "fa-solid fa-heart text-danger";
+                }
+            }
+            else
+            {
+                var AddLike = new Like
+                {
+                    NewsId = NewsId,
+                    UserId = userId,
+                    StatusLike = StatusLike.Like
+                };
+                await _DbContext.Likes.AddAsync(AddLike);
+                await _DbContext.SaveChangesAsync();
+                return "fa-solid fa-heart text-danger";
+            }
+        }
+        #endregion
+
     }
 }

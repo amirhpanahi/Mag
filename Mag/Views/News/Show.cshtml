@@ -3,7 +3,6 @@
     ViewData["Title"] = "لیست اخبار";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="row mt-8">
     <div class="col-md-1">
     </div>
@@ -20,6 +19,55 @@
     <link rel="stylesheet" href="~/assets/css/Layoutcss/ShowNews.css?v=1">
 }
 @section Scripts{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <script>
+        function LikeNewsOwnSelf() {
+            // console.log("like")
+            // $.post("Like/News", { "NewsId": 2 }, function (data) {
+            //     alert("success");
+            //     alert(data);
+            // });
+            $.ajax({
+                type: "POST",
+                url: "Like/News",
+                data: { "NewsId": @Model.Id },
+                success: function (response) {
+                    const likebtn = document.getElementById('LikeHeart');
+                    likebtn.classList = response;
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+        function NoneOwnSelf() {
+            // console.log("like")
+            // $.post("Like/News", { "NewsId": 2 }, function (data) {
+            //     alert("success");
+            //     alert(data);
+            // });
+            $.ajax({
+                type: "POST",
+                url: "Like/News",
+                data: { "NewsId": @Model.Id },
+                success: function (response) {
+                    const likebtn = document.getElementById('LikeHeart');
+                    likebtn.classList = response;
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+    </script>
+
     <script>
         function updateCharacterCount() {
             const inputElement = document.getElementById('textInput');
@@ -35,6 +83,27 @@
                 inputElement.value = enteredText.substring(0, 1000);
                 charCountLabel.textContent = '1000/1000';
             }
+        }
+
+        const buttonPreventlike = document.getElementById('kt_docs_sweetalert_state_warning_for_Like');
+        if(buttonPreventlike != null){
+            buttonPreventlike.addEventListener('click', e => {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'برای لایک کردن خبر ها ابتدا وارد شوید',
+                    width: 380,
+                    padding: '3em',
+                    color: '#716add',
+                    confirmButtonText: "تایید",
+                    background: '#fff url(/assets/media/Home/trees.png)',
+                    backdrop: `
+                            rgba(0,0,123,0.4)
+                            url("/images/nyan-cat.gif")
+                            left top
+                            no-repeat`
+                })
+            });
         }
     </script>
 }

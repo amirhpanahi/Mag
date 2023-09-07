@@ -55,7 +55,9 @@ namespace Mag.Controllers
                 var a = await _roleManager.FindByIdAsync(item.RoleId);
                 roleNme.Append($"{a.Name},");
             }
-            var RetVal = new Tuple<User, List<NewsListDto>,string?,int?>(user,ListNews,roleNme.ToString(), RoleUserWriter);
+
+            var CommentCount = _DbContext.Comments.Where(p => p.UserId == userId && p.Status == Comment.StatusName.Publish).Count();
+            var RetVal = new Tuple<User,List<NewsListDto>,string?,int?,int?>(user,ListNews,roleNme.ToString(), RoleUserWriter,CommentCount);
 
             return View(RetVal);
         }

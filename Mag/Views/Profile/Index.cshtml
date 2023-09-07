@@ -1,6 +1,6 @@
 ﻿@using Mag.Common
 @using Mag.Models.Entities
-@model Tuple<User,List<Mag.Areas.Admin.Models.Dto.News.NewsListDto>,string?,int?>
+@model Tuple<User,List<Mag.Areas.Admin.Models.Dto.News.NewsListDto>,string?,int?,int?>
 @{
     ViewData["Title"] = " پروفایل کاربر";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -113,7 +113,7 @@
                                     <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                         <!--begin::شماره کارت-->
                                         <div class="d-flex align-items-center justify-content-center">
-                                            <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="80" data-kt-initialized="1">80</div>
+                                            <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="80" data-kt-initialized="1">@Model.Item5</div>
                                         </div>
                                         <!--end::شماره کارت-->
                                         <!--begin::Tags-->
