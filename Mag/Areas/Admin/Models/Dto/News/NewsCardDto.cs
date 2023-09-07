@@ -13,7 +13,8 @@ namespace Mag.Areas.Admin.Models.Dto.News
         public string? DescriptionHtmlEditor { get; set; }
         public string? DescriptionSeo { get; set; }
         public string? LikeStatus { get; set; }
-        public int CountOfLike { get; set; }     
+        public int? CountOfLike { get; set; }
+        public int? CountOfComment { get; set; }
         public string? KeyWords { get; set; }
         public string? ParentCategory { get; set; }
         public int? ParentCategoryId { get; set; }

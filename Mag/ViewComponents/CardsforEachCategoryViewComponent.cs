@@ -2,10 +2,11 @@
 using Mag.Data;
 using Mag.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mag.ViewComponents
 {
-    public class CardsforEachCategoryViewComponent : ViewComponent 
+    public class CardsforEachCategoryViewComponent : ViewComponent
     {
         private readonly DataBaseContext _dbContext;
         public CardsforEachCategoryViewComponent(DataBaseContext dataBaseContext)
@@ -15,6 +16,7 @@ namespace Mag.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(string slug)
         {
             var categoryfind = _dbContext.CategoryTags.FirstOrDefault(p => p.Slug == slug);
+
             //var a = _dbContext.News.Where(p => p.Categories.Contains(categoryfind.Id.ToString()));
             //var listnews = _dbContext.News.Where(p => p.Status == StatusName.Publish && p.PublishNewsDatePersian != null && (","+ p.Categories + ",").Contains(","+ categoryfind.Id + ",")).Select(p => new NewsCardDto
             var listnews = new List<NewsCardDto>();
@@ -29,6 +31,8 @@ namespace Mag.ViewComponents
                     IndexImageAddressTitle = p.IndexImageAddressTitle,
                     PublishNewsDatePersianDay = getDay(p.PublishNewsDatePersian),
                     PublishNewsDatePersianmonth = getmonth(p.PublishNewsDatePersian),
+                    CountOfLike = _dbContext.Likes.Where(x => x.NewsId == p.Id && x.StatusLike == StatusLike.Like).Count(),
+                    CountOfComment = _dbContext.Comments.Where(x => x.NewsId == p.Id && x.Status == Comment.StatusName.Publish).Count(),
                     NewsSummary = p.NewsSummary == null ? " " : p.NewsSummary,
                 }).ToList();
             }
@@ -53,7 +57,7 @@ namespace Mag.ViewComponents
         {
             var SeprateDayMonth = date.Split(" ");
             var GetDayMonth = SeprateDayMonth[0].Split("/");
-            return  GetDayMonth[2];
+            return GetDayMonth[2];
         }
         static string getmonth(string date)
         {

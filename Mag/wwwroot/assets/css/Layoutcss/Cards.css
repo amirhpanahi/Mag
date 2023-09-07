@@ -7,7 +7,7 @@
     width: 100%;
     background-color: #ffffff;
     color: #000000;
-    text-align: right;
+    text-align:right;
     font-size: 16px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
@@ -38,6 +38,7 @@
         max-width: 100%;
         vertical-align: top;
         position: relative;
+        object-fit: cover;
     }
 
     .snip1493 figcaption {
@@ -89,11 +90,10 @@
     }
 
     .snip1493 footer {
-        padding: 0 25px;
         color: #999999;
         font-size: 0.8em;
         line-height: 50px;
-        text-align: right;
+        text-align:right;
         position: absolute;
         bottom: 0;
         left: 0;
