@@ -1,0 +1,120 @@
+﻿using Mag.Areas.Admin.Models.Dto.News;
+using Mag.Data;
+using Mag.Models.Entities;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Mag.ViewComponents
+{
+    public class CardsforEachTagsViewComponent : ViewComponent
+    {
+        private readonly DataBaseContext _dbContext;
+        public CardsforEachTagsViewComponent(DataBaseContext dataBaseContext)
+        {
+            _dbContext = dataBaseContext;
+        }
+        public async Task<IViewComponentResult> InvokeAsync(int Id)
+        {
+            ViewBag.ParentIdCategories = _dbContext.CategoryTags.Where(x => x.Type == "Category" && x.ParentId == 1 && x.Id != 1).ToList();
+            ViewBag.ListUsers = _dbContext.Users.ToList();
+            var Tagfind = _dbContext.CategoryTags.FirstOrDefault(p => p.Id == Id);
+
+            //var a = _dbContext.News.Where(p => p.Categories.Contains(categoryfind.Id.ToString()));
+            //var listnews = _dbContext.News.Where(p => p.Status == StatusName.Publish && p.PublishNewsDatePersian != null && (","+ p.Categories + ",").Contains(","+ categoryfind.Id + ",")).Select(p => new NewsCardDto
+            var listnews = new List<NewsCardDto>();
+            if (Id != null && Tagfind != null)
+            {
+                listnews = _dbContext.News.Where(p => p.PublishNewsDatePersian != null && p.Status == StatusName.Publish && ("," + p.Tags + ",").Contains("," + Tagfind.Id + ",")).Select(p => new NewsCardDto
+                {
+                    Title = p.Title,
+                    Slug = p.Slug,
+                    IndexImageAddress = p.IndexImageAddress,
+                    IndexImageAddressAlt = p.IndexImageAddressAlt,
+                    IndexImageAddressTitle = p.IndexImageAddressTitle,
+                    PublishNewsDatePersianDay = getDay(p.PublishNewsDatePersian),
+                    PublishNewsDatePersianmonth = getmonth(p.PublishNewsDatePersian),
+                    PublishNewsDatePersianYear = getYear(p.PublishNewsDatePersian),
+                    CountOfLike = _dbContext.Likes.Where(x => x.NewsId == p.Id && x.StatusLike == StatusLike.Like).Count(),
+                    CountOfComment = _dbContext.Comments.Where(x => x.NewsId == p.Id && x.Status == Comment.StatusName.Publish).Count(),
+                    NewsSummary = p.NewsSummary == null ? " " : p.NewsSummary,
+                    WriterId = p.WriterId,
+                    Categories = p.Categories==null?" ":p.Categories,
+                }).ToList();
+            }
+            else
+            {
+                listnews = _dbContext.News.Where(p => p.PublishNewsDatePersian != null).Select(p => new NewsCardDto
+                {
+                    Title = p.Title,
+                    Slug = p.Slug,
+                    IndexImageAddress = p.IndexImageAddress,
+                    IndexImageAddressAlt = p.IndexImageAddressAlt,
+                    IndexImageAddressTitle = p.IndexImageAddressTitle,
+                    PublishNewsDatePersianDay = getDay(p.PublishNewsDatePersian),
+                    PublishNewsDatePersianmonth = getmonth(p.PublishNewsDatePersian),
+                    NewsSummary = p.NewsSummary == null ? " " : p.NewsSummary,
+                }).ToList();
+            }
+            return View(listnews);
+        }
+
+        static string getDay(string date)
+        {
+            var SeprateDayMonth = date.Split(" ");
+            var GetDayMonth = SeprateDayMonth[0].Split("/");
+            return GetDayMonth[2];
+        }
+        static string getmonth(string date)
+        {
+            var SeprateDayMonth = date.Split(" ");
+            var GetDayMonth = SeprateDayMonth[0].Split("/");
+            var month = GetDayMonth[1];
+            var Retmonth = "";
+            switch (month)
+            {
+                case "1":
+                    Retmonth = "فروردین";
+                    break;
+                case "2":
+                    Retmonth = "اردیبهشت";
+                    break;
+                case "3":
+                    Retmonth = "خرداد";
+                    break;
+                case "4":
+                    Retmonth = "تیر";
+                    break;
+                case "5":
+                    Retmonth = "مرداد";
+                    break;
+                case "6":
+                    Retmonth = "شهریور";
+                    break;
+                case "7":
+                    Retmonth = "مهر";
+                    break;
+                case "8":
+                    Retmonth = "آبان";
+                    break;
+                case "9":
+                    Retmonth = "آذر";
+                    break;
+                case "10":
+                    Retmonth = "دی";
+                    break;
+                case "11":
+                    Retmonth = "بهمن";
+                    break;
+                case "12":
+                    Retmonth = "اسفند";
+                    break;
+            }
+            return Retmonth;
+        }
+        static string getYear(string date)
+        {
+            var SeprateDayMonth = date.Split(" ");
+            var GetDayMonth = SeprateDayMonth[0].Split("/");
+            return GetDayMonth[0];
+        }
+    }
+}

@@ -1,4 +1,26 @@
-﻿.snip1493 {
+﻿.owl-carousel .snip1493 {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+}
+
+.owl-dots {
+    text-align: center
+}
+
+    .owl-dots span {
+        font-size: 20px
+    }
+
+.owl-nav {
+    text-align: center
+}
+
+    .owl-nav span {
+        font-size: 20px
+    }
+
+.snip1493 {
     position: relative;
     overflow: hidden;
     margin: 10px;
@@ -7,7 +29,7 @@
     width: 100%;
     background-color: #ffffff;
     color: #000000;
-    text-align:right;
+    text-align: right;
     font-size: 16px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
@@ -42,85 +64,144 @@
     }
 
     .snip1493 figcaption {
-        padding: 20px 20px 30px;
+        padding: 20px 20px 0;
         background-color: #ffffff;
     }
 
-    .snip1493 .date {
-        background-color: #d2652d;
-        top: 15px;
-        color: #fff;
-        right: 15px;
-        min-height: 48px;
-        min-width: 48px;
-        position: absolute;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-        text-transform: uppercase;
-        border-radius: 50%;
-        padding: 10px 0;
+
+.category {
+    background-color: #d2652d;
+    top: 15px;
+    color: #fff;
+    right: 15px;
+    min-height: 28px;
+    min-width: 68px;
+    position: absolute;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 10px;
+    padding: 10px 0;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* وقتی روی .item هاور شد، کلاس category پدیدار شود */
+.item:hover .category {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.item:hover .snip1493 .like-and-comment {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.snip1493 .category span {
+    display: block;
+    line-height: 14px;
+}
+
+.snip1493 .category .name {
+    font-size: 11px;
+}
+
+.snip1493 h3,
+.snip1493 p {
+    margin: 0;
+    padding: 0;
+}
+
+.snip1493 h3 {
+    margin-bottom: 10px;
+    display: inline-block;
+    font-weight: 700;
+    height: 75px;
+}
+
+.snip1493 p {
+    font-size: 0.8em;
+    margin-bottom: 20px;
+    line-height: 1.6em;
+    height: 60px;
+}
+
+.snip1493 footer {
+    color: #999999;
+    font-size: 0.8em;
+    line-height: 50px;
+    text-align: right;
+    width: 100%;
+}
+.snip1493 .like-and-comment {
+    opacity: 0;
+    top: 150px;
+    right: 0;
+    position: absolute;
+    color: #999999;
+    font-size: 0.8em;
+    line-height: 50px;
+    text-align: right;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 15px;
+    padding-right: 20px;
+}
+    .snip1493 .like-and-comment .love i{
+        margin-right:5px;
+    }
+    .snip1493 .like-and-comment .comments i {
+        margin-right: 5px;
     }
 
-        .snip1493 .date span {
-            display: block;
-            line-height: 14px;
+.snip1493 .footer-for-between {
+    display: flex !important;
+    justify-content: space-between;
+    padding: 0 !important;
+    width: 100%;
+    margin: 0;
+    font-size:13px; 
+}
+
+        .snip1493 .footer-for-between .pick-name {
+            margin-right: -4% !important;
         }
 
-        .snip1493 .date .month {
-            font-size: 11px;
-        }
-
-    .snip1493 h3,
-    .snip1493 p {
-        margin: 0;
-        padding: 0;
-    }
-
-    .snip1493 h3 {
-        margin-bottom: 10px;
+    .snip1493 footer > div {
         display: inline-block;
-        font-weight: 700;
+        margin-right: 15px;
     }
 
-    .snip1493 p {
-        font-size: 0.8em;
-        margin-bottom: 20px;
-        line-height: 1.6em;
+    .snip1493 footer i {
+        margin-right: 5px;
+        font-size: 1.2em;
     }
 
-    .snip1493 footer {
-        color: #999999;
-        font-size: 0.8em;
-        line-height: 50px;
-        text-align:right;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
+.snip1493 a {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.snip1493:hover:after,
+.snip1493.hover:after {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+}
+
+.imgCardsCategory {
+    height: 193px;
+    width: 277px;
+}
+
+@media screen and (max-width: 425px) {
+    .snip1493 .footer-for-between {
+        font-size: 11px;
     }
-
-        .snip1493 footer > div {
-            display: inline-block;
-            margin-right: 15px;
-        }
-
-        .snip1493 footer i {
-            margin-right: 5px;
-            font-size: 1.2em;
-        }
-
-    .snip1493 a {
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        position: absolute;
-        z-index: 1;
-    }
-
-    .snip1493:hover:after,
-    .snip1493.hover:after {
-        -webkit-transform: translateX(0%);
-        transform: translateX(0%);
-    }
+}

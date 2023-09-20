@@ -26,12 +26,14 @@ namespace Mag.Controllers
             _fileUpload = fileUploadService;
             _emailService = new EmailService();
         }
+
         #region Index
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await _userManager.FindByIdAsync(userId);
-            var ListNews = _DbContext.News.Where(p => p.WriterId == userId).Select(p => new NewsListDto
+
+            var ListNews = _DbContext.News.Where(p => p.WriterId == userId && p.Status!=StatusName.Delete).Select(p => new NewsListDto
             {
                 Id = p.Id,
                 Title = p.Title,
@@ -40,10 +42,24 @@ namespace Mag.Controllers
                 IndexImageAddressAlt = p.IndexImageAddressAlt,
                 IndexImageAddressTitle = p.IndexImageAddressTitle,
                 WriterId = p.WriterId,
+                WriterName = _DbContext.Users.Where(q => q.Id == p.WriterId).Select(q => new FullnameUser { FirstName = q.FirstName, LastName = q.LastName }).First(),
                 Categories = p.Categories,
                 IsActive = p.IsActive,
                 Status = p.Status,
             }).ToList();
+
+            List<int> Categories = new List<int>();
+            foreach (var item in ListNews)
+            {
+                if (item.Categories != "")
+                {
+                    item.Categories = item.Categories.Trim(',');
+                    var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+                    Categories.AddRange(splitcat);
+                }
+            }
+            var Cats = _DbContext.CategoryTags.Where(p => Categories.Contains(p.Id)).ToList();
+            ViewBag.Categories = Cats;
 
             var role = await _roleManager.FindByNameAsync("writer");
             var RoleUserWriter = _DbContext.UserRoles.Where(p => p.UserId == userId && p.RoleId == role.Id).ToList().Count();

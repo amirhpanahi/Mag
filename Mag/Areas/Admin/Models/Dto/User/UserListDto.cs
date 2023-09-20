@@ -16,5 +16,7 @@
         public DateTime? DateRegister { get; set; }
         public DateTime? LastLoginDate { get; set; }
 
+        public bool? IsAdmin { get; set; }
+
     }
 }

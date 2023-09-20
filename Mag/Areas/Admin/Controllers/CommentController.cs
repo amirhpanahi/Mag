@@ -1,11 +1,13 @@
 ﻿using Mag.Areas.Admin.Models.Dto.Comment;
 using Mag.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static Mag.Models.Entities.Comment;
 
 namespace Mag.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class CommentController : Controller
     {

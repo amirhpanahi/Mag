@@ -19,7 +19,8 @@ namespace Mag.Areas.Admin.Models.Dto.News
         public string? ParentCategory { get; set; }
         public int? ParentCategoryId { get; set; }
         public string? ParentCategorySlug { get; set; }
-        public List<string>? Tags { get; set; }
+        public string? Categories { get; set; }
+        public List<TgsForEachNews>? Tags { get; set; }
         public string? VideoAddress { get; set; }
         public string? IndexImageAddress { get; set; }
         public string? RegisterDatePersian { get; set; }
@@ -40,4 +41,12 @@ namespace Mag.Areas.Admin.Models.Dto.News
         public string? IndexImageAddressTitle { get; set; }
         public List<CommentListDto>? Comments { get; set; }
     }
+
+    public class TgsForEachNews
+    {
+        public int? Id { get; set; }
+        public string? Name { get; set; }
+    }
+
+    
 }

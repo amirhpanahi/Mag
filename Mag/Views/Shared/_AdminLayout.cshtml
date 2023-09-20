@@ -22,6 +22,7 @@
     <link href="assets/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
     <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
+    @await RenderSectionAsync("css", required: false)
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -276,18 +277,6 @@
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
                                                 <span class="menu-title">اخبار حذف شده</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link" href="../../demo1/dist/pages/user-profile/followers.html">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">لایک ها</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
@@ -5248,7 +5237,7 @@
     <script src="assets/js/scripts.bundle.js"></script>
     <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <!--end::Javascript-->
-    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 <!--end::Body-->

@@ -96,7 +96,6 @@
                             icon: 'success',
                             confirmButtonText: "تایید",
                         })
-                        textInput.value = "";
                     }
                     else {
                         Swal.fire({
@@ -105,7 +104,7 @@
                             confirmButtonText: "تایید",
                         })
                     }
-                    
+                    textInput.value = "";
                 },
                 failure: function (response) {
                     alert(response.responseText);

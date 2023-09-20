@@ -87,8 +87,11 @@
                         @foreach (var item in Model.Tags)
                         {
                             <span class="SpanTag mx-1">
-                                @item
+                                <a href="/News/Tag/@item.Id" style="color:black">
+                                    @item.Name
+                                </a>
                             </span>
+                            
                         }
                     </div>
                 }
@@ -116,7 +119,12 @@
         </div>
         <div class="col-md-3 NewaRelational">
             @await Component.InvokeAsync("TenNewNews")
-            @await Component.InvokeAsync("TenNewNewsCategory",new { PId = Model.ParentCategoryId })
+            @if (Model.ParentCategoryId == null)
+            {
+                @await Component.InvokeAsync("TenNewNewsCategory")
+            }else{
+                @await Component.InvokeAsync("TenNewNewsCategory",new { PId = Model.ParentCategoryId })
+            }
         </div>
     </div>
     <div class="row mt-5  d-flex justify-content-center">

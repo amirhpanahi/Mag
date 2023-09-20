@@ -52,7 +52,7 @@ namespace Mag.ViewComponents
                 Slug = FindNews.Slug,
                 ParentCategory = pcName == null ? "سایر" : pcName.Name,
                 ParentCategoryId = pcName == null ? null : pcName.Id,
-                ParentCategorySlug = pcName.Slug,
+                ParentCategorySlug = pcName==null? "سایر" : pcName.Slug, 
                 IndexImageAddress = FindNews.IndexImageAddress,
                 VideoAddress = FindNews.VideoAddress == null ? null : FindNews.VideoAddress,
                 IndexImageAddressAlt = FindNews.IndexImageAddressAlt,
@@ -66,7 +66,7 @@ namespace Mag.ViewComponents
                 UserFullName = FindUser.FirstName + " " + FindUser.LastName,
                 Comments = ListComments,
                 NewsSummary = FindNews.NewsSummary == null ? " " : FindNews.NewsSummary,
-                Tags = FindNews.Tags == "" ? null : GetTags(FindNews.Tags),
+                Tags = FindNews.Tags == null ? null : GetTags(FindNews.Tags),
                 LikeStatus = Like==null ? "" : Like.StatusLike.ToString(),
                 CountOfLike = NumberOfLike
             };
@@ -157,9 +157,9 @@ namespace Mag.ViewComponents
             }
             return 0;
         }
-        private List<string> GetTags(string tags)
+        private List<TgsForEachNews> GetTags(string tags)
         {
-            var listTag = new List<string>();
+            var listTag = new List<TgsForEachNews>();
             var splitTags = tags.Split(",");
 
             foreach (var Tag in splitTags)
@@ -167,7 +167,12 @@ namespace Mag.ViewComponents
                 if (Tag != "")
                 {
                     var findtag = _dbContext.CategoryTags.FirstOrDefault(p => p.Id == Convert.ToInt32(Tag));
-                    listTag.Add(findtag.Name);
+                    var lista = new TgsForEachNews
+                    {
+                        Id = findtag.Id,
+                        Name = findtag.Name,
+                    };
+                    listTag.Add(lista);
                 }
             }
             return listTag;

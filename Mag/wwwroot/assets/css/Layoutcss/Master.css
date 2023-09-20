@@ -21,12 +21,15 @@
 }
 /* End of utility */
 /* navbar */
+.row-navbar{
+    display:flex;
+    justify-content:space-between
+}
 .Nav-menU {
     background-color: darkslategray;
     padding: 15px;
     transition: all .7s;
 }
-
 .Menu-iteM {
     color: #eee;
     font-size: 17px;
@@ -63,37 +66,9 @@
 
 /* End of navbar */
 /* End of header  */
-/* carousel  */
-.carousel {
-    background-color: white;
-}
 
-.carousel-cell {
-    width: 30%;
-    height: 400px;
-    margin-right: 10px;
-    background: #8C8;
-    border-radius: 5px;
-    counter-increment: carousel-cell;
-}
-.flickity-viewport {
-    background-color: whitesmoke;
-}
-/* End of carousel  */
 
-@media only screen and (max-width: 767px) {
-    #ForMarginMain {
-        margin-top:20px !important;
-    }
 
-    .underline {
-        width: 250px;
-    }
-
-    .fixed-top {
-        position: relative;
-    }
-}
 
 
 /* Footer  */
@@ -122,3 +97,59 @@
         text-decoration: none;
     }
 /* End of Footer  */
+@media only screen and (max-width: 767px) {
+    #ForMarginMain {
+        margin-top: 20px !important;
+    }
+
+    .underline {
+        width: 250px;
+    }
+
+    .fixed-top {
+        position: relative;
+    }
+}
+@media (min-width: 768px) and (max-width: 992px) {
+    .Nav-menU {
+        padding-right: 8.3%;
+        padding-left: 8.1%;
+    }
+}
+
+@media (min-width: 992px){
+    .Nav-menU {
+        padding-right: 8.3%;
+        padding-left: 8.1%;
+    }
+}
+
+/*@media (min-width: 769px) and (max-width: 1024px) {
+    .Nav-menU {
+        padding-right: 8.3%;
+        padding-left: 8.1%;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+    .Nav-menU {
+        padding-right: 8.3%;
+        padding-left: 8.1%;
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1440px) {
+    .Nav-menU {
+        padding-right: 8.3%;
+        padding-left: 8.1%;
+    }
+}
+@media (min-width: 1441px) and (max-width: 2560px) {
+    .Nav-menU {
+        padding-right: 8.3%;
+        padding-left: 8.1%;
+    }
+}
+@media (min-width: 2560px){
+
+} */

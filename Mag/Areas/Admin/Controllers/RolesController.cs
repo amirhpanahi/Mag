@@ -1,11 +1,13 @@
 ﻿using Mag.Areas.Admin.Models.Dto.Role;
 using Mag.Areas.Admin.Models.Dto.User;
 using Mag.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mag.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class RolesController : Controller
     {

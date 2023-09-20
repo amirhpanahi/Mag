@@ -1,0 +1,29 @@
+﻿@model Mag.Areas.Admin.Models.Dto.News.NewsListDto
+@{
+    ViewData["Title"] = $"{Model.Title}لیست اخبار";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row mt-4">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10">
+        <div class="row">
+            @await Component.InvokeAsync("CardsforEachTags",new { Id = @Model.Id })
+        </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(".hover").mouseleave(
+            function () {
+                $(this).removeClass("hover");
+            }
+        );
+    </script>
+}
+
+@section css{
+    <link rel="stylesheet" href="~/assets/css/Layoutcss/Cards.css?v=1">
+}

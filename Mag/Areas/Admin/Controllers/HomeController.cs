@@ -3,6 +3,7 @@ using Mag.Areas.Admin.Models.Dto.Settings;
 using Mag.Data;
 using Mag.Models.Entities;
 using Mag.Services.FileUploadService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using System.Text;
 
 namespace Mag.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class HomeController : Controller
     {
@@ -316,12 +318,26 @@ namespace Mag.Areas.Admin.Controllers
             var banner = new BannersDto
             {
                 Banner1Address = baner1 == null ? "" : baner1.BannerAddress,
+                Banner1PhotoText = baner1.PhotoText == null ? "" : baner1.PhotoText,
+                Banner1PhotoLink = baner1.PhotoLink == null ? "" : baner1.PhotoLink,
                 Banner2Address = baner2 == null ? "" : baner2.BannerAddress,
+                Banner2PhotoText = baner2.PhotoText == null ? "" : baner2.PhotoText,
+                Banner2PhotoLink = baner2.PhotoLink == null ? "" : baner2.PhotoLink,
                 Banner3Address = baner3 == null ? "" : baner3.BannerAddress,
+                Banner3PhotoText = baner3.PhotoText == null ? "" : baner3.PhotoText,
+                Banner3PhotoLink = baner3.PhotoLink == null ? "" : baner3.PhotoLink,
                 Banner4Address = baner4 == null ? "" : baner4.BannerAddress,
+                Banner4PhotoText = baner4.PhotoText == null ? "" : baner4.PhotoText,
+                Banner4PhotoLink = baner4.PhotoLink == null ? "" : baner4.PhotoLink,
                 Banner5Address = baner5 == null ? "" : baner5.BannerAddress,
+                Banner5PhotoText = baner5.PhotoText == null ? "" : baner5.PhotoText,
+                Banner5PhotoLink = baner5.PhotoLink == null ? "" : baner5.PhotoLink,
                 Banner6Address = baner6 == null ? "" : baner6.BannerAddress,
+                Banner6PhotoText = baner6.PhotoText == null ? "" : baner6.PhotoText,
+                Banner6PhotoLink = baner6.PhotoLink == null ? "" : baner6.PhotoLink,
                 Banner7Address = baner7 == null ? "" : baner7.BannerAddress,
+                Banner7PhotoText = baner7.PhotoText == null ? "" : baner7.PhotoText,
+                Banner7PhotoLink = baner7.PhotoLink == null ? "" : baner7.PhotoLink,
             };
             return View(banner);
         }
@@ -342,6 +358,10 @@ namespace Mag.Areas.Admin.Controllers
                         await EditBaner(model.Banner1,model.Banner1.Name);
                     }
                 }
+                if (model.Banner1PhotoLink != null || model.Banner1PhotoText != null)
+                {
+                    await EditBanerTextLink("Banner1", model.Banner1PhotoText,model.Banner1PhotoLink);
+                }
                 if (model.Banner2 != null)
                 {
                     var findBanner = _DbContext.Banners.FirstOrDefault(p => p.BannerName == model.Banner2.Name);
@@ -354,6 +374,10 @@ namespace Mag.Areas.Admin.Controllers
                         await EditBaner(model.Banner2, model.Banner2.Name);
                     }
                 }
+                if (model.Banner2PhotoLink != null || model.Banner2PhotoText != null)
+                {
+                    await EditBanerTextLink("Banner2", model.Banner2PhotoText, model.Banner2PhotoLink);
+                }
                 if (model.Banner3 != null)
                 {
                     var findBanner = _DbContext.Banners.FirstOrDefault(p => p.BannerName == model.Banner3.Name);
@@ -363,8 +387,12 @@ namespace Mag.Areas.Admin.Controllers
                     }
                     else
                     {
-                        await SaveBaner(model.Banner3, model.Banner3.Name);
+                        await EditBaner(model.Banner3, model.Banner3.Name);
                     }
+                }
+                if (model.Banner3PhotoLink != null || model.Banner3PhotoText != null)
+                {
+                    await EditBanerTextLink("Banner3", model.Banner3PhotoText, model.Banner3PhotoLink);
                 }
                 if (model.Banner4 != null)
                 {
@@ -377,7 +405,10 @@ namespace Mag.Areas.Admin.Controllers
                     {
                         await EditBaner(model.Banner4, model.Banner4.Name);
                     }
-                    await SaveBaner(model.Banner4, model.Banner4.Name);
+                }
+                if (model.Banner4PhotoLink != null || model.Banner4PhotoText != null)
+                {
+                    await EditBanerTextLink("Banner4", model.Banner4PhotoText, model.Banner4PhotoLink);
                 }
                 if (model.Banner5 != null)
                 {
@@ -391,6 +422,10 @@ namespace Mag.Areas.Admin.Controllers
                         await EditBaner(model.Banner5, model.Banner5.Name);
                     }
                 }
+                if (model.Banner5PhotoLink != null || model.Banner5PhotoText != null)
+                {
+                    await EditBanerTextLink("Banner5", model.Banner5PhotoText, model.Banner5PhotoLink);
+                }
                 if (model.Banner6 != null)
                 {
                     var findBanner = _DbContext.Banners.FirstOrDefault(p => p.BannerName == model.Banner6.Name);
@@ -402,6 +437,10 @@ namespace Mag.Areas.Admin.Controllers
                     {
                         await EditBaner(model.Banner6, model.Banner6.Name);
                     }
+                }
+                if (model.Banner6PhotoLink != null || model.Banner6PhotoText != null)
+                {
+                    await EditBanerTextLink("Banner6", model.Banner6PhotoText, model.Banner6PhotoLink);
                 }
                 if (model.Banner7 != null)
                 {
@@ -415,6 +454,11 @@ namespace Mag.Areas.Admin.Controllers
                         await EditBaner(model.Banner7, model.Banner7.Name);
                     }
                 }
+                if (model.Banner7PhotoLink != null || model.Banner7PhotoText != null)
+                {
+                    await EditBanerTextLink("Banner7", model.Banner7PhotoText, model.Banner7PhotoLink);
+                }
+
                 return Redirect("/Admin/Banners");
             }
             return View();
@@ -426,7 +470,7 @@ namespace Mag.Areas.Admin.Controllers
             var baner = new Banners
             {
                 BannerName = Name,
-                BannerAddress = stringLogoPath
+                BannerAddress = stringLogoPath,
             };
 
             await _DbContext.Banners.AddAsync(baner);
@@ -448,8 +492,19 @@ namespace Mag.Areas.Admin.Controllers
             return true;
         }
 
-        #endregion
+        public async Task<bool> EditBanerTextLink(string Name,string PhotoText , string PhotoLink)
+        {
+            var findBanner = _DbContext.Banners.FirstOrDefault(p => p.BannerName == Name);
 
+            findBanner.PhotoText = PhotoText;
+            findBanner.PhotoLink = PhotoLink;
+
+            _DbContext.Entry(findBanner).State = EntityState.Modified;
+            await _DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        #endregion
 
     }
 }

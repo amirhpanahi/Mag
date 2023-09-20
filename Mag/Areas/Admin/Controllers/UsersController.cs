@@ -6,6 +6,7 @@ using Mag.Models.Entities;
 using Mag.Services.FileUploadService;
 using Mag.Services.Pagination;
 using Mag.Services.Pagination.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Mag.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class UsersController : Controller
     {

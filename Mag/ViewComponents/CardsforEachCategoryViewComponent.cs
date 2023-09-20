@@ -15,6 +15,9 @@ namespace Mag.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync(string slug)
         {
+            ViewBag.ParentIdCategories = _dbContext.CategoryTags.Where(x => x.Type == "Category" && x.ParentId == 1 && x.Id != 1).ToList();
+            ViewBag.ListUsers = _dbContext.Users.ToList();
+
             var categoryfind = _dbContext.CategoryTags.FirstOrDefault(p => p.Slug == slug);
 
             //var a = _dbContext.News.Where(p => p.Categories.Contains(categoryfind.Id.ToString()));
@@ -22,18 +25,21 @@ namespace Mag.ViewComponents
             var listnews = new List<NewsCardDto>();
             if (slug != null && categoryfind != null)
             {
-                listnews = _dbContext.News.Where(p => p.PublishNewsDatePersian != null && ("," + p.Categories + ",").Contains("," + categoryfind.Id + ",")).Select(p => new NewsCardDto
+                listnews = _dbContext.News.Where(p => p.PublishNewsDatePersian != null&& p.Status == StatusName.Publish && ("," + p.Categories + ",").Contains("," + categoryfind.Id + ",")).Select(p => new NewsCardDto
                 {
                     Title = p.Title,
                     Slug = p.Slug,
+                    Categories = p.Categories == null ? " " : p.Categories,
                     IndexImageAddress = p.IndexImageAddress,
                     IndexImageAddressAlt = p.IndexImageAddressAlt,
                     IndexImageAddressTitle = p.IndexImageAddressTitle,
                     PublishNewsDatePersianDay = getDay(p.PublishNewsDatePersian),
                     PublishNewsDatePersianmonth = getmonth(p.PublishNewsDatePersian),
+                    PublishNewsDatePersianYear = getYear(p.PublishNewsDatePersian),
                     CountOfLike = _dbContext.Likes.Where(x => x.NewsId == p.Id && x.StatusLike == StatusLike.Like).Count(),
                     CountOfComment = _dbContext.Comments.Where(x => x.NewsId == p.Id && x.Status == Comment.StatusName.Publish).Count(),
                     NewsSummary = p.NewsSummary == null ? " " : p.NewsSummary,
+                    WriterId = p.WriterId
                 }).ToList();
             }
             else
@@ -105,6 +111,12 @@ namespace Mag.ViewComponents
                     break;
             }
             return Retmonth;
+        }
+        static string getYear(string date)
+        {
+            var SeprateDayMonth = date.Split(" ");
+            var GetDayMonth = SeprateDayMonth[0].Split("/");
+            return GetDayMonth[0];
         }
     }
 }

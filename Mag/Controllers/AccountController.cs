@@ -7,6 +7,7 @@ using Mag.Models.Entities;
 using Mag.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mag.Controllers
 {
@@ -32,6 +33,11 @@ namespace Mag.Controllers
             return View();
         }
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         #region Register
 
         [HttpGet]
@@ -44,6 +50,7 @@ namespace Mag.Controllers
         public async Task<IActionResult> Register(RegisterUserDto registerUser)
         {
             var FindUser = await _userManager.FindByEmailAsync(registerUser.Email);
+            var FindUserName = await _DbContext.Users.FirstOrDefaultAsync(x => x.UserName == registerUser.UserName);
             var UserPhone = _DbContext.Users.Where(p => p.PhoneNumber == registerUser.PhoneNumber).ToList();
             if (registerUser.Password != registerUser.ConfirmPassword)
             {
@@ -52,6 +59,10 @@ namespace Mag.Controllers
             if (FindUser != null)
             {
                 ModelState.AddModelError("Email", "این ایمیل قبلا ثبت نام شده است");
+            }
+            if (FindUserName != null)
+            {
+                ModelState.AddModelError("UserName", "این نام کاربری قبلا ثبت نام شده است");
             }
             if (registerUser.PhoneNumber.Length != 11)
             {
@@ -71,7 +82,7 @@ namespace Mag.Controllers
                 FirstName = registerUser.FirstName,
                 LastName = registerUser.LastName,
                 Email = registerUser.Email,
-                UserName = registerUser.Email,
+                UserName = registerUser.UserName,
                 PhoneNumber = registerUser.PhoneNumber,
                 DateRegister = DateTime.Now,
                 DateRegisterPresian = Utility.ConvertToPersian(DateTime.Now),

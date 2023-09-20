@@ -28,8 +28,8 @@
         public bool IsActive { get; set; }
         public StatusName? Status { get; set; }
         public string? NewsSummary { get; set; }
-
         public int? CountSeeNews { get; set; }
+        public bool IsSelectBychiefEditor { get; set; }
 
     }
 

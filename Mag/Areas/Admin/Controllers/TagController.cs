@@ -2,11 +2,13 @@
 using Mag.Data;
 using Mag.Models.Entities;
 using Mag.Services.FileUploadService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mag.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class TagController : Controller
     {

@@ -9,7 +9,7 @@
 
 <div b-r6so7zx28k="" class="app-navbar-item ms-1 ms-md-3" id="kt_header_user_menu_toggle">
     <!--begin::Menu wrapper-->
-    <div b-r6so7zx28k="" class="cursor-pointer symbol symbol-55px symbol-md-55px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" style="margin-left:110px">
+    <div b-r6so7zx28k="" class="cursor-pointer symbol symbol-55px symbol-md-55px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
         @if (Model == null)
         {
             <img b-r6so7zx28k="" src="assets/media/avatars/300-1.jpg" alt="user">
@@ -60,6 +60,14 @@
             <a b-r6so7zx28k="" href="/Profile/index" class="menu-link px-5">پروفایل من</a>
         </div>
         <!--end::Menu item-->
+        @if (Model.IsAdmin == true)
+        {
+            <!--begin::Menu item-->
+            <div b-r6so7zx28k="" class="menu-item px-5">
+                <a b-r6so7zx28k="" href="/Admin/index" class="menu-link px-5">پنل ادمین</a>
+            </div>
+            <!--end::Menu item-->
+        }
         <!--begin::Menu item-->
         <div b-r6so7zx28k="" class="menu-item px-5">
             <a b-r6so7zx28k="" href="/Account/Logout" class="menu-link px-5">خروج</a>

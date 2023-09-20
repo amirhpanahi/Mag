@@ -1,4 +1,5 @@
 ﻿@using Mag.Common
+@using Mag.Models.Entities;
 @model IEnumerable<Mag.Areas.Admin.Models.Dto.News.NewsListDto>
 @{
     ViewData["Title"] = "اخبار در انتظار تایید";
@@ -7,6 +8,7 @@
                             {
                 "warning","primary","info","success","danger","dark"
                             };
+    var Categories = ViewBag.Categories as List<CategoryTag>;
 }
 <br>
 <div class="card shadow-sm">
@@ -58,6 +60,13 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
+                        List<string> catsName = new List<string>();
+                        if (item.Categories != "")
+                        {
+                            item.Categories = item.Categories.Trim(',');
+                            var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+                            catsName.AddRange(Categories.Where(x => splitcat.Contains(x.Id)).Select(x => x.Name));
+                        }
                         <tr>
                             <td style="vertical-align: middle;text-align: center;">
                                 @item.Title
@@ -83,16 +92,16 @@
                                 }
                             </td>
                             <td style="vertical-align: middle;text-align: center;">
-                                @Html.DisplayFor(modelItem => item.WriterId)
+                                @item.WriterName.FirstName @item.WriterName.LastName
                             </td>
                             <td style="vertical-align: middle;text-align: center;">
-                                @Html.DisplayFor(modelItem => item.Categories)
+                                @string.Join("، ",catsName)
                             </td>
                             <td style="vertical-align: middle;text-align: center;">
                                   <input asp-for="@item.IsActive" class="form-check-input " type="checkbox" disabled style="border-color:gray;" />
                             </td>
                             <td style="vertical-align: middle;text-align: center;">
-                                @Html.DisplayFor(modelItem => item.Status)
+                                پیشنویس شده
                             </td>
                             <td width="140px">
                                 <div class="col-sm-6">

@@ -36,6 +36,12 @@ namespace Mag.Migrations
                     b.Property<string>("BannerName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PhotoLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoText")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Banners");
@@ -185,6 +191,9 @@ namespace Mag.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSelectBychiefEditor")
                         .HasColumnType("bit");
 
                     b.Property<string>("KeyWords")

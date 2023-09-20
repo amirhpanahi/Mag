@@ -3,6 +3,7 @@ using Mag.Common;
 using Mag.Data;
 using Mag.Models.Entities;
 using Mag.Services.FileUploadService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,7 @@ using System.Text;
 
 namespace Mag.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class NewsController : Controller
     {
@@ -85,7 +87,7 @@ namespace Mag.Areas.Admin.Controllers
                 NewsSummary = FindNews.NewsSummary == null ? " " : FindNews.NewsSummary
             };
 
-            ViewBag.StatusName = FindNews.Status.ToString();
+            ViewBag.StatusName = FindNews.Status.Value.ToString();
             return View(DetailsNews);
         }
         #endregion
@@ -162,7 +164,7 @@ namespace Mag.Areas.Admin.Controllers
                 if (model.indexImageFile.ContentType == "image/png" || model.indexImageFile.ContentType == "image/jpg" ||
                     model.indexImageFile.ContentType == "image/jpeg" || model.indexImageFile.ContentType == "image/gif")
                 {
-                    stringImagePath = $"Media/News/" + await _fileUpload.UploadFileAsync(model.indexImageFile, model.Title, "News", "Video");
+                    stringImagePath = $"Media/News/" + await _fileUpload.UploadFileAsync(model.indexImageFile, model.Title, "News");
                 }
                 else
                 {
@@ -183,7 +185,7 @@ namespace Mag.Areas.Admin.Controllers
                 }
                 if (model.VideoFile.ContentType == "video/mp4" || model.VideoFile.ContentType == "video/wmv")
                 {
-                    stringVideoPath = $"Media/News/" + await _fileUpload.UploadFileAsync(model.VideoFile, model.Title, "News");
+                    stringVideoPath = $"Media/News/" + await _fileUpload.UploadFileAsync(model.VideoFile, model.Title, "News", "Video");
                 }
                 else
                 {
@@ -290,6 +292,7 @@ namespace Mag.Areas.Admin.Controllers
                 TagId = TagId,
                 Tags = Tags,
                 IsActive = FindNews.IsActive,
+                IsSelectBychiefEditor = FindNews.IsSelectBychiefEditor,
                 Status = FindNews.Status,
                 DraftTimePersain = FindNews.DraftNewsDatePersian,
                 RegisterDatePersian = FindNews.RegisterNewsDatePersian,
@@ -401,6 +404,7 @@ namespace Mag.Areas.Admin.Controllers
                 NewsFind.DraftNewsDatePersian = Draft == "Draft" && NewsFind.DraftNewsDatePersian == null ? Utility.ConvertToPersian(DateTime.Now) : NewsFind.DraftNewsDatePersian;
                 NewsFind.WriterId = userId;
                 NewsFind.IsActive = model.IsActive;
+                NewsFind.IsSelectBychiefEditor = model.IsSelectBychiefEditor;
                 NewsFind.Status = Draft == null ? StatusName.Publish : StatusName.Draft;
                 NewsFind.CountSeeNews = model.CountSeeNews;
                 NewsFind.NewsSummary = model.NewsSummary;
@@ -489,7 +493,7 @@ namespace Mag.Areas.Admin.Controllers
                 _DbContext.Entry(FindNews).State = EntityState.Modified;
                 await _DbContext.SaveChangesAsync();
 
-                return RedirectToAction("Index", "News", new { Areas = "Admin" });
+                return Redirect("Admin/News/DeletedNewses");
             }
 
             return View();
@@ -528,10 +532,24 @@ namespace Mag.Areas.Admin.Controllers
                 IndexImageAddressAlt = p.IndexImageAddressAlt,
                 IndexImageAddressTitle = p.IndexImageAddressTitle,
                 WriterId = p.WriterId,
+                WriterName = _DbContext.Users.Where(q => q.Id == p.WriterId).Select(q => new FullnameUser { FirstName = q.FirstName, LastName = q.LastName }).First(),
                 Categories = p.Categories,
                 IsActive = p.IsActive,
                 Status = p.Status,
             }).ToList();
+
+            List<int> Categories = new List<int>();
+            foreach (var item in ListNews)
+            {
+                if (item.Categories != "")
+                {
+                    item.Categories = item.Categories.Trim(',');
+                    var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+                    Categories.AddRange(splitcat);
+                }
+            }
+            var Cats = _DbContext.CategoryTags.Where(p => Categories.Contains(p.Id)).ToList();
+            ViewBag.Categories = Cats;
             return View(ListNews);
         }
         #endregion
@@ -549,10 +567,24 @@ namespace Mag.Areas.Admin.Controllers
                 IndexImageAddressAlt = p.IndexImageAddressAlt,
                 IndexImageAddressTitle = p.IndexImageAddressTitle,
                 WriterId = p.WriterId,
+                WriterName = _DbContext.Users.Where(q => q.Id == p.WriterId).Select(q => new FullnameUser { FirstName = q.FirstName, LastName = q.LastName }).First(),
                 Categories = p.Categories,
                 IsActive = p.IsActive,
                 Status = p.Status,
             }).ToList();
+
+            List<int> Categories = new List<int>();
+            foreach (var item in ListNews)
+            {
+                if (item.Categories != "")
+                {
+                    item.Categories = item.Categories.Trim(',');
+                    var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+                    Categories.AddRange(splitcat);
+                }
+            }
+            var Cats = _DbContext.CategoryTags.Where(p => Categories.Contains(p.Id)).ToList();
+            ViewBag.Categories = Cats;
             return View(ListNews);
         }
         public async Task<IActionResult> RejectedByAdmin(int Id)
@@ -586,10 +618,24 @@ namespace Mag.Areas.Admin.Controllers
                 IndexImageAddressAlt = p.IndexImageAddressAlt,
                 IndexImageAddressTitle = p.IndexImageAddressTitle,
                 WriterId = p.WriterId,
+                WriterName = _DbContext.Users.Where(q => q.Id == p.WriterId).Select(q => new FullnameUser { FirstName = q.FirstName, LastName = q.LastName }).First(),
                 Categories = p.Categories,
                 IsActive = p.IsActive,
                 Status = p.Status,
             }).ToList();
+
+            List<int> Categories = new List<int>();
+            foreach (var item in ListNews)
+            {
+                if (item.Categories != "")
+                {
+                    item.Categories = item.Categories.Trim(',');
+                    var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+                    Categories.AddRange(splitcat);
+                }
+            }
+            var Cats = _DbContext.CategoryTags.Where(p => Categories.Contains(p.Id)).ToList();
+            ViewBag.Categories = Cats;
             return View(ListNews);
         }
         #endregion 
@@ -607,10 +653,24 @@ namespace Mag.Areas.Admin.Controllers
                 IndexImageAddressAlt = p.IndexImageAddressAlt,
                 IndexImageAddressTitle = p.IndexImageAddressTitle,
                 WriterId = p.WriterId,
+                WriterName = _DbContext.Users.Where(q => q.Id == p.WriterId).Select(q => new FullnameUser { FirstName = q.FirstName, LastName = q.LastName }).First(),
                 Categories = p.Categories,
                 IsActive = p.IsActive,
                 Status = p.Status,
             }).ToList();
+
+            List<int> Categories = new List<int>();
+            foreach (var item in ListNews)
+            {
+                if (item.Categories != "")
+                {
+                    item.Categories = item.Categories.Trim(',');
+                    var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+                    Categories.AddRange(splitcat);
+                }
+            }
+            var Cats = _DbContext.CategoryTags.Where(p => Categories.Contains(p.Id)).ToList();
+            ViewBag.Categories = Cats;
             return View(ListNews);
         }
         #endregion 

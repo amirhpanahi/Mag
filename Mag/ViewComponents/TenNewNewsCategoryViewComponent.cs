@@ -15,22 +15,43 @@ namespace Mag.ViewComponents
         {
             _dbContext = dataBaseContex;
         }
-        public async Task<IViewComponentResult> InvokeAsync(int Pid)
+        public async Task<IViewComponentResult> InvokeAsync(int? Pid)
         {
-            var cat = _dbContext.CategoryTags.FirstOrDefault(p => p.Id == Pid);
-
-            var listNews = _dbContext.News.OrderByDescending(p => p.PublishNewsDate).Where(p => p.Status == StatusName.Publish
-            && ("," + p.Categories + ",").Contains("," + Pid + ",")).Take(10).ToList().Select(p=>new NewsListDto
+            if (Pid == null)
             {
-                Title = p.Title,
-                IndexImageAddress = p.IndexImageAddress,
-                IndexImageAddressAlt = p.IndexImageAddressAlt,
-                IndexImageAddressTitle = p.IndexImageAddressTitle,
-                Slug = p.Slug
-            }).ToList();
+                var ParentIdCategory = await _dbContext.CategoryTags.Where(x => x.Type == "Category" && x.ParentId == 1 && x.Id != 1).FirstAsync();
 
-            var RetVal = new Tuple<List<NewsListDto>?,string>(listNews,cat.Name);
-            return View(RetVal);
+                var listNews = _dbContext.News.OrderByDescending(p => p.PublishNewsDate).Where(p => p.Status == StatusName.Publish
+                && ("," + p.Categories + ",").Contains("," + ParentIdCategory.Id + ",")).Take(10).ToList().Select(p => new NewsListDto
+                {
+                    Title = p.Title,
+                    IndexImageAddress = p.IndexImageAddress,
+                    IndexImageAddressAlt = p.IndexImageAddressAlt,
+                    IndexImageAddressTitle = p.IndexImageAddressTitle,
+                    Slug = p.Slug
+                }).ToList();
+
+                var RetVal = new Tuple<List<NewsListDto>?, string>(listNews, ParentIdCategory.Name);
+                return View(RetVal);
+            }
+            else
+            {
+                var cat = _dbContext.CategoryTags.FirstOrDefault(p => p.Id == Pid);
+
+                var listNews = _dbContext.News.OrderByDescending(p => p.PublishNewsDate).Where(p => p.Status == StatusName.Publish
+                && ("," + p.Categories + ",").Contains("," + Pid + ",")).Take(10).ToList().Select(p => new NewsListDto
+                {
+                    Title = p.Title,
+                    IndexImageAddress = p.IndexImageAddress,
+                    IndexImageAddressAlt = p.IndexImageAddressAlt,
+                    IndexImageAddressTitle = p.IndexImageAddressTitle,
+                    Slug = p.Slug
+                }).ToList();
+
+                var RetVal = new Tuple<List<NewsListDto>?, string>(listNews, cat.Name);
+                return View(RetVal);
+            }
+
         }
     }
 }

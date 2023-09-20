@@ -39,4 +39,11 @@
     <Folder Include="wwwroot\Media\Tags\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\assets\OwlCarousel\LICENSE" />
+    <None Include="wwwroot\assets\OwlCarousel\owl.carousel.js" />
+    <None Include="wwwroot\assets\OwlCarousel\owl.carousel.min.js" />
+    <None Include="wwwroot\assets\OwlCarousel\README.md" />
+  </ItemGroup>
+
 </Project>

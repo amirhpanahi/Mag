@@ -8,6 +8,7 @@
                                                                                 {
                 "warning","primary","info","success","danger","dark"
                                                                                 };
+    var Categories = ViewBag.Categories as List<CategoryTag>;
 }
 <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
     <!--begin::Toolbar container-->
@@ -320,6 +321,13 @@
                         <tbody>
                             @foreach (var item in Model.Item2)
                             {
+                                List<string> catsName = new List<string>();
+                                if (item.Categories != "")
+                                {
+                                    item.Categories = item.Categories.Trim(',');
+                                    var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+                                    catsName.AddRange(Categories.Where(x => splitcat.Contains(x.Id)).Select(x => x.Name));
+                                }
                                 <tr>
                                     <td style="vertical-align: middle;text-align: center;">
                                         @item.Title
@@ -345,16 +353,31 @@
                                         }
                                     </td>
                                     <td style="vertical-align: middle;text-align: center;">
-                                        @Html.DisplayFor(modelItem => item.WriterId)
+                                        @item.WriterName.FirstName @item.WriterName.LastName
                                     </td>
                                     <td style="vertical-align: middle;text-align: center;">
-                                        @Html.DisplayFor(modelItem => item.Categories)
+                                        @string.Join("، ",catsName)
                                     </td>
                                     <td style="vertical-align: middle;text-align: center;">
                                         <input asp-for="@item.IsActive" class="form-check-input " type="checkbox" disabled style="border-color:gray;" />
                                     </td>
                                     <td style="vertical-align: middle;text-align: center;">
-                                        @Html.DisplayFor(modelItem => item.Status)
+                                        
+                                        @switch (item.Status.Value.ToString())
+                                        {
+                                            case "Publish":
+                                                <span>انتشار</span>
+                                                break;
+                                            case "Draft":
+                                                <span>پیشنویس</span>
+                                                break;
+                                            case "WaitingForConfirm":
+                                                <span>در انتظار تایید</span>
+                                                break;
+                                            case "RejectedByAdmin":
+                                                <span>رد شده توسط ادمین</span>
+                                                break;
+                                        }
                                     </td>
                                     <td style="vertical-align: middle;text-align: center;">
                                         @if (item.Status == StatusName.Publish || item.Status == StatusName.Draft)

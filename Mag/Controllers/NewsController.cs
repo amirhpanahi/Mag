@@ -4,6 +4,7 @@ using Mag.Common;
 using Mag.Data;
 using Mag.Models.Entities;
 using Mag.Services.FileUploadService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,45 @@ namespace Mag.Controllers
             return View(model);
         }
 
+        #region TagsNews
+        [HttpGet]
+        [Route("News/Tag/{Id}")]
+        public async Task<IActionResult> Tag(int Id)
+        {
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    var userIdVisitor = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //    ViewBag.userIdVisitor = userIdVisitor;
+            //}
+            //var findNews = await _DbContext.CategoryTags.FirstOrDefaultAsync(x => x.Id == Id);
+            //if (findNews == null)
+            //{
+            //    return Redirect("/NotFound/News");
+            //}
+            //var model = new NewsCardDto
+            //{
+            //    Id = findNews.Id,
+            //    Slug = findNews.Slug,
+            //    CountOfLike = await _DbContext.Likes.Where(p => p.NewsId == findNews.Id && p.StatusLike == StatusLike.Like).CountAsync()
+            //};
+            //return View(model);
+            var model = new NewsListDto
+            {
+                Id = Id
+            };
+            return View(model);
+        }
+        #endregion
+
+        #region NotFound
+        [HttpGet]
+        [Route("NotFound/News")]
+        public IActionResult NotFound()
+        {
+            return View();
+        }
+        #endregion
+
         #region ShowNews
         [HttpGet]
         [Route("News/{slug}")]
@@ -43,6 +83,10 @@ namespace Mag.Controllers
                 ViewBag.userIdVisitor=userIdVisitor;
             }
             var findNews = await _DbContext.News.FirstOrDefaultAsync(x => x.Slug == slug);
+            if (findNews == null)
+            {
+                return Redirect("/NotFound/News");
+            }
             var model = new NewsCardDto
             {
                 Id = findNews.Id,
@@ -53,6 +97,7 @@ namespace Mag.Controllers
         }
         #endregion
 
+        #region submitComment
         [HttpPost]
         [Route("api/submitComment")]
         public async Task<string> SubmitComment(string IdCommentWriter,string TextComment,int NewsId)
@@ -85,7 +130,7 @@ namespace Mag.Controllers
             }
             return "UnKnow";
         }
-        
+        #endregion
 
         #region Category
         [HttpGet]
@@ -102,6 +147,7 @@ namespace Mag.Controllers
 
         #region Add
         [HttpGet]
+        [Authorize(Roles = "writer")]
         [Route("User/News/Add")]
         public IActionResult Add()
         {
@@ -128,6 +174,7 @@ namespace Mag.Controllers
             });
         }
         [Route("User/News/Add")]
+        [Authorize(Roles = "writer")]
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 111148393)]//110
         public async Task<IActionResult> Add(NewsAddDto model, string? Draft, string? Publish)
@@ -242,10 +289,11 @@ namespace Mag.Controllers
             }
             return View(model);
         }
-        #endregion
+        #endregion 
 
         #region Edit
         [HttpGet]
+        [Authorize(Roles = "writer")]
         [Route("User/NewsEdit/{id}")]
         public IActionResult Edit(int id)
         {
@@ -324,6 +372,7 @@ namespace Mag.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "writer")]
         [Route("User/NewsEdit")]
         [RequestFormLimits(MultipartBodyLengthLimit = 111148393)]//110
         public async Task<IActionResult> Edit(NewsEditDto model, string? Draft, string? Publish)

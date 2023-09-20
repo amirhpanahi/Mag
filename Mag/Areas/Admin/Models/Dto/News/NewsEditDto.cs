@@ -27,6 +27,7 @@ namespace Mag.Areas.Admin.Models.Dto.News
         public int? CountSeeNews { get; set; }
         public IFormFile? indexImageFile { get; set; }
         public IFormFile? VideoFile { get; set; }
+        public bool IsSelectBychiefEditor { get; set; }
 
         public List<int>? CategoryId { get; set; }
         public List<SelectListItem>? Categories { get; set; }

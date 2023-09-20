@@ -1,0 +1,19 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,300,500);
+.PNotFound {
+    font-size: 2em;
+    text-align: center;
+    font-weight: 100;
+}
+
+.h1NotFound {
+    text-align: center;
+    font-size: 15em;
+    font-weight: 100;
+}
+.CollectionNotFound{
+    height:371px
+}
+footer {
+    bottom: 0;
+    width: 100%;
+}

@@ -12,6 +12,7 @@ builder.Services.AddDbContext<DataBaseContext>(x =>
     x.UseSqlServer(builder.Configuration.GetConnectionString("MagConn")));
 builder.Services.AddIdentity<User,Role>()
     .AddEntityFrameworkStores<DataBaseContext>()
+    .AddRoles<Role>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IFileUploadService, LocalFileUploadService>();
@@ -34,6 +35,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllerRoute(
+    name: "ProfileUser",
+    pattern: "{ShowUserProfile?}");
 
 app.UseEndpoints(endpoints =>
 {
@@ -47,5 +51,7 @@ app.UseEndpoints(endpoints =>
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 app.Run();
