@@ -1,0 +1,234 @@
+﻿@model Mag.Areas.Admin.Models.Dto.Home.BannersDto
+@{
+    ViewData["Title"] = "تنظیمات بنر سایت";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!--begin::Toolbar-->
+<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+            <!--begin::Title-->
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">تنظیمات</h1>
+            <!--end::Title-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">ادمین</a> 
+                </li>
+                <!--end::آیتم-->
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                </li>
+                <!--end::آیتم-->
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item text-muted">تنظیمات</li>
+                <!--end::آیتم-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+    </div>
+    <!--end::Toolbar container-->
+</div>
+<!--end::Toolbar-->
+<div class="card shadow-sm">
+    <form action="/Admin/MainBanners" method="post" enctype="multipart/form-data">
+        <div class="card-header">
+            <h3 class="card-title">
+                تنظیمات بنر
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="row" style="">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-12" data-bs-toggle="tooltip" data-bs-html="true" data-bs-custom-class="tooltip-inverse" data-bs-placement="top" title="بنرشماره 1<br>طول 994 پیکسل <br> عرض 140 پیکسل">
+                            <div class="cardBanner Banner2 d-flex justify-content-center align-items-center" style="background-image:url(../../../@Model.Banner1Address)">
+                                <div class="content">
+                                    <input type="file" class="form-control mt-2" name="Banner1" accept=".png,.jpg,.jpeg,.gif">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-md-6" data-bs-toggle="tooltip" data-bs-html="true" data-bs-custom-class="tooltip-inverse" data-bs-placement="top" title="بنرشماره 2 <br> 470 پیکسل <br> عرض 518 پیکسل">
+                            <div class="cardBanner Banner3 d-flex justify-content-center align-items-center" style="background-image:url(../../../@Model.Banner2Address)">
+                                <div class="content">
+                                    <input type="file" class="form-control mt-2" name="Banner2" accept=".png,.jpg,.jpeg,.gif">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6 " data-bs-toggle="tooltip" data-bs-html="true" data-bs-custom-class="tooltip-inverse" data-bs-placement="top" title="بنرشماره 3<br> 235 پیکسل <br> عرض 250 پیکسل">
+                                    <div class="cardBanner Banner4 d-flex justify-content-center align-items-center" style="background-image:url(../../../@Model.Banner3Address)">
+                                        <div class="content">
+                                            <input type="file" class="form-control mt-2" name="Banner3" accept=".png,.jpg,.jpeg,.gif">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 " data-bs-toggle="tooltip" data-bs-html="true" data-bs-custom-class="tooltip-inverse" data-bs-placement="top" title="بنرشماره 4<br>طول 235 پیکسل <br> عرض 250 پیکسل">
+                                    <div class="cardBanner Banner5 d-flex justify-content-center align-items-center" style="background-image:url(../../../@Model.Banner4Address)">
+                                        <div class="content">
+                                            <input type="file" class="form-control mt-2" name="Banner4" accept=".png,.jpg,.jpeg,.gif">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-5">
+                                <div class="col-md-6" data-bs-toggle="tooltip" data-bs-html="true" data-bs-custom-class="tooltip-inverse" data-bs-placement="top" title="بنرشماره 5<br>طول 235 پیکسل <br> عرض 250 پیکسل">
+                                    <div class="cardBanner Banner6 d-flex justify-content-center align-items-center" style="background-image:url(../../../@Model.Banner5Address)">
+                                        <div class="content">
+                                            <input type="file" class="form-control mt-2" name="Banner5" accept=".png,.jpg,.jpeg,.gif">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" data-bs-toggle="tooltip" data-bs-html="true" data-bs-custom-class="tooltip-inverse" data-bs-placement="top" title="بنرشماره 6<br>طول 235 پیکسل <br> عرض 250 پیکسل">
+                                    <div class="cardBanner Banner7 d-flex justify-content-center align-items-center" style="background-image:url(../../../@Model.Banner6Address)">
+                                        <div class="content">
+                                            <input type="file" class="form-control mt-2" name="Banner6" accept=".png,.jpg,.jpeg,.gif">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+        <br /><br /><hr /><br /><br />
+
+        <div class="row">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <label class="control-label pb-1" style="font-size:16px">بنر شماره 1</label>
+                                    <input asp-for="Banner1PhotoText" class="form-control mt-2" placeholder="متن روی عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <input asp-for="Banner1PhotoLink" class="form-control" placeholder="لینک عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <label class="control-label pb-1" style="font-size:16px">بنر شماره 2</label>
+                                    <input asp-for="Banner2PhotoText" class="form-control mt-2" placeholder="متن روی عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <input asp-for="Banner2PhotoLink" class="form-control" placeholder="لینک عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <label class="control-label pb-1" style="font-size:16px">بنر شماره 3</label>
+                                    <input asp-for="Banner3PhotoText" class="form-control mt-2" placeholder="متن روی عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <input asp-for="Banner3PhotoLink" class="form-control" placeholder="لینک عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <label class="control-label pb-1" style="font-size:16px">بنر شماره 4</label>
+                                    <input asp-for="Banner4PhotoText" class="form-control mt-2" placeholder="متن روی عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <input asp-for="Banner4PhotoLink" class="form-control" placeholder="لینک عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <label class="control-label pb-1" style="font-size:16px">بنر شماره 5</label>
+                                    <input asp-for="Banner5PhotoText" class="form-control mt-2" placeholder="متن روی عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <input asp-for="Banner5PhotoLink" class="form-control" placeholder="لینک عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <label class="control-label pb-1" style="font-size:16px">بنر شماره 6</label>
+                                    <input asp-for="Banner6PhotoText" class="form-control mt-2" placeholder="متن روی عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group pb-4">
+                                    <input asp-for="Banner6PhotoLink" class="form-control" placeholder="لینک عکس" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 d-flex justify-content-center">
+                        <button class="btn btn-primary">ذخیره</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+    </form>
+    <br /><br />
+</div>
+
+@section css{
+    <link rel="stylesheet" href="~/assets/css/Layoutcss/BannersAdmin.css?v=1" />
+}

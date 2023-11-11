@@ -6,6 +6,7 @@ using Mag.Services;
 using Mag.Services.FileUploadService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Text;
 
@@ -28,10 +29,21 @@ namespace Mag.Controllers
         }
 
         #region Index
-        public async Task<IActionResult> Index()
+        [Route("/Profile/Index/User")]
+        [Route("Profile/Index/")]
+        public async Task<IActionResult> Index(int? page)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await _userManager.FindByIdAsync(userId);
+
+            var CurentPage = (page == null || page == 0) ? 1 : page.Value;
+            var PageSize = 5;
+            var SkipData = (CurentPage - 1) * PageSize;
+            var CountData = await _DbContext.News.Where(p => p.WriterId == userId).CountAsync();
+            var ToalPage = (int)Math.Ceiling((double)CountData / PageSize);
+
+            ViewBag.CurentPage = CurentPage;
+            ViewBag.ToalPage = ToalPage;
 
             var ListNews = _DbContext.News.Where(p => p.WriterId == userId && p.Status!=StatusName.Delete).Select(p => new NewsListDto
             {
@@ -46,7 +58,7 @@ namespace Mag.Controllers
                 Categories = p.Categories,
                 IsActive = p.IsActive,
                 Status = p.Status,
-            }).ToList();
+            }).Skip(SkipData).Take(PageSize).ToList();
 
             List<int> Categories = new List<int>();
             foreach (var item in ListNews)
@@ -72,8 +84,9 @@ namespace Mag.Controllers
                 roleNme.Append($"{a.Name},");
             }
 
-            var CommentCount = _DbContext.Comments.Where(p => p.UserId == userId && p.Status == Comment.StatusName.Publish).Count();
-            var RetVal = new Tuple<User,List<NewsListDto>,string?,int?,int?>(user,ListNews,roleNme.ToString(), RoleUserWriter,CommentCount);
+            var CommentCount = await _DbContext.Comments.Where(p => p.UserId == userId && p.Status == Comment.StatusName.Publish).CountAsync();
+            var NewsCount = await _DbContext.News.Where(p => p.WriterId == userId && p.Status != StatusName.Delete).CountAsync();
+            var RetVal = new Tuple<User,List<NewsListDto>,string?,int?,int?, int?>(user,ListNews,roleNme.ToString(), RoleUserWriter,CommentCount,NewsCount);
 
             return View(RetVal);
         }
@@ -92,6 +105,7 @@ namespace Mag.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
+                UserName = user.UserName,
                 PhoneNumber = user.PhoneNumber,
                 PicAddress = user.PicAddress,
             };
@@ -102,6 +116,11 @@ namespace Mag.Controllers
         {
             var stringPath = "";
             var FindUser = await _userManager.FindByIdAsync(model.Id);
+            var findUserName = await _userManager.FindByNameAsync(model.UserName);
+            if (findUserName != null)
+            {
+                ModelState.AddModelError("UserName", "این نام کاربری قبلا ثبت شده");
+            }
             if (model.FirstName == null)
             {
                 ModelState.AddModelError("FirstName", "فرمت وارد شده صحیح نمی باشد");
@@ -157,13 +176,14 @@ namespace Mag.Controllers
             FindUser.FirstName = model.FirstName;
             FindUser.LastName = model.LastName;
             FindUser.PhoneNumber = model.PhoneNumber;
+            FindUser.UserName = model.UserName;
             FindUser.PicAddress = model.File == null ? FindUser.PicAddress : $"Media/Users/{stringPath}";
 
             var result = await _userManager.UpdateAsync(FindUser);
 
             if (result.Succeeded)
             {
-                return RedirectToAction("index", "Profile");
+                return Redirect("/Profile/index");
             }
 
             return View();
@@ -277,6 +297,7 @@ namespace Mag.Controllers
                 model.FirstName = FindUser.FirstName;
                 model.LastName = FindUser.LastName;
                 model.PhoneNumber = FindUser.PhoneNumber;
+                model.UserName = FindUser.UserName;
                 return View("Edit", model);
             }
             if (result == PasswordVerificationResult.Success)

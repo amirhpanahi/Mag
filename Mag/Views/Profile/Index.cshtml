@@ -1,6 +1,6 @@
 ﻿@using Mag.Common
 @using Mag.Models.Entities
-@model Tuple<User,List<Mag.Areas.Admin.Models.Dto.News.NewsListDto>,string?,int?,int?>
+@model Tuple<User,List<Mag.Areas.Admin.Models.Dto.News.NewsListDto>,string?,int?,int?,int?>
 @{
     ViewData["Title"] = " پروفایل کاربر";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -102,7 +102,7 @@
                                     <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                         <!--begin::شماره کارت-->
                                         <div class="d-flex align-items-center justify-content-center">
-                                            <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="4500" data-kt-countup-prefix="$" data-kt-initialized="1">@Model.Item2.Count</div>
+                                            <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="4500" data-kt-countup-prefix="$" data-kt-initialized="1">@Model.Item6</div>
                                         </div>
                                         <!--end::شماره کارت-->
                                         <!--begin::Tags-->
@@ -394,7 +394,7 @@
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-auto min-w-200 mw-300px" data-kt-menu="true">
                                                     <div class="list-group p-2" style="background-color:lavender">
                                                         <a href="/User/NewsEdit/@item.Id" class="badge badge-success mb-1 py-4" style="width:67px;height:20px;justify-content: center;">ویرایش</a>
-                                                        <a href="/News/Details/@item.Id" class="badge badge-primary  mb-1 py-4" style="width:67px;height:20px;justify-content: center;">جزییات</a>
+                                                        <a href="/User/NewsDetails/@item.Id" class="badge badge-primary  mb-1 py-4" style="width:67px;height:20px;justify-content: center;">جزییات</a>
                                                     </div>
                                                 </div>
                                                 <!--end::Menu-->
@@ -414,14 +414,11 @@
             </div>
             <div class="card-footer">
                 <ul class="pagination">
-                    <li class="page-item previous disabled"><a href="#" class="page-link"><i class="previous"></i></a></li>
-                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item "><a href="#" class="page-link">2</a></li>
-                    <li class="page-item "><a href="#" class="page-link">3</a></li>
-                    <li class="page-item "><a href="#" class="page-link">4</a></li>
-                    <li class="page-item "><a href="#" class="page-link">5</a></li>
-                    <li class="page-item "><a href="#" class="page-link">6</a></li>
-                    <li class="page-item next"><a href="#" class="page-link"><i class="next"></i></a></li>
+                    @for (int i = 1; i <= ViewBag.ToalPage; i++)
+                    {
+                        var ActiveMode = @ViewBag.CurentPage == i ? "active" : "";
+                        <li class="page-item @ActiveMode" id="Pagination @i"><a href="/Profile/Index/?page=@i" class="page-link">@i</a></li>
+                    }
                 </ul>
             </div>
             <!--end::کارت body-->

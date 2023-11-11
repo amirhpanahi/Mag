@@ -118,5 +118,28 @@
         </div>
     </div>
     <div class="card-footer">
+        <ul class="pagination">
+            @for (int i = 1; i <= ViewBag.ToalPage; i++)
+            {
+                var ActiveMode = @ViewBag.CurentPage == i ? "active" : "";
+                <li class="page-item @ActiveMode" id="Pagination @i"><a href="/Admin/News/Index?page=@i" class="page-link">@i</a></li>
+            }
+        </ul>
     </div>
 </div>
+@section Scripts{
+    <script src="~/assets/pagination/paginathing.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#news-list").paginathing({
+                perPage: 3,
+                prevText: '<i class="ri-arrow-right-s-line"></i>',
+                nextText: '<i class="ri-arrow-left-s-line"></i>',
+                firstText: '<i class="ri-arrow-right-double-line"></i>',
+                lastText: '<i class="ri-arrow-left-double-line"></i>',
+                containerClass: 'd-flex justify-content-center mt-60',
+                ulClass: 'pagination style-5 color-5'
+            });
+        });
+    </script>
+}

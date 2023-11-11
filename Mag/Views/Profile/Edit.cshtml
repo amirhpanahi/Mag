@@ -157,6 +157,19 @@
                             <!--end::Col-->
                         </div>
                         <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Tags-->
+                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">نام کاربری</label>
+                            <!--end::Tags-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                <input type="text" asp-for="UserName" class="form-control form-control-lg form-control-solid">
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
                     </div>
                     <!--end::کارت body-->
                     <!--begin::Actions-->
@@ -264,14 +277,14 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="fv-row mb-0">
-                                            <label asp-for="NewPassword" class="form-label fs-6 fw-bold mb-3">کلمه عبور فعلی</label>
+                                            <label asp-for="NewPassword" class="form-label fs-6 fw-bold mb-3">کلمه عبور جدید</label>
                                             <input asp-for="NewPassword" type="password" class="form-control form-control-lg form-control-solid" />
                                             <span asp-validation-for="NewPassword" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="fv-row mb-0">
-                                            <label asp-for="ConfirmNewPassword" class="form-label fs-6 fw-bold mb-3">کلمه عبور فعلی</label>
+                                            <label asp-for="ConfirmNewPassword" class="form-label fs-6 fw-bold mb-3">تایید کلمه عبور</label>
                                             <input asp-for="ConfirmNewPassword" type="password" class="form-control form-control-lg form-control-solid" />
                                             <span asp-validation-for="ConfirmNewPassword" class="text-danger"></span>
                                         </div>

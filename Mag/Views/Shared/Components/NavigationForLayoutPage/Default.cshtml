@@ -1,0 +1,8 @@
+﻿@model List<Mag.Models.Dto.Home.NavigationForLayoutPageDto>
+
+@foreach (var item in Model)
+{
+    <li class="nav-item">
+        <a href="~/News/Category/@item.Slug" class="nav-link m-2 Menu-iteM">@item.Name</a>
+    </li>
+}

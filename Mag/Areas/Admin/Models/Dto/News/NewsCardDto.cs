@@ -40,6 +40,19 @@ namespace Mag.Areas.Admin.Models.Dto.News
         public string? IndexImageAddressAlt { get; set; }
         public string? IndexImageAddressTitle { get; set; }
         public List<CommentListDto>? Comments { get; set; }
+        public string? UserName { get; set; }
+
+        public string? Gif1Address { get; set; }
+        public string? Gif2Address { get; set; }
+        public string? Gif3Address { get; set; }
+        public string? Gif4Address { get; set; }
+        public string? Gif5Address { get; set; }
+        public string? Gif6Address { get; set; }
+        public string? Gif7Address { get; set; }
+        public string? Gif8Address { get; set; }
+        public string? Gif9Address { get; set; }
+        public string? Gif10Address { get; set; }
+        public string? Gif11Address { get; set; }
     }
 
     public class TgsForEachNews

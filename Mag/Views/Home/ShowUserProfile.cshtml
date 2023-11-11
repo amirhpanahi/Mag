@@ -1,4 +1,143 @@
-﻿@{
+﻿@using System.Security.Claims;
+@model Mag.Models.Dto.Home.ShowUserProfileDto
+@{
     ViewData["Title"] = "صفحه پروفایل";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row d-flex justify-content-center">
+    <div class="col-sm-12 col-md-10 col-lg-8">
+        <div class="card">
+            @*             <div class="card-header">
+            <h3 class="card-title">Title</h3>
+            <div class="card-toolbar">
+            <button type="button" class="btn btn-sm btn-light">
+            Action
+            </button>
+            </div>
+            </div> *@
+            <div class="card-body">
+                <div class="row">
+                    <form action="/@Model.UserName" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="UserId" />
+                        <div class="col-12">
+                            <div class="container">
+                                <img src="~/@Model.BannerForProfile" class="imgNews" />
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    var userIdVisitor = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                                    if (userIdVisitor == Model.UserId)
+                                    {
+                                        <div class="EditBannerBtn symbol symbol-circle">
+                                            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" aria-label="تعویض آواتار" data-bs-original-title="تعویض آواتار" data-kt-initialized="1">
+                                                <i class="ki-duotone ki-pencil fs-7">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                                <!--begin::Inputs-->
+                                                <input asp-for="BannerPicFile" type="file" name="BannerPicFile" accept=".png,.jpg,.jpeg,.gif" id="BannerPicFile" style="display: none;">
+                                                <!--end::Inputs-->
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                                <div class="BackimgProfile symbol symbol-circle">
+                                    <div class="symbol symbol-circle imgProfile">
+                                        <img alt="@Model.UserPictureAlt" title="@Model.UserPictureTitle" src="~/@Model.UserPicture">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex align-items-center ClassForBetween">
+                            <div class="Date">
+                                <h6>
+                                    تاریخ عضویت : @Model.RegisterDate
+                                </h6>
+                            </div>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                var userIdVisitor = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                                if (userIdVisitor == Model.UserId)
+                                {
+                                    <div>
+                                        <button type="button" class="btn bg-secondary rounded-circle btnChange" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
+                                            <i class="fa-solid fa-pencil text-info"></i>
+                                        </button>
+
+                                        <div class="modal fade" tabindex="-1" id="kt_modal_1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title">متن درباره من</h3>
+
+                                                        <!--begin::Close-->
+                                                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                                        </div>
+                                                        <!--end::Close-->
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        <textarea asp-for="AboutMe" class="form-control" style="height: 330px;"></textarea>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                                        <button type="submit" class="btn btn-primary">ذخیره اطلاعات</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        <button class="btn btn-primary btnSave mt-1" type="submit">
+                                            ذخیره
+                                        </button>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="col-12 FullName">
+                            <h2>
+                                @Model.FullName
+                            </h2>
+                        </div>
+                        <div class="col-12 about_user">
+                            <p>
+                                <b>درباره من:</b>
+                                @Model.AboutMe
+                            </p>
+                        </div>
+                        <div class="col-12 about_user">
+                            <div class="row">
+                                @await Component.InvokeAsync("CardsforEachUser",new { UserName = Model.UserName,skip=ViewBag.Skip,take=ViewBag.Take})
+                            </div>
+                        </div>
+                        <div class="col-12">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="card-footer">
+                <ul class="pagination">
+                    @for (int i = 1; i <= ViewBag.ToalPage; i++)
+                    {
+                        var ActiveMode = @ViewBag.CurentPage == i ? "active" : "";
+                        <li class="page-item @ActiveMode" id="Pagination @i"><a href="/@Model.UserName?page=@i" class="page-link">@i</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section css{
+    <link rel="stylesheet" href="~/assets/css/Layoutcss/ShowProfile.css" />
+    <link rel="stylesheet" href="~/assets/css/Layoutcss/Cards.css?v=1" />
+
+}
+

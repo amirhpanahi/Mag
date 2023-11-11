@@ -26,5 +26,8 @@ namespace Mag.Models.Dto.Profile
         [DataType(DataType.Password)]
         [Compare(nameof(NewPassword))]
         public string? ConfirmNewPassword { get; set; }
+
+
+        public string? UserName { get; set; }
     }
 }

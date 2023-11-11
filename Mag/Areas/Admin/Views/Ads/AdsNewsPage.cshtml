@@ -1,0 +1,650 @@
+﻿@model Mag.Areas.Admin.Models.Dto.Ads.AdsNewsPageDto
+
+@{
+    ViewData["Title"] = "اضافه کردن دسته بندی";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!--begin::Toolbar-->
+<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+            <!--begin::Title-->
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">تبلیغات</h1>
+            <!--end::Title-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">ادمین</a>
+                </li>
+                <!--end::آیتم-->
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                </li>
+                <!--end::آیتم-->
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item text-muted">تبلیغات</li>
+                <!--end::آیتم-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+    </div>
+    <!--end::Toolbar container-->
+</div>
+<!--end::Toolbar-->
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">
+            تبلیغات صفحه خبر
+        </h3>
+        <div class="card-toolbar">
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8 border d-flex align-items-center justify-content-center" style="border-color: #000!important;border-radius: 7px;">
+                <p style="font-size:20px">محتوا خبر</p>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <video src="~/@Model.Address1" class="VideoAdv border" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650" style="width: 150px;height: 150px"></video>
+                        <div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
+                                گیف شماره 1
+                            </button>
+                        </div>
+
+                        <div class="modal fade" tabindex="-1" id="kt_modal_1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="/Admin/Ads/AdsNewsPage" method="post" enctype="multipart/form-data">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title">گیف شماره 1</h3>
+
+                                            <!--begin::Close-->
+                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                                <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                            </div>
+                                            <!--end::Close-->
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <input type="hidden" asp-for="Name" value="NP1" />
+                                                <input type="hidden" asp-for="IndexNumber" value="1" />
+                                                <div class="col-md-6">
+                                                    <input type="file" class="form-control" asp-for="Gif" name="Gif" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="Description" class="form-control" placeholder="توضیحات" />
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <input asp-for="Alt" class="form-control" placeholder="alt گیف" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="Title" class="form-control" placeholder="title گیف" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                            <button type="submit" class="btn btn-success">ثبت تغییرات</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center mt-2">
+                        <video src="~/@Model.Address2" class="VideoAdv border" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650" style="width: 150px;height: 150px;"></video>
+
+                        <div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_2">
+                                گیف شماره 2
+                            </button>
+                        </div>
+
+                        <div class="modal fade" tabindex="-1" id="kt_modal_2">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="/Admin/Ads/AdsNewsPage" method="post" enctype="multipart/form-data">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title">گیف شماره 2</h3>
+
+                                            <!--begin::Close-->
+                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                                <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                            </div>
+                                            <!--end::Close-->
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <input type="hidden" asp-for="Name" value="NP2" />
+                                            <input type="hidden" asp-for="IndexNumber" value="2" />
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <input type="file" class="form-control" asp-for="Gif" name="Gif" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="Description" class="form-control" placeholder="توضیحات" />
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <input asp-for="Alt" class="form-control" placeholder="alt گیف" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="Title" class="form-control" placeholder="title گیف" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                            <button type="submit" class="btn btn-success">ثبت تغییرات</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center mt-2">
+                        <video src="~/@Model.Address3" class="VideoAdv border" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650" style="width: 150px;height: 150px"></video>
+
+                        <div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3">
+                                گیف شماره 3
+                            </button>
+                        </div>
+
+                        <div class="modal fade" tabindex="-1" id="kt_modal_3">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="/Admin/Ads/AdsNewsPage" method="post" enctype="multipart/form-data">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title">گیف شماره 3</h3>
+
+                                            <!--begin::Close-->
+                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                                <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                            </div>
+                                            <!--end::Close-->
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <input type="hidden" asp-for="Name" value="NP3" />
+                                            <input type="hidden" asp-for="IndexNumber" value="3" />
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <input type="file" class="form-control" asp-for="Gif" name="Gif" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="Description" class="form-control" placeholder="توضیحات" />
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <input asp-for="Alt" class="form-control" placeholder="alt گیف" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="Title" class="form-control" placeholder="title گیف" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                            <button type="submit" class="btn btn-success">ثبت تغییرات</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-3 text-center">
+                <video src="~/@Model.Address4" class="VideoAdv border" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650" style="width: 150px;height: 150px"></video>
+
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_4">
+                        گیف شماره 4
+                    </button>
+                </div>
+
+                <div class="modal fade" tabindex="-1" id="kt_modal_4">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="/Admin/Ads/AdsNewsPage" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">گیف شماره 4</h3>
+
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="hidden" asp-for="Name" value="NP4" />
+                                    <input type="hidden" asp-for="IndexNumber" value="4" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="file" class="form-control" asp-for="Gif" name="Gif" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Description" class="form-control" placeholder="توضیحات" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <input asp-for="Alt" class="form-control" placeholder="alt گیف" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Title" class="form-control" placeholder="title گیف" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                    <button type="submit" class="btn btn-success">ثبت تغییرات</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <video src="~/@Model.Address5" class="VideoAdv border" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650" style="width: 150px;height: 150px;"></video>
+
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_5">
+                        گیف شماره 5
+                    </button>
+                </div>
+
+                <div class="modal fade" tabindex="-1" id="kt_modal_5">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="/Admin/Ads/AdsNewsPage" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">گیف شماره 5</h3>
+
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="hidden" asp-for="Name" value="NP5" />
+                                    <input type="hidden" asp-for="IndexNumber" value="5" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="file" class="form-control" asp-for="Gif" name="Gif" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Description" class="form-control" placeholder="توضیحات" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <input asp-for="Alt" class="form-control" placeholder="alt گیف" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Title" class="form-control" placeholder="title گیف" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                    <button type="submit" class="btn btn-success">ثبت تغییرات</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <video src="~/@Model.Address6" class="VideoAdv border" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650" style="width: 150px;height: 150px"></video>
+
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_6">
+                        گیف شماره 6
+                    </button>
+                </div>
+
+                <div class="modal fade" tabindex="-1" id="kt_modal_6">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="/Admin/Ads/AdsNewsPage" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">گیف شماره 6</h3>
+
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="hidden" asp-for="Name" value="NP6" />
+                                    <input type="hidden" asp-for="IndexNumber" value="6" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="file" class="form-control" asp-for="Gif" name="Gif" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Description" class="form-control" placeholder="توضیحات" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <input asp-for="Alt" class="form-control" placeholder="alt گیف" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Title" class="form-control" placeholder="title گیف" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                    <button type="submit" class="btn btn-success">ثبت تغییرات</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <video src="~/@Model.Address7" class="VideoAdv border" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650" style="width: 150px;height: 150px; "></video>
+
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_7">
+                        گیف شماره 7
+                    </button>
+                </div>
+
+                <div class="modal fade" tabindex="-1" id="kt_modal_7">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="/Admin/Ads/AdsNewsPage" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">گیف شماره 7</h3>
+
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="hidden" asp-for="Name" value="NP7" />
+                                    <input type="hidden" asp-for="IndexNumber" value="7" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="file" class="form-control" asp-for="Gif" name="Gif" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Description" class="form-control" placeholder="توضیحات" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <input asp-for="Alt" class="form-control" placeholder="alt گیف" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Title" class="form-control" placeholder="title گیف" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                    <button type="submit" class="btn btn-success">ثبت تغییرات</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-3 text-center">
+                <video src="~/@Model.Address8" class="VideoAdv border" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650" style="width: 150px;height: 150px; "></video>
+
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_8">
+                        گیف شماره 8
+                    </button>
+                </div>
+
+                <div class="modal fade" tabindex="-1" id="kt_modal_8">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="/Admin/Ads/AdsNewsPage" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">گیف شماره 8</h3>
+
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="hidden" asp-for="Name" value="NP8" />
+                                    <input type="hidden" asp-for="IndexNumber" value="8" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="file" class="form-control" asp-for="Gif" name="Gif" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Description" class="form-control" placeholder="توضیحات" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <input asp-for="Alt" class="form-control" placeholder="alt گیف" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Title" class="form-control" placeholder="title گیف" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                    <button type="submit" class="btn btn-success">ثبت تغییرات</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <video src="~/@Model.Address9" class="VideoAdv border" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650" style="width: 150px;height: 150px; "></video>
+
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_9">
+                        گیف شماره 9
+                    </button>
+                </div>
+
+                <div class="modal fade" tabindex="-1" id="kt_modal_9">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="/Admin/Ads/AdsNewsPage" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">گیف شماره 9</h3>
+
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="hidden" asp-for="Name" value="NP9" />
+                                    <input type="hidden" asp-for="IndexNumber" value="9" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="file" class="form-control" asp-for="Gif" name="Gif" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Description" class="form-control" placeholder="توضیحات" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <input asp-for="Alt" class="form-control" placeholder="alt گیف" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Title" class="form-control" placeholder="title گیف" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                    <button type="submit" class="btn btn-success">ثبت تغییرات</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <video src="~/@Model.Address10" class="VideoAdv border" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650" style="width: 150px;height: 150px; "></video>
+
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_10">
+                        گیف شماره 10
+                    </button>
+                </div>
+
+                <div class="modal fade" tabindex="-1" id="kt_modal_10">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="/Admin/Ads/AdsNewsPage" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">گیف شماره 10</h3>
+
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="hidden" asp-for="Name" value="NP10" />
+                                    <input type="hidden" asp-for="IndexNumber" value="10" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="file" class="form-control" asp-for="Gif" name="Gif" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Description" class="form-control" placeholder="توضیحات" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <input asp-for="Alt" class="form-control" placeholder="alt گیف" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Title" class="form-control" placeholder="title گیف" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                    <button type="submit" class="btn btn-success">ثبت تغییرات</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <video src="~/@Model.Address11" class="VideoAdv border" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650" style="width: 150px;height: 150px; "></video>
+
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_11">
+                        گیف شماره 11
+                    </button>
+                </div>
+
+                <div class="modal fade" tabindex="-1" id="kt_modal_11">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="/Admin/Ads/AdsNewsPage" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">گیف شماره 11</h3>
+
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="hidden" asp-for="Name" value="NP11" />
+                                    <input type="hidden" asp-for="IndexNumber" value="11" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="file" class="form-control" asp-for="Gif" name="Gif" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Description" class="form-control" placeholder="توضیحات" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <input asp-for="Alt" class="form-control" placeholder="Alt گیف" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="Title" class="form-control" placeholder="title گیف" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">بستن</button>
+                                    <button type="submit" class="btn btn-success">ثبت تغییرات</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer">
+    </div>
+</div>

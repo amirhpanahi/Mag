@@ -37,9 +37,12 @@
     <Folder Include="wwwroot\Media\Banners\" />
     <Folder Include="wwwroot\Media\News\Video\" />
     <Folder Include="wwwroot\Media\Tags\" />
+    <Folder Include="wwwroot\Media\Users\BannerProfile\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\assets\js\pagination\jq-paginator.js" />
+    <None Include="wwwroot\assets\js\pagination\paginathing.min.js" />
     <None Include="wwwroot\assets\OwlCarousel\LICENSE" />
     <None Include="wwwroot\assets\OwlCarousel\owl.carousel.js" />
     <None Include="wwwroot\assets\OwlCarousel\owl.carousel.min.js" />

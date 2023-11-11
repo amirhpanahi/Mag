@@ -1,0 +1,12 @@
+﻿@model List<Mag.Areas.Admin.Models.Dto.Tag.TagListDto>
+
+<li id="li-2">
+    <div class="hashtag-menu-nav">
+        @foreach (var item in Model)
+        {
+            <a class="hashtag" href="/News/Tag/@item.Id">
+                #@item.Name
+            </a>
+        }
+    </div>
+</li>

@@ -13,5 +13,8 @@ namespace Mag.Models.Entities
         public string? PicAddress { get; set; }
         public string? PicAlt { get; set; }
         public string? PicTitle { get; set; }
+
+        public string? BannerForProfile { get; set; } 
+        public string? AboutMe { get; set; }
     }
 }

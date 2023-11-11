@@ -5,10 +5,10 @@
 <!--begin::Head-->
 <head>
     <base href="~/" />
-    <title>@ViewData["Title"] - مجله سیبو</title>
     <meta charset="utf-8" />
+    @await Component.InvokeAsync("GeneralSettings",new{SecendPart=@ViewData["Title"],NewsId=@ViewData["NewsId"]})
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+    
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
     <!--begin::Fonts(mوatory for all pages)-->
@@ -45,29 +45,7 @@
                         <li class="nav-item">
                             <a href="~/" class="nav-link m-2 Menu-iteM">خانه</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="~/" class="nav-link m-2 Menu-iteM">اخبار</a>
-                        </li>
-                        @*<li class="nav-item dropdown">
-                        <a href="#" class="nav-link m-2 Menu-iteM dropdown-toggle" data-bs-toggle="dropdown">اخبار</a>
-                        <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">جدیدترین ها</a>
-                        <a href="#" class="dropdown-item">پربازدید ترین  ها</a>
-                        <a href="#" class="dropdown-item">افزودن خبر</a>
-                        </div>
-                        </li>*@
-                        <li class="nav-item">
-                            <a href="" class="nav-link m-2 Menu-iteM">آموزش ها</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link m-2 Menu-iteM">شهروند خبرنگار</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link m-2 Menu-iteM">تبلیغات</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link m-2 Menu-iteM">ارتباط با ما</a>
-                        </li>
+                         @await Component.InvokeAsync("NavigationForLayoutPage")
                     </ul>
                 </div>
             </div>

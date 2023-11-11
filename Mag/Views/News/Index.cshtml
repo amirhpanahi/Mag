@@ -1,34 +1,270 @@
-﻿@model Mag.Areas.Admin.Models.Dto.News.NewsListDto
+﻿@model Tuple<Mag.Areas.Admin.Models.Dto.Home.BannersDto,Mag.Areas.Admin.Models.Dto.Ads.AdsDto>
 @{
-    ViewData["Title"] = "لیست اخبار";
+    ViewData["Title"] = "صفحه اخبار";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-Slider
-
-<div class="underline underline-dark my-5"></div>
-
+<div class="row" id="Banners">
+    <div class="col-md-1"></div>
+    <div class="col-md-2"> 
+        <div class="row">
+            <div class="col-md-12">
+                <a href="@Model.Item1.Banner1PhotoLink">
+                    <div class="card Banner1">
+                        <img src="../../../@Model.Item1.Banner1Address" />
+                        <div class="content">
+                            <p class="copy">@Model.Item1.Banner1PhotoText</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="@Model.Item1.Banner2PhotoLink">
+                    <div class="card Banner2">
+                        <img src="../../../@Model.Item1.Banner2Address" />
+                        <div class="content">
+                            <p class="copy">@Model.Item1.Banner2PhotoText</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <a href="@Model.Item1.Banner3PhotoLink">
+                    <div class="card Banner3">
+                        <img src="../../../@Model.Item1.Banner3Address" />
+                        <div class="content">
+                            <p class="copy">@Model.Item1.Banner3PhotoText</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6 ">
+                        <a href="@Model.Item1.Banner4PhotoLink">
+                            <div class="card Banner4">
+                                <img src="../../../@Model.Item1.Banner4Address" />
+                                <div class="content">
+                                    <p class="copy">@Model.Item1.Banner4PhotoText</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 ">
+                        <a href="@Model.Item1.Banner5PhotoLink">
+                            <div class="card Banner5">
+                                <img src="../../../@Model.Item1.Banner5Address" />
+                                <div class="content">
+                                    <p class="copy">@Model.Item1.Banner5PhotoText</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-6">
+                        <a href="@Model.Item1.Banner6PhotoLink">
+                            <div class="card Banner6">
+                                <img src="../../../@Model.Item1.Banner6Address" />
+                                <div class="content">
+                                    <p class="copy">@Model.Item1.Banner6PhotoText</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="@Model.Item1.Banner7PhotoLink">
+                            <div class="card Banner7">
+                                <img src="../../../@Model.Item1.Banner7Address" />
+                                <div class="content">
+                                    <p class="copy">@Model.Item1.Banner7PhotoText</p> 
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+@*-------------Line-------------*@
+@*<div class="row mt-5">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+    <div class="row">
+    <div class="col-md-1 col-sm-0 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 13px;">
+    اخبار منتخب
+    </div>
+    <div class="col-md-10">
+    <hr />
+    </div>
+    <div class="col-md-1 col-sm-0 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 11px;">
+    مشاهده بیشتر
+    </div>
+    </div>
+    </div>
+    <div class="col-md-1"></div>
+    </div>*@
+<div class="underline underline-dark" style="margin-top: 50px;margin-bottom: 50px;" id="SepratorBanners"></div>
+@*-------------EndLine-------------*@
+@*-------------carousel-------------*@
+<div class="row mt-5">
+    <h1 class="text-center mb-6" style="font-size: 2rem;">
+        منتخب سردبیر
+    </h1>
+    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px">
+        @await Component.InvokeAsync("CarouselSelectedByAdmin")
+    </div>
+</div>
+@*-------------Endcarousel-------------*@
+@*-------------Line-------------*@
+@*<div class="row mt-5">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+    <div class="row">
+    <div class="col-md-1 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 13px;">
+    آخرین اخبار
+    </div>
+    <div class="col-md-10">
+    <hr />
+    </div>
+    <div class="col-md-1 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 11px;">
+    مشاهده بیشتر
+    </div>
+    </div>
+    </div>
+    <div class="col-md-1"></div>
+    </div>*@
+<div class="underline underline-dark" style="margin-top: 70px;margin-bottom: 50px;"></div>
+@*-------------EndLine-------------*@
 <div class="row mt-4">
     <div class="col-md-1">
     </div>
     <div class="col-md-10">
         <div class="row">
-            @await Component.InvokeAsync("Card",new { Slug = @Model.Slug })
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="container pb-4" style="direction:ltr">
+                            <h1 class="h1" id="pageHeaderTitle">دسته بندی اخبار</h1>
+                            @await Component.InvokeAsync("CategoryForIndexPage")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="Ads">
+                <div class="row">
+                    <div class="col-md-12 mb-5">
+                        <video src="~/@Model.Item2.Address1" style="width:100%;height:100%" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-5">
+                        <video src="~/@Model.Item2.Address2" style="width:100%;height:100%" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-5">
+                        <video src="~/@Model.Item2.Address3" style="width:100%;height:100%" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-5">
+                        <video src="~/@Model.Item2.Address4" style="width:100%;height:100%" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-5">
+                        <video src="~/@Model.Item2.Address5" style="width:100%;height:100%" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-5">
+                        <video src="~/@Model.Item2.Address6" style="width:100%;height:100%" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-1">
     </div>
 </div>
-@section scripts{
-    <script>
-        $(".hover").mouseleave(
-          function() {
-            $(this).removeClass("hover");
-          }
-        );
-    </script> 
-}
 
+
+<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true" style="margin-left:50px">
+    <i class="ki-duotone ki-arrow-up">
+        <span class="path1"></span>
+        <span class="path2"></span>
+    </i>
+</div>
+
+
+@section Scripts{
+    <script src="~/assets/OwlCarousel/owl.carousel.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.owl-carousel').owlCarousel({
+                rtl: true,
+                loop: true,
+                dotsEach: 2 / true,
+                margin: 10,
+                responsiveClass: true,
+                autoplay: true,
+                autoplayTimeout: 2500,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: {
+                        items: 1.5,
+                        nav: true
+                    },
+                    600: {
+                        items: 2.5,
+                        nav: false
+                    },
+                    1100: {
+                        items: 4.5,
+                        nav: true,
+                    }
+                }
+            })
+        });
+        $('.play').on('click', function () {
+            owl.trigger('play.owl.autoplay', [1000])
+        })
+        $('.stop').on('click', function () {
+            owl.trigger('stop.owl.autoplay')
+        })
+
+        $(".hover").mouseleave(
+            function () {
+                $(this).removeClass("hover");
+            }
+        );
+        $(".snip1493").mouseleave(
+            function () {
+                $(this).removeClass("hover");
+            }
+        );
+        $(".hover").mouseleave(
+            function () {
+                $(this).removeClass("hover");
+            }
+        );
+    </script>
+}
 @section css{
-    <link rel="stylesheet" href="~/assets/css/Layoutcss/Cards.css?v=1">
+    <link href="~/assets/css/Layoutcss/Home.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/css/Layoutcss/CategoriesCard.css?v=1" />
+    <link rel="stylesheet" href="~/assets/css/Layoutcss/Banners.css?v=1" />
+    <link rel="stylesheet" href="~/assets/css/Layoutcss/Cards.css?v=1" />
+    <link href="~/assets/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/assets/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet" />
+
 }

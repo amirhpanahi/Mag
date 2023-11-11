@@ -7,82 +7,218 @@
     var CurrentUser = new UserListDto();
 }
 
-
-@foreach (var item in Model)
+<div class="row">
+    <div class="col-md-12 text-center heading-page">
+        دسته @ViewBag.CategoryName
+    </div>
+</div>
+@if (Model.Count >= 5)
 {
-    var NameParentIdCategories = "";
-    if (item.Categories != "")
-    {
-        item.Categories = item.Categories.Trim(',');
-        var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
-        NameParentIdCategories = ParentIdCategories.Where(x => splitcat.Contains(x.Id)).Select(x => x.Name).FirstOrDefault();
-    }
-    if (item.WriterId != "")
-    {
-        CurrentUser = User.Where(x => x.Id == item.WriterId).Select(x => new UserListDto
-                    {
-                        FirstName = x.FirstName,
-                        LastName = x.LastName,
-                        PicAddress = x.PicAddress,
-                        PicAlt = x.PicAlt,
-                        PicTitle = x.PicTitle
-
-                    }).FirstOrDefault();
-    }
-    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-        <div class="row">
-            <div class="item">
-                <div class="col-md-12 d-flex justify-content-center">
-                    <figure class="snip1493">
-                        <div class="image"><img src="~/@item.IndexImageAddress" alt="@item.IndexImageAddressAlt" title="@item.IndexImageAddressTitle" class="imgCardsCategory" /></div>
-                        <figcaption>
-                            <div class="like-and-comment">
-                                <div class="love">
-                                    <span>
-                                        @item.CountOfLike
-                                    </span>
-                                    <i class="fa-solid fa-heart text-danger"></i>
-                                </div>
-                                <div class="comments">@item.CountOfComment<i class="fa-solid fa-comment text-info"></i></div>
-                            </div>
-                            <div class="category d-flex align-items-center justify-content-center">
-                                <span class="name">
-                                    @NameParentIdCategories
-                                </span>
-                            </div>
-                            <h3>@item.Title</h3>
-                            <p>
-                                @if (@item.NewsSummary.Length > 105)
-                                {
-                                    @item.NewsSummary.Substring(0,105)
-
-                                    <span> و ...</span>
-                                }
-                                else
-                                {
-                                    @item.NewsSummary
-                                }
-                            </p>
-                            <footer>
-                                <div class="footer-for-between">
-                                    <div class="d-flex align-items-center pick-name">
-                                        <div class="symbol symbol-20px symbol-circle d-flex justify-content-center">
-                                             <img src="~/@CurrentUser.PicAddress" alt="@CurrentUser.PicAlt" title="@CurrentUser.PicTitle">
-                                        </div>
-                                        <div style="margin-right: 5px;">
-                                            @CurrentUser.FirstName @CurrentUser.LastName
-                                        </div>
-                                    </div>
-                                    <div style="margin-left: 2%;">
-                                        <span>@item.PublishNewsDatePersianDay @item.PublishNewsDatePersianmonth @item.PublishNewsDatePersianYear</span>
-                                    </div>
-                                </div>
-                            </footer>
-                        </figcaption>
-                        <a href="/News/@item.Slug"></a>
-                    </figure>
+    <div class="row all-Of-Top mb-5">
+        <div class="col-md-7 hover-div">
+            <a href="/News/@Model[0].Slug">
+                <img class="img-top" src="~/@Model[0].IndexImageAddress" />
+                <p>@Model[0].NewsSummary</p>
+            </a>
+        </div>
+        <div class="col-md-5">
+            <div class="row First-Row">
+                <div class="col-md-6 hover-div">
+                    <a href="/News/@Model[1].Slug">
+                        <img class="img-top" src="~/@Model[1].IndexImageAddress" />
+                        <p>@Model[1].NewsSummary</p>
+                    </a>
+                </div>
+                <div class="col-md-6 hover-div">
+                    <a href="/News/@Model[2].Slug">
+                        <img class="img-top" src="~/@Model[2].IndexImageAddress" />
+                        <p>@Model[2].NewsSummary</p>
+                    </a>
+                </div>
+            </div>
+            <div class="row Secend-Row mt-5">
+                <div class="col-md-6 hover-div">
+                    <a href="/News/@Model[3].Slug">
+                        <img class="img-top" src="~/@Model[3].IndexImageAddress" />
+                        <p>@Model[3].NewsSummary</p>
+                    </a>
+                </div>
+                <div class="col-md-6 hover-div">
+                    <a href="/News/@Model[4].Slug">
+                        <img class="img-top" src="~/@Model[4].IndexImageAddress" />
+                        <p>@Model[4].NewsSummary</p>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+}
+
+@if (Model.Count - 5 == 0)
+{
+
+}
+else if (Model.Count - 5 >= 0)
+{
+    @foreach (var item in Model.Skip(5).Take(Model.Count - 5))
+    {
+        var NameParentIdCategories = "";
+        if (item.Categories != "")
+        {
+            item.Categories = item.Categories.Trim(',');
+            var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+            NameParentIdCategories = ParentIdCategories.Where(x => splitcat.Contains(x.Id)).Select(x => x.Name).FirstOrDefault();
+        }
+        if (item.WriterId != "")
+        {
+            CurrentUser = User.Where(x => x.Id == item.WriterId).Select(x => new UserListDto
+                        {
+                            FirstName = x.FirstName,
+                            LastName = x.LastName,
+                            PicAddress = x.PicAddress,
+                            PicAlt = x.PicAlt,
+                            PicTitle = x.PicTitle
+
+                        }).FirstOrDefault();
+        }
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+            <div class="row">
+                <div class="item">
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <figure class="snip1493">
+                            <div class="image"><img src="~/@item.IndexImageAddress" alt="@item.IndexImageAddressAlt" title="@item.IndexImageAddressTitle" class="imgCardsCategory" /></div>
+                            <figcaption>
+                                <div class="like-and-comment">
+                                    <div class="love">
+                                        <span>
+                                            @item.CountOfLike
+                                        </span>
+                                        <i class="fa-solid fa-heart text-danger"></i>
+                                    </div>
+                                    <div class="comments">@item.CountOfComment<i class="fa-solid fa-comment text-info"></i></div>
+                                </div>
+                                <div class="category d-flex align-items-center justify-content-center">
+                                    <span class="name">
+                                        @NameParentIdCategories
+                                    </span>
+                                </div>
+                                <h3>@item.Title</h3>
+                                <p>
+                                    @if (@item.NewsSummary.Length > 105)
+                                    {
+                                        @item.NewsSummary.Substring(0,105)
+
+                                        <span> و ...</span>
+                                    }
+                                    else
+                                    {
+                                        @item.NewsSummary
+                                    }
+                                </p>
+                                <footer>
+                                    <div class="footer-for-between">
+                                        <div class="d-flex align-items-center pick-name">
+                                            <div class="symbol symbol-20px symbol-circle d-flex justify-content-center">
+                                                <img src="~/@CurrentUser.PicAddress" alt="@CurrentUser.PicAlt" title="@CurrentUser.PicTitle">
+                                            </div>
+                                            <div style="margin-right: 5px;">
+                                                @CurrentUser.FirstName @CurrentUser.LastName
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: 2%;">
+                                            <span>@item.PublishNewsDatePersianDay @item.PublishNewsDatePersianmonth @item.PublishNewsDatePersianYear</span>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </figcaption>
+                            <a href="/News/@item.Slug"></a>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    @foreach (var item in Model)
+    {
+        var NameParentIdCategories = "";
+        if (item.Categories != "")
+        {
+            item.Categories = item.Categories.Trim(',');
+            var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+            NameParentIdCategories = ParentIdCategories.Where(x => splitcat.Contains(x.Id)).Select(x => x.Name).FirstOrDefault();
+        }
+        if (item.WriterId != "")
+        {
+            CurrentUser = User.Where(x => x.Id == item.WriterId).Select(x => new UserListDto
+                        {
+                            FirstName = x.FirstName,
+                            LastName = x.LastName,
+                            PicAddress = x.PicAddress,
+                            PicAlt = x.PicAlt,
+                            PicTitle = x.PicTitle
+
+                        }).FirstOrDefault();
+        }
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">  
+            <div class="row">
+                <div class="item">
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <figure class="snip1493">
+                            <div class="image"><img src="~/@item.IndexImageAddress" alt="@item.IndexImageAddressAlt" title="@item.IndexImageAddressTitle" class="imgCardsCategory" /></div>
+                            <figcaption>
+                                <div class="like-and-comment">
+                                    <div class="love">
+                                        <span>
+                                            @item.CountOfLike
+                                        </span>
+                                        <i class="fa-solid fa-heart text-danger"></i>
+                                    </div>
+                                    <div class="comments">@item.CountOfComment<i class="fa-solid fa-comment text-info"></i></div>
+                                </div>
+                                <div class="category d-flex align-items-center justify-content-center">
+                                    <span class="name">
+                                        @NameParentIdCategories
+                                    </span>
+                                </div>
+                                <h3>@item.Title</h3>
+                                <p>
+                                    @if (@item.NewsSummary.Length > 105)
+                                    {
+                                        @item.NewsSummary.Substring(0,105)
+
+                                        <span> و ...</span>
+                                    }
+
+
+                                    else
+                                    {
+                                        @item.NewsSummary
+                                    }
+                                </p>
+                                <footer>
+                                    <div class="footer-for-between">
+                                        <div class="d-flex align-items-center pick-name">
+                                            <div class="symbol symbol-20px symbol-circle d-flex justify-content-center">
+                                                <img src="~/@CurrentUser.PicAddress" alt="@CurrentUser.PicAlt" title="@CurrentUser.PicTitle">
+                                            </div>
+                                            <div style="margin-right: 5px;">
+                                                @CurrentUser.FirstName @CurrentUser.LastName
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: 2%;">
+                                            <span>@item.PublishNewsDatePersianDay @item.PublishNewsDatePersianmonth @item.PublishNewsDatePersianYear</span>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </figcaption>
+                            <a href="/News/@item.Slug"></a>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 }

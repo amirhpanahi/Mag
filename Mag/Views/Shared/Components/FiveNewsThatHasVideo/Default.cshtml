@@ -1,0 +1,41 @@
+﻿@model List<Mag.Areas.Admin.Models.Dto.News.NewsCardDto>
+@{
+    var FirstNews = Model.First();
+    Model.RemoveAt(0);
+}
+<div class="layout-add">
+    <div class="tite-layout-add">
+        <div class="title-layout">
+            <a >
+                آخرین ویدیو ها
+            </a>
+        </div>
+        <div class="img-layout">
+            <img src="@FirstNews.IndexImageAddress" alt="@FirstNews.IndexImageAddressAlt" title="@FirstNews.IndexImageAddressTitle">
+        </div>
+        <div class="p-layout">
+            <a href="/News/@FirstNews.Slug">
+                @FirstNews.Title
+            </a>
+        </div>
+    </div>
+    @foreach(var item in Model)
+    {
+        <div class="item">
+            <div class="row">
+                <div class="col-5">
+                    <img src="@item.IndexImageAddress" alt="@item.IndexImageAddressAlt" title="@item.IndexImageAddressTitle">
+                </div>
+                <div class="col-7">
+                    <a href="/News/@item.Slug" class="title">
+                        @item.Title
+                    </a>
+                    <p class="time">
+                        <i class="fa fa-thin fa-clock"></i>
+                        <span>@item.PublishNewsDatePersianDay @item.PublishNewsDatePersianmonth @item.PublishNewsDatePersianYear</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -22,7 +22,10 @@ namespace Mag.ViewComponents
 
 
 
-            var listNews = _dbContext.News.OrderByDescending(p => p.PublishNewsDate).Where(p => p.Status == StatusName.Publish && p.IsSelectBychiefEditor == true).Take(7).ToList().Select(p => new NewsCardDto
+            var listNews = _dbContext.News.OrderByDescending(p => p.PublishNewsDate)
+                .Where(p => p.Status == StatusName.Publish &&
+                    p.IsActive == true &&
+                    p.IsSelectBychiefEditor == true).Take(7).ToList().Select(p => new NewsCardDto
             {
                 Title = p.Title,
                 Slug = p.Slug,

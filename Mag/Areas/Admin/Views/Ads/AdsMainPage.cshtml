@@ -1,0 +1,216 @@
+﻿@model Mag.Areas.Admin.Models.Dto.Ads.AdsDto
+
+@{
+    ViewData["Title"] = "اضافه کردن دسته بندی";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!--begin::Toolbar-->
+<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+            <!--begin::Title-->
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">تبلیغات</h1>
+            <!--end::Title-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">ادمین</a>
+                </li>
+                <!--end::آیتم-->
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                </li>
+                <!--end::آیتم-->
+                <!--begin::آیتم-->
+                <li class="breadcrumb-item text-muted">تبلیغات</li>
+                <!--end::آیتم-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+    </div>
+    <!--end::Toolbar container-->
+</div>
+<!--end::Toolbar-->
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">
+            تبلیغات صفحه اصلی
+        </h3>
+        <div class="card-toolbar">
+        </div>
+    </div>
+    <div class="card-body">
+        <form action="/Admin/Ads/AdsMainPage" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>شماره 1</p>
+                            <video src="~/@Model.Address1" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="file" class="form-control" asp-for="Gif1" name="Gif1"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Description1" class="form-control" placeholder="توضیحات"/>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <input asp-for="Alt1" class="form-control" placeholder="alt گیف" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Title1" class="form-control" placeholder="title گیف" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>شماره 2</p>
+                            <video src="~/@Model.Address2" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="file" class="form-control" asp-for="Gif2" name="Gif2" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Description2" class="form-control" placeholder="توضیحات" />
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <input asp-for="Alt2" class="form-control" placeholder="alt گیف" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Title2" class="form-control" placeholder="title گیف" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>شماره 3</p>
+                            <video src="~/@Model.Address3" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="file" class="form-control" asp-for="Gif3" name="Gif3" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Description3" class="form-control" placeholder="توضیحات" />
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <input asp-for="Alt3" class="form-control" placeholder="alt گیف" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Title3" class="form-control" placeholder="title گیف" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>شماره 4</p>
+                            <video src="~/@Model.Address4" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="file" class="form-control" asp-for="Gif4" name="Gif4" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Description4" class="form-control" placeholder="توضیحات" />
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <input asp-for="Alt4" class="form-control" placeholder="alt گیف" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Title4" class="form-control" placeholder="title گیف" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>شماره 5</p>
+                            <video src="~/@Model.Address5" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="file" class="form-control" asp-for="Gif5" name="Gif5" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Description5" class="form-control" placeholder="توضیحات" />
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <input asp-for="Alt5" class="form-control" placeholder="alt گیف" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Title5" class="form-control" placeholder="title گیف" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>شماره 6</p>
+                            <video src="~/@Model.Address6" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="file" class="form-control" asp-for="Gif6" name="Gif6" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Description6" class="form-control" placeholder="توضیحات" />
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <input asp-for="Alt6" class="form-control" placeholder="alt گیف" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Title6" class="form-control" placeholder="title گیف" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-sm-12 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success">
+                        ذخیره
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-footer">
+    </div>
+</div>
+@section css{
+    <link rel="stylesheet" href="~/assets/css/Layoutcss/ShowNews.css?v=1">
+}

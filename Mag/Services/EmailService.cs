@@ -15,7 +15,7 @@ namespace Mag.Services
             client.Timeout = 1000000;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("sibou.mag@gmail.com", "nylbfyuwqoxsasto");
+            client.Credentials = new NetworkCredential("sibou.mag@gmail.com", "reip apre ygbh jcaz");
             MailMessage message = new MailMessage("sibou.mag@gmail.com", UserEmail,Subject,Body);
             message.IsBodyHtml = true;
             message.BodyEncoding = UTF8Encoding.UTF8;

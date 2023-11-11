@@ -1,0 +1,185 @@
+﻿@using Mag.Common
+@using Mag.Models.Entities;
+@model Mag.Areas.Admin.Models.Dto.News.NewsListDto
+
+@{
+    ViewData["Title"] = "جزییات خبر";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Colors = new string[]
+                            {
+                "warning","primary","info","success","danger","dark"
+                            };
+}
+<br>
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">جزییات خبر (@Model.Title)</h3>
+        <div class="card-toolbar">
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="Title" class="control-label pb-1" style="font-size:16px">عنوان خبر</label>
+                    <input asp-for="Title" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="Slug" class="control-label pb-1" style="font-size:16px">لینک(نامک)</label>
+                    <input asp-for="Slug" class="form-control" readonly />
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <div class="form-group pb-4">
+                    <label asp-for="DescriptionHtmlEditor" class="control-label pb-1" style="font-size:16px">توضیحات(Html Editor)</label>
+                    <div style="border-radius: 16px;border: 1px solid #ccc!important;padding: 15px 15px;min-height:100px">
+                        @Html.Raw(Model.DescriptionHtmlEditor)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <div class="form-group pb-4">
+                    <label asp-for="NewsSummary" class="control-label pb-1" style="font-size:16px">خلاصه خبر</label>
+                    <textarea asp-for="NewsSummary" class="form-control" readonly></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="DescriptionSeo" class="control-label pb-1" style="font-size:16px">توضیحات سئو</label>
+                    <textarea asp-for="DescriptionSeo" class="form-control" readonly></textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="KeyWords" class="control-label pb-1" style="font-size:16px">کلمات کلیدی</label>
+                    <input asp-for="KeyWords" class="form-control" readonly />
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="RegisterDatePersian" class="control-label pb-1" style="font-size:16px">تاریخ ثبت خبر</label>
+                    <input asp-for="RegisterDatePersian" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="PublishTimePersain" class="control-label pb-1" style="font-size:16px">تاریخ انتشار</label>
+                    <input asp-for="PublishTimePersain" class="form-control" readonly />
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="Categories" class="control-label pb-1" style="font-size:16px">دسته بندی ها</label>
+                    <textarea class="form-control" readonly>@string.Join(" , ",ViewBag.Categories)</textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="Tags" class="control-label pb-1" style="font-size:16px">تگ ها</label>
+                    <textarea class="form-control" readonly>@string.Join(" , ",ViewBag.Tags)</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="WriterName" class="control-label pb-1" style="font-size:16px">نام نویسنده</label>
+                    <input class="form-control" value="@Model.WriterName.FirstName @Model.WriterName.LastName" readonly />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="Status" class="control-label pb-1" style="font-size:16px">وضعیت خبر</label>
+                    <input asp-for="Status" class="form-control" readonly />
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="IndexImageAddressAlt" class="control-label pb-1" style="font-size:16px">Alt عکس</label>
+                    <input asp-for="IndexImageAddressAlt" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="IndexImageAddressTitle" class="control-label pb-1" style="font-size:16px">Title عکس</label>
+                    <input asp-for="IndexImageAddressTitle" class="form-control" readonly />
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="IsActive" class="control-label pb-1" style="font-size:16px;margin-left: 15px;">فعال بودن خبر</label>
+                    <input asp-for="IsActive" class="form-check-input h-30px w-30px" type="checkbox" disabled style="border-color:gray;" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group pb-4">
+                    <label asp-for="IsSelectBychiefEditor" class="control-label pb-1" style="font-size:16px;margin-left: 15px;">منتخب سردبیر</label>
+                    <input asp-for="IsSelectBychiefEditor" class="form-check-input h-30px w-30px" type="checkbox" disabled style="border-color:gray;" />
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <div class="form-group pb-4">
+                    <label asp-for="IndexImageAddress" class="control-label pb-1" style="font-size:16px;display: block;">عکس خبر</label>
+                    @if (Model.IndexImageAddress != null)
+                    {
+                        <div class="text-center">
+                            <img src=~/@Model.IndexImageAddress alt="@Model.IndexImageAddressAlt" title="@Model.IndexImageAddressTitle" style="width: 30%;border-radius: 10px;" />
+                        </div>
+                    }
+                    else
+                    {
+                        string fName = Model.Title.Substring(0, 1);
+                        var sum = Utility.CalculateAsciiSum(Model.Title);
+                        var Color = Convert.ToInt32(Math.Ceiling((double)sum % 6));
+                        <div class="text-center">
+                            <div class="symbol symbol-100px">
+                                <div class="symbol-label fs-2 fw-semibold bg-@Colors[Color] text-inverse-@Colors[Color]">@fName</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if (Model.VideoAddress != null)
+        {
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <div class="form-group pb-4">
+                        <label asp-for="VideoAddress" class="control-label pb-1" style="font-size:16px;display: block;">ویدیو خبر</label>
+                        <div class="text-center">
+                            <video controls style="width: 80%;border-radius: 10px;">
+                                <source src="~/@Model.VideoAddress" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <div class="card-footer">
+            <a href="/Profile/Index" style="font-size:18px">بازگشت به لیست</a>
+        </div>
+    </div>
+
+

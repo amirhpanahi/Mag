@@ -1,0 +1,32 @@
+﻿@model List<Mag.Models.Dto.Home.NavigationForLayoutPageDto>
+@{
+    var stringArray = new string[7]
+            {
+                "fa fa-thin fa-graduation-cap fa-lg",
+                "fa fa-thin fa-desktop fa-lg",
+                "fa fa-light fa-newspaper fa-lg",
+                "fa fa-solid fa-gamepad fa-lg",
+                "fa fa-regular fa-fire fa-lg",
+                "fa fa-solid fa-earth-americas fa-lg",
+                "fa fa-light fa-book fa-lg",
+            };
+    int counter = 0;
+}
+
+<li class="nav-item">
+    <a class="nav-link" href="/News/Index">
+        <i class="fa fa-thin fa-newspaper fa-flip-horizontal fa-lg"></i>
+        اخبار
+    </a>
+</li>
+@foreach (var item in Model)
+{
+    
+    <li class="nav-item">
+        <a class="nav-link" href="/News/Category/@item.Slug">
+            <i class="@stringArray[counter]"></i>
+            @item.Name
+        </a> 
+    </li>
+    counter++;
+}

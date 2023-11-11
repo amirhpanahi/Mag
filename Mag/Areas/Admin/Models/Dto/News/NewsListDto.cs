@@ -17,10 +17,12 @@ namespace Mag.Areas.Admin.Models.Dto.News
         public string? IndexImageAddress { get; set; }
         public string? RegisterDatePersian { get; set; }
         public string? DraftTimePersain { get; set; }
+        public string? PublishTimePersain { get; set; }
         public string? WriterId { get; set; }
         public FullnameUser? WriterName { get; set; }
 
         public bool IsActive { get; set; }
+        public bool IsSelectBychiefEditor { get; set; }
         public StatusName? Status { get; set; }
         public int? CountSeeNews { get; set; }
         public string? IndexImageAddressAlt { get; set; }

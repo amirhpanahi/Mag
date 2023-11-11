@@ -16,14 +16,19 @@ namespace Mag.ViewComponents
         {
             ViewBag.ParentIdCategories = _dbContext.CategoryTags.Where(x => x.Type == "Category" && x.ParentId == 1 && x.Id != 1).ToList();
             ViewBag.ListUsers = _dbContext.Users.ToList();
+            
             var Tagfind = _dbContext.CategoryTags.FirstOrDefault(p => p.Id == Id);
-
+            ViewBag.TagName = Tagfind.Name;
             //var a = _dbContext.News.Where(p => p.Categories.Contains(categoryfind.Id.ToString()));
             //var listnews = _dbContext.News.Where(p => p.Status == StatusName.Publish && p.PublishNewsDatePersian != null && (","+ p.Categories + ",").Contains(","+ categoryfind.Id + ",")).Select(p => new NewsCardDto
             var listnews = new List<NewsCardDto>();
             if (Id != null && Tagfind != null)
             {
-                listnews = _dbContext.News.Where(p => p.PublishNewsDatePersian != null && p.Status == StatusName.Publish && ("," + p.Tags + ",").Contains("," + Tagfind.Id + ",")).Select(p => new NewsCardDto
+                listnews = _dbContext.News
+                    .Where(p => p.PublishNewsDatePersian != null &&
+                        p.Status == StatusName.Publish &&
+                        p.IsActive == true &&
+                        ("," + p.Tags + ",").Contains("," + Tagfind.Id + ",")).Select(p => new NewsCardDto
                 {
                     Title = p.Title,
                     Slug = p.Slug,

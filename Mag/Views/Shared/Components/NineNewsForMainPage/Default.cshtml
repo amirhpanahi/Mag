@@ -1,0 +1,223 @@
+﻿@using Mag.Areas.Admin.Models.Dto.User;
+@using Mag.Models.Entities;
+@model List<Mag.Areas.Admin.Models.Dto.News.NewsCardDto>
+@{
+    var ParentIdCategories = ViewBag.ParentIdCategories as List<CategoryTag>;
+    var User = ViewBag.ListUsers as List<User>;
+    var CurrentUser = new UserListDto();
+    var FirstCol = Model.Take(3);
+    var SecendCol = Model.Skip(3).Take(3);
+    var ThirdCol = Model.Skip(6).Take(3);
+}
+
+<div class="row">
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+        @foreach (var item in FirstCol)
+        {
+            var NameParentIdCategories = "";
+            if (item.Categories != "")
+            {
+                item.Categories = item.Categories.Trim(',');
+                var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+                NameParentIdCategories = ParentIdCategories.Where(x => splitcat.Contains(x.Id)).Select(x => x.Name).FirstOrDefault();
+            }
+            if (item.WriterId != "")
+            {
+                CurrentUser = User.Where(x => x.Id == item.WriterId).Select(x => new UserListDto
+                    {
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        PicAddress = x.PicAddress,
+                        PicAlt = x.PicAlt,
+                        PicTitle = x.PicTitle
+
+                    }).FirstOrDefault();
+            }
+            <div class="item">
+                <figure class="snip1493">
+                    <div class="image">
+                        <img src="@item.IndexImageAddress" alt="@item.IndexImageAddressAlt"
+                             title="@item.IndexImageAddressTitle" class="imgCardsCategory" />
+                    </div>
+                    <figcaption>
+                        <div class="category d-flex align-items-center justify-content-center">
+                            <span class="name">
+                                @NameParentIdCategories
+                            </span>
+                        </div>
+                        <div class="like-and-comment">
+                            <div class="love">
+                                @item.CountOfLike
+                                <i class="fas fa-solid fa-heart text-danger"></i>
+                            </div>
+                            <div class="comments">
+                                @item.CountOfComment
+                                <i class="fas fa-solid fa-comment text-info"></i>
+                            </div>
+                        </div>
+                        <h3>@item.Title</h3>
+                        <p>
+                            @item.NewsSummary
+                        </p>
+                        <footer>
+                            <div class="footer-for-between">
+                                <div class="d-flex align-items-center pick-name">
+                                    <div class="symbol symbol-20px symbol-circle">
+                                        <img src="~/@CurrentUser.PicAddress" alt="" title="">
+                                    </div>
+                                    <div style="margin-right: 5px;">
+                                        @CurrentUser.FirstName @CurrentUser.LastName
+                                    </div>
+                                </div>
+                                <div style="margin-left: 2%;">
+                                    <span>@item.PublishNewsDatePersianDay @item.PublishNewsDatePersianmonth @item.PublishNewsDatePersianYear</span>
+                                </div>
+                            </div>
+                        </footer>
+                    </figcaption>
+                    <a href="/News/@item.Slug"></a>
+                </figure>
+            </div>
+        }
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+        @foreach (var item in SecendCol)
+        {
+            var NameParentIdCategories = "";
+            if (item.Categories != "")
+            {
+                item.Categories = item.Categories.Trim(',');
+                var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+                NameParentIdCategories = ParentIdCategories.Where(x => splitcat.Contains(x.Id)).Select(x => x.Name).FirstOrDefault();
+            }
+            if (item.WriterId != "")
+            {
+                CurrentUser = User.Where(x => x.Id == item.WriterId).Select(x => new UserListDto
+                    {
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        PicAddress = x.PicAddress,
+                        PicAlt = x.PicAlt,
+                        PicTitle = x.PicTitle
+
+                    }).FirstOrDefault();
+            }
+            <div class="item">
+                <figure class="snip1493">
+                    <div class="image">
+                        <img src="@item.IndexImageAddress" alt="@item.IndexImageAddressAlt"
+                             title="@item.IndexImageAddressTitle" class="imgCardsCategory" />
+                    </div>
+                    <figcaption>
+                        <div class="category d-flex align-items-center justify-content-center">
+                            <span class="name">
+                                @NameParentIdCategories
+                            </span>
+                        </div>
+                        <div class="like-and-comment">
+                            <div class="love">
+                                @item.CountOfLike
+                                <i class="fas fa-solid fa-heart text-danger"></i>
+                            </div>
+                            <div class="comments">
+                                @item.CountOfComment
+                                <i class="fas fa-solid fa-comment text-info"></i>
+                            </div>
+                        </div>
+                        <h3>@item.Title</h3>
+                        <p>
+                            @item.NewsSummary
+                        </p>
+                        <footer>
+                            <div class="footer-for-between">
+                                <div class="d-flex align-items-center pick-name">
+                                    <div class="symbol symbol-20px symbol-circle">
+                                        <img src="~/@CurrentUser.PicAddress" alt="" title="">
+                                    </div>
+                                    <div style="margin-right: 5px;">
+                                        @CurrentUser.FirstName @CurrentUser.LastName
+                                    </div>
+                                </div>
+                                <div style="margin-left: 2%;">
+                                    <span>@item.PublishNewsDatePersianDay @item.PublishNewsDatePersianmonth @item.PublishNewsDatePersianYear</span>
+                                </div>
+                            </div>
+                        </footer>
+                    </figcaption>
+                    <a href="/News/@item.Slug"></a>
+                </figure>
+            </div>
+        }
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+        @foreach (var item in ThirdCol)
+        {
+            var NameParentIdCategories = "";
+            if (item.Categories != "")
+            {
+                item.Categories = item.Categories.Trim(',');
+                var splitcat = item.Categories.Split(",").Select(int.Parse).ToList();
+                NameParentIdCategories = ParentIdCategories.Where(x => splitcat.Contains(x.Id)).Select(x => x.Name).FirstOrDefault();
+            }
+            if (item.WriterId != "")
+            {
+                CurrentUser = User.Where(x => x.Id == item.WriterId).Select(x => new UserListDto
+                    {
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        PicAddress = x.PicAddress,
+                        PicAlt = x.PicAlt,
+                        PicTitle = x.PicTitle
+
+                    }).FirstOrDefault();
+            }
+            <div class="item">
+                <figure class="snip1493">
+                    <div class="image">
+                        <img src="@item.IndexImageAddress" alt="@item.IndexImageAddressAlt"
+                             title="@item.IndexImageAddressTitle" class="imgCardsCategory" />
+                    </div>
+                    <figcaption>
+                        <div class="category d-flex align-items-center justify-content-center">
+                            <span class="name">
+                                @NameParentIdCategories
+                            </span>
+                        </div>
+                        <div class="like-and-comment">
+                            <div class="love">
+                                @item.CountOfLike
+                                <i class="fas fa-solid fa-heart text-danger"></i>
+                            </div>
+                            <div class="comments">
+                                @item.CountOfComment
+                                <i class="fas fa-solid fa-comment text-info"></i>
+                            </div>
+                        </div>
+                        <h3>@item.Title</h3>
+                        <p>
+                            @item.NewsSummary
+                        </p>
+                        <footer>
+                            <div class="footer-for-between">
+                                <div class="d-flex align-items-center pick-name">
+                                    <div class="symbol symbol-20px symbol-circle">
+                                        <img src="~/@CurrentUser.PicAddress" alt="" title="">
+                                    </div>
+                                    <div style="margin-right: 5px;">
+                                        @CurrentUser.FirstName @CurrentUser.LastName
+                                    </div>
+                                </div>
+                                <div style="margin-left: 2%;">
+                                    <span>@item.PublishNewsDatePersianDay @item.PublishNewsDatePersianmonth @item.PublishNewsDatePersianYear</span>
+                                </div>
+                            </div>
+                        </footer>
+                    </figcaption>
+                    <a href="/News/@item.Slug"></a>
+                </figure>
+            </div>
+
+        }
+    </div>
+
+</div>

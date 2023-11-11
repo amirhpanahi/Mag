@@ -1,262 +1,250 @@
-﻿@model Mag.Areas.Admin.Models.Dto.Home.BannersDto
+﻿@using System.Security.Claims;
+@model Mag.Areas.Admin.Models.Dto.Home.BannersDto
 @{
-    ViewData["Title"] = "صفحه اصلی";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
-<div class="row" id="Banners">
-    <div class="col-md-1"></div>
-    <div class="col-md-2">
-        <div class="row">
-            <div class="col-md-12">
-                <a href="@Model.Banner1PhotoLink">
-                    <div class="card Banner1" style="background-image:url(../../../@Model.Banner1Address)">
-                        <div class="content">
-                            <p class="copy">@Model.Banner1PhotoText</p>
-                        </div>
-                    </div>
+
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    @await Component.InvokeAsync("GeneralSettings",new{SecendPart="صفحه اصلی",NewsId=@ViewData["NewsId"]})
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/css/Layoutcss/HomeMainPage.css?v=1" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+
+    <!--begin::Global Stylesheets Bundle(mوatory for all pages)-->
+    <link href="~/assets/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Global Stylesheets Bundle-->
+
+
+</head>
+
+<body>
+
+    <!--start nav-->
+    <nav class="navbar navbar-midnight-blue">
+        <ul>
+            <li class="nav-item" style="background: transparent;">
+                <a href="#" class="sidebar-icon" id="btn-sidebars">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
                 </a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-12">
-                <a href="@Model.Banner2PhotoLink">
-                    <div class="card Banner2" style="background-image:url(../../../@Model.Banner2Address)">
-                        <div class="content">
-                            <p class="copy">@Model.Banner2PhotoText</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="row mt-5">
-            <div class="col-md-6">
-                <a href="@Model.Banner3PhotoLink">
-                    <div class="card Banner3" style="background-image:url(../../../@Model.Banner3Address)">
-                        <div class="content">
-                            <p class="copy">@Model.Banner3PhotoText</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6 ">
-                        <a href="@Model.Banner4PhotoLink">
-                            <div class="card Banner4" style="background-image:url(../../../@Model.Banner4Address)">
-                                <div class="content">
-                                    <p class="copy">@Model.Banner4PhotoText</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-6 ">
-                        <a href="@Model.Banner5PhotoLink">
-                            <div class="card Banner5" style="background-image:url(../../../@Model.Banner5Address)">
-                                <div class="content">
-                                    <p class="copy">@Model.Banner5PhotoText</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+            </li>
+            <li id="li-1">
+                <div class="hashtag hashtag1">
+                    هشتگ‌های داغ :‌
                 </div>
-                <div class="row mt-5">
-                    <div class="col-md-6">
-                        <a href="@Model.Banner6PhotoLink">
-                            <div class="card Banner6" style="background-image:url(../../../@Model.Banner6Address)">
-                                <div class="content">
-                                    <p class="copy">@Model.Banner6PhotoText</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="@Model.Banner7PhotoLink">
-                            <div class="card Banner7" style="background-image:url(../../../@Model.Banner7Address)">
-                                <div class="content">
-                                    <p class="copy">
-                                        @Model.Banner7PhotoText
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1"></div>
-</div>
-
-
-
-
-@*-------------Line-------------*@
-@*<div class="row mt-5">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-    <div class="row">
-    <div class="col-md-1 col-sm-0 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 13px;">
-    اخبار منتخب
-    </div>
-    <div class="col-md-10">
-    <hr />
-    </div>
-    <div class="col-md-1 col-sm-0 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 11px;">
-    مشاهده بیشتر
-    </div>
-    </div>
-    </div>
-    <div class="col-md-1"></div>
-    </div>*@
-<div class="underline underline-dark" style="margin-top: 50px;margin-bottom: 50px;" id="SepratorBanners"></div>
-@*-------------EndLine-------------*@
-@*-------------carousel-------------*@
-<div class="row mt-5">
-    <h1 class="text-center mb-6" style="font-size: 2rem;">
-        منتخب سردبیر
-    </h1>
-    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px">
-        @await Component.InvokeAsync("CarouselSelectedByAdmin")
-    </div>
-</div>
-@*-------------Endcarousel-------------*@
-@*-------------Line-------------*@
-@*<div class="row mt-5">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-    <div class="row">
-    <div class="col-md-1 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 13px;">
-    آخرین اخبار
-    </div>
-    <div class="col-md-10">
-    <hr />
-    </div>
-    <div class="col-md-1 d-flex justify-content-center align-items-center" style="border: 1px solid #ccc!important;border-radius: 20px;font-size: 11px;">
-    مشاهده بیشتر
-    </div>
-    </div>
-    </div>
-    <div class="col-md-1"></div>
-    </div>*@
-<div class="underline underline-dark" style="margin-top: 70px;margin-bottom: 50px;"></div>
-@*-------------EndLine-------------*@
-<div class="row mt-4">
-    <div class="col-md-1">
-    </div>
-    <div class="col-md-10">
-        <div class="row">
-            <div class="col-md-9">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="container pb-4" style="direction:ltr">
-                            <h1 class="h1" id="pageHeaderTitle">دسته بندی اخبار</h1>
-                            @await Component.InvokeAsync("CategoryForIndexPage")
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row">
-                    <div class="col-md-12 mb-5">
-                        <img src="~/assets/media/Home/Adv1.gif" class="GifAdv" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-5">
-                        <img src="~/assets/media/Home/Adv2.gif" class="GifAdv" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-5">
-                        <img src="~/assets/media/Home/Adv3.gif" class="GifAdv" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-5">
-                        <img src="~/assets/media/Home/Adv1.gif" class="GifAdv" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-5">
-                        <img src="~/assets/media/Home/Adv2.gif" class="GifAdv" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-    </div>
-</div>
-
-
-<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true" style="margin-left:50px">
-    <i class="ki-duotone ki-arrow-up">
-        <span class="path1"></span>
-        <span class="path2"></span>
-    </i>
-</div>
-
-
-@section Scripts{
-    <script src="~/assets/OwlCarousel/owl.carousel.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('.owl-carousel').owlCarousel({
-                rtl: true,
-                loop: true,
-                dotsEach: 2/true,
-                margin: 10,
-                responsiveClass: true,
-                autoplay: false,
-                autoplayTimeout: 2500,
-                autoplayHoverPause: true,
-                responsive: {
-                    0: {
-                        items: 1.5,
-                        nav: true
-                    },
-                    600: {
-                        items: 2.5,
-                        nav: false
-                    },
-                    1100: {
-                        items: 4.5,
-                        nav: true,
+            </li>
+            @await Component.InvokeAsync("TagsInMainPage")
+            <li>
+                <div class="div-head">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @await Component.InvokeAsync("LayoutUser", new { Id = User.FindFirst(ClaimTypes.NameIdentifier).Value })
                     }
-                }
-            })
-        });
-        $('.play').on('click', function () {
-            owl.trigger('play.owl.autoplay', [1000])
-        })
-        $('.stop').on('click', function () {
-            owl.trigger('stop.owl.autoplay')
-        })
+                    else
+                    {
+                        <button class="btn btn-log-in">
+                            <i class="fa fal fa-search"></i>
+                        </button>
+                        <button class="btn btn-log-in">
+                            <i class="fa fal fa-user-circle"></i>
+                        </button>
+                        <a href="/Account/Login" class="btn btn-log-in btn-none">ورود</a>
+                        <button class="btn btn-log-in btn-none" style="padding: 0 !important;">/</button>
+                        <a href="/Account/Register" class="btn btn-log-in btn-none">ثبت نام</a>
 
-        $(".hover").mouseleave(
-            function () {
-                $(this).removeClass("hover");
-            }
-        );
-        $(".snip1493").mouseleave(
-            function () {
-                $(this).removeClass("hover");
-            }
-        );
-        $(".hover").mouseleave(
-            function () {
-                $(this).removeClass("hover");
-            }
-        );
-    </script>
-}
-@section css{
-    <link rel="stylesheet" href="~/assets/css/Layoutcss/CategoriesCard.css?v=1" />
-    <link rel="stylesheet" href="~/assets/css/Layoutcss/Banners.css?v=1" />
-    <link rel="stylesheet" href="~/assets/css/Layoutcss/Cards.css?v=1" />
-    <link href="~/assets/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
-    <link href="~/assets/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet" />
-}
+                    }
+                </div>
+            </li>
+            <div class="row m-0" style="display: flex; flex-wrap: nowrap;" id="row-head">
+            <li>
+                <div class="hashtag hashtag1">
+                    هشتگ‌های داغ :‌
+                </div>
+            </li>
+            <li>
+                <div class="hashtag-menu-nav">
+                    <a class="hashtag" href="#">
+                        #اخبار داغ تکنولوژی
+                    </a>
+                    <a class="hashtag" href="#">
+                        #اپل
+                    </a>
+                    <a class="hashtag" href="#">
+                        #مجله اینترنتی
+                    </a>
+                    <a class="hashtag" href="#">
+                        #آموزش اپل
+                    </a>
+                    <a class="hashtag" href="#">
+                        #اپل واچ
+                    </a>
+                    <a class="hashtag" href="#">
+                        #مجله اپل
+                    </a>
+                </div>
+            </li>
+            </div>
+        </ul>
+
+    </nav>
+    <!--end nav -->
+    <!--start main sidebar-->
+    <div id="sidebar" class="main-sidebar navbar-midnight-blue show-sidebar">
+        <ul class="navbar-nav">
+            <li class="nav-item nav-main">
+                <a class="nav-link active" aria-current="page" href="#">
+                    اپ استور ایرانی | سیبو
+                </a>
+            </li>
+            @await Component.InvokeAsync("SidebarMainPage")
+        </ul>
+    </div>
+    <!--end  main sidebar-->
+    <!--HERE CONTENT -->
+    <div class="container-fluid">
+        <div class="content" id="content">
+            <div class="banner-layout">
+                <div class="row m-0">
+                    <div class="col-12">
+                        <a href="/@Model.Banner1PhotoLink">
+                            <div class="banner-first">
+                                <img src="@Model.Banner1Address">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <a href="/@Model.Banner2PhotoLink">
+                            <div class="banner banner-big">
+                                <img src="@Model.Banner2Address">
+                                <div class="p-banner">
+                                    <p>@Model.Banner2PhotoText</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="/@Model.Banner3PhotoLink">
+                                    <div class="banner">
+                                        <img src="@Model.Banner3Address">
+                                        <div class="p-banner">
+                                            <p>
+                                                @Model.Banner3PhotoText
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="/@Model.Banner4PhotoLink">
+                                    <div class="banner">
+                                        <img src="@Model.Banner4Address">
+                                        <div class="p-banner">
+                                            <p>
+                                                @Model.Banner4PhotoText
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="/@Model.Banner5PhotoLink">
+                                    <div class="banner">
+                                        <img src="@Model.Banner5Address">
+                                        <div class="p-banner">
+                                            <p>
+                                                @Model.Banner5PhotoText
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="/@Model.Banner6PhotoLink">
+                                    <div class="banner">
+                                        <img src="@Model.Banner6Address">
+                                        <div class="p-banner">
+                                            <p>
+                                                @Model.Banner6PhotoText
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="underline underline-dark"></div>
+    <div class="layout-sticky">
+        <div class="sticky-div" id="myStickyDiv">
+            <div class="item" style="background-color: #2899d5;">
+                <img src="~/assets/media/Home/logo-sefid.png">
+            </div>
+            <a href="/Account/Login">
+                <div class="item">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                        <path d="M406.5 399.6C387.4 352.9 341.5 320 288 320H224c-53.5 0-99.4 32.9-118.5 79.6C69.9 362.2 48 311.7 48 256C48 141.1 141.1 48 256 48s208 93.1 208 208c0 55.7-21.9 106.2-57.5 143.6zm-40.1 32.7C334.4 452.4 296.6 464 256 464s-78.4-11.6-110.5-31.7c7.3-36.7 39.7-64.3 78.5-64.3h64c38.8 0 71.2 27.6 78.5 64.3zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-272a40 40 0 1 1 0-80 40 40 0 1 1 0 80zm-88-40a88 88 0 1 0 176 0 88 88 0 1 0 -176 0z" />
+                    </svg>
+                </div>
+            </a>
+            <div class="item">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                    <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                </svg>
+            </div>
+        </div>
+        <div class="container card-news">
+            <div class="row">
+                <div class="col-lg-9">
+                    @await Component.InvokeAsync("NineNewsForMainPage")
+                </div>
+                <div class="col-lg-3 adds">
+                    @* <div class="gif">
+                    <img src="images/iran-Server-ads.gif">
+                    </div> *@
+
+                    @await Component.InvokeAsync("FiveNewsThatHasVideo")
+
+                    @* <div class="gif">
+                    <img src="images/timekook-ads.gif">
+                    </div> *@
+
+                    @await Component.InvokeAsync("FiveTopNewsForMainPage")
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+            crossorigin="anonymous"></script>
+
+
+    <!--begin::Javascript-->
+    <script src="assets/plugins/global/plugins.bundle.js"></script>
+    <script src="assets/js/scripts.bundle.js"></script>
+
+    <script src="~/assets/js/layoutjs/homemainpage.js"></script>
+</body>
+</html>

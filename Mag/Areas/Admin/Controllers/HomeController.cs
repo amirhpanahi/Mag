@@ -237,7 +237,8 @@ namespace Mag.Areas.Admin.Controllers
                     ModelState.AddModelError("FavIconAddress", "حجم آیکون باید زیر پنج مگابایت باشد");
                     return View();
                 }
-                if (model.FavIconFile.ContentType == "image/x-icon")
+                if (model.FavIconFile.ContentType == "image/x-icon" || model.FavIconFile.ContentType == "image/png" ||
+                    model.FavIconFile.ContentType == "image/jpg" || model.FavIconFile.ContentType == "image/jpeg")
                 {
                     stringIconPath = $"Media/Icon/" + await _fileUpload.UploadFileAsync(model.FavIconFile, model.SiteName, "Icon");
                 }
@@ -278,8 +279,8 @@ namespace Mag.Areas.Admin.Controllers
                 {
                     findsetting.SiteName = model.SiteName;
                     findsetting.Title = model.Title;
-                    findsetting.LogoAddress = model.LogoFile != null ? stringLogoPath : model.LogoAddress;
-                    findsetting.FavIconAddress = model.FavIconFile != null ? stringIconPath : model.FavIconAddress;
+                    findsetting.LogoAddress = model.LogoFile == null ? findsetting.LogoAddress : stringLogoPath;
+                    findsetting.FavIconAddress = model.FavIconFile == null ? findsetting.FavIconAddress : stringIconPath;
                     findsetting.SeoDescription = model.SeoDescription;
                     findsetting.KeyWords = model.KeyWords;
                     findsetting.ScriptHeader = model.ScriptHeader;
@@ -302,8 +303,8 @@ namespace Mag.Areas.Admin.Controllers
 
         #endregion
 
-        #region Baners
-        [Route("/admin/Banners")]
+        #region NewsBanners
+        [Route("/admin/NewsBanners")]
         [HttpGet]
         public IActionResult Banners()
         {
@@ -341,7 +342,7 @@ namespace Mag.Areas.Admin.Controllers
             };
             return View(banner);
         }
-        [Route("/admin/Banners")]
+        [Route("/admin/NewsBanners")]
         [HttpPost]
         public async Task<IActionResult> Banners(BannersDto model)
         {
@@ -464,6 +465,153 @@ namespace Mag.Areas.Admin.Controllers
             return View();
         }
 
+        #endregion
+
+        #region MainBanners
+        [Route("/admin/MainBanners")]
+        [HttpGet]
+        public IActionResult MainBanners()
+        {
+            var baner1 = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner1");
+            var baner2 = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner2");
+            var baner3 = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner3");
+            var baner4 = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner4");
+            var baner5 = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner5");
+            var baner6 = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner6");
+
+            var banner = new BannersDto
+            {
+                Banner1Address = baner1 == null ? "" : baner1.BannerAddress,
+                Banner1PhotoText = baner1 == null ? "" : baner1.PhotoText,
+                Banner1PhotoLink = baner1 == null ? "" : baner1.PhotoLink,
+                Banner2Address = baner2 == null ? "" : baner2.BannerAddress,
+                Banner2PhotoText = baner2 == null ? "" : baner2.PhotoText,
+                Banner2PhotoLink = baner2 == null ? "" : baner2.PhotoLink,
+                Banner3Address = baner3 == null ? "" : baner3.BannerAddress,
+                Banner3PhotoText = baner3 == null ? "" : baner3.PhotoText,
+                Banner3PhotoLink = baner3 == null ? "" : baner3.PhotoLink,
+                Banner4Address = baner4 == null ? "" : baner4.BannerAddress,
+                Banner4PhotoText = baner4 == null ? "" : baner4.PhotoText,
+                Banner4PhotoLink = baner4 == null ? "" : baner4.PhotoLink,
+                Banner5Address = baner5 == null ? "" : baner5.BannerAddress,
+                Banner5PhotoText = baner5 == null ? "" : baner5.PhotoText,
+                Banner5PhotoLink = baner5 == null ? "" : baner5.PhotoLink,
+                Banner6Address = baner6 == null ? "" : baner6.BannerAddress,
+                Banner6PhotoText = baner6 == null ? "" : baner6.PhotoText,
+                Banner6PhotoLink = baner6 == null ? "" : baner6.PhotoLink,
+            };
+            return View(banner);
+        }
+        [Route("/admin/MainBanners")]
+        [HttpPost]
+        public async Task<IActionResult> MainBanners(BannersDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.Banner1 != null)
+                {
+                    var findBanner = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner1");
+                    if (findBanner == null)
+                    {
+                        await SaveBaner(model.Banner1, "MainBanner1");
+                    }
+                    else
+                    {
+                        await EditBaner(model.Banner1, "MainBanner1");
+                    }
+                }
+                if (model.Banner1PhotoLink != null || model.Banner1PhotoText != null)
+                {
+                    await EditBanerTextLink("MainBanner1", model.Banner1PhotoText, model.Banner1PhotoLink);
+                }
+                if (model.Banner2 != null)
+                {
+                    var findBanner = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner2");
+                    if (findBanner == null)
+                    {
+                        await SaveBaner(model.Banner2, "MainBanner2");
+                    }
+                    else
+                    {
+                        await EditBaner(model.Banner2, "MainBanner2");
+                    }
+                }
+                if (model.Banner2PhotoLink != null || model.Banner2PhotoText != null)
+                {
+                    await EditBanerTextLink("MainBanner2", model.Banner2PhotoText, model.Banner2PhotoLink);
+                }
+                if (model.Banner3 != null)
+                {
+                    var findBanner = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner3");
+                    if (findBanner == null)
+                    {
+                        await SaveBaner(model.Banner3, "MainBanner3");
+                    }
+                    else
+                    {
+                        await EditBaner(model.Banner3, "MainBanner3");
+                    }
+                }
+                if (model.Banner3PhotoLink != null || model.Banner3PhotoText != null)
+                {
+                    await EditBanerTextLink("MainBanner3", model.Banner3PhotoText, model.Banner3PhotoLink);
+                }
+                if (model.Banner4 != null)
+                {
+                    var findBanner = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner4");
+                    if (findBanner == null)
+                    {
+                        await SaveBaner(model.Banner4, "MainBanner4");
+                    }
+                    else
+                    {
+                        await EditBaner(model.Banner4, "MainBanner4");
+                    }
+                }
+                if (model.Banner4PhotoLink != null || model.Banner4PhotoText != null)
+                {
+                    await EditBanerTextLink("MainBanner4", model.Banner4PhotoText, model.Banner4PhotoLink);
+                }
+                if (model.Banner5 != null)
+                {
+                    var findBanner = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner5");
+                    if (findBanner == null)
+                    {
+                        await SaveBaner(model.Banner5, "MainBanner5");
+                    }
+                    else
+                    {
+                        await EditBaner(model.Banner5, "MainBanner5");
+                    }
+                }
+                if (model.Banner5PhotoLink != null || model.Banner5PhotoText != null)
+                {
+                    await EditBanerTextLink("MainBanner5", model.Banner5PhotoText, model.Banner5PhotoLink);
+                }
+                if (model.Banner6 != null)
+                {
+                    var findBanner = _DbContext.Banners.FirstOrDefault(p => p.BannerName == "MainBanner6");
+                    if (findBanner == null)
+                    {
+                        await SaveBaner(model.Banner6, "MainBanner6");
+                    }
+                    else
+                    {
+                        await EditBaner(model.Banner6, "MainBanner6");
+                    }
+                }
+                if (model.Banner6PhotoLink != null || model.Banner6PhotoText != null)
+                {
+                    await EditBanerTextLink("MainBanner6", model.Banner6PhotoText, model.Banner6PhotoLink);
+                }
+
+                return Redirect("/Admin/MainBanners");
+            }
+            return View();
+        }
+
+        #endregion
+
         public async Task<bool> SaveBaner(IFormFile file, string Name)
         {
             var stringLogoPath = $"Media/Banners/" + await _fileUpload.UploadFileAsync(file, Name, "Banners");
@@ -492,7 +640,7 @@ namespace Mag.Areas.Admin.Controllers
             return true;
         }
 
-        public async Task<bool> EditBanerTextLink(string Name,string PhotoText , string PhotoLink)
+        public async Task<bool> EditBanerTextLink(string Name, string PhotoText, string PhotoLink)
         {
             var findBanner = _DbContext.Banners.FirstOrDefault(p => p.BannerName == Name);
 
@@ -503,8 +651,6 @@ namespace Mag.Areas.Admin.Controllers
             await _DbContext.SaveChangesAsync();
             return true;
         }
-
-        #endregion
 
     }
 }

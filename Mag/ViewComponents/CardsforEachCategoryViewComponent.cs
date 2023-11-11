@@ -20,12 +20,18 @@ namespace Mag.ViewComponents
 
             var categoryfind = _dbContext.CategoryTags.FirstOrDefault(p => p.Slug == slug);
 
+            ViewBag.CategoryName = categoryfind?.Name;
+
             //var a = _dbContext.News.Where(p => p.Categories.Contains(categoryfind.Id.ToString()));
             //var listnews = _dbContext.News.Where(p => p.Status == StatusName.Publish && p.PublishNewsDatePersian != null && (","+ p.Categories + ",").Contains(","+ categoryfind.Id + ",")).Select(p => new NewsCardDto
             var listnews = new List<NewsCardDto>();
             if (slug != null && categoryfind != null)
             {
-                listnews = _dbContext.News.Where(p => p.PublishNewsDatePersian != null&& p.Status == StatusName.Publish && ("," + p.Categories + ",").Contains("," + categoryfind.Id + ",")).Select(p => new NewsCardDto
+                listnews = _dbContext.News.OrderByDescending(p=>p.PublishNewsDate)
+                    .Where(p => p.PublishNewsDatePersian != null&&
+                        p.Status == StatusName.Publish &&
+                        p.IsActive == true &&
+                        ("," + p.Categories + ",").Contains("," + categoryfind.Id + ",")).Select(p => new NewsCardDto
                 {
                     Title = p.Title,
                     Slug = p.Slug,

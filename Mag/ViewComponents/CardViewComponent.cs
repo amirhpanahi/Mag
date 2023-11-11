@@ -1,4 +1,5 @@
-﻿using Mag.Areas.Admin.Models.Dto.Comment;
+﻿using Mag.Areas.Admin.Models.Dto.Ads;
+using Mag.Areas.Admin.Models.Dto.Comment;
 using Mag.Areas.Admin.Models.Dto.News;
 using Mag.Areas.Admin.Models.Dto.Tag;
 using Mag.Data;
@@ -22,6 +23,7 @@ namespace Mag.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync(string slug,string UserIdVisitor)
         {
+            var listGif = _dbContext.Ads.OrderBy(x=>x.IndexNumber).Where(p => p.Name.Contains("NP")).Select(x => x.Address).ToList();
             var FindNews =await _dbContext.News.FirstOrDefaultAsync(p => p.Slug == slug);
             var FindUser = await _userManager.FindByIdAsync(FindNews.WriterId);
             var ParentIdCategories = _dbContext.CategoryTags.Where(x => x.Type == "Category" && x.ParentId == 1 && x.Id != 1).Select(p => p.Id).ToList();
@@ -52,7 +54,7 @@ namespace Mag.ViewComponents
                 Slug = FindNews.Slug,
                 ParentCategory = pcName == null ? "سایر" : pcName.Name,
                 ParentCategoryId = pcName == null ? null : pcName.Id,
-                ParentCategorySlug = pcName==null? "سایر" : pcName.Slug, 
+                ParentCategorySlug = pcName == null ? "سایر" : pcName.Slug,
                 IndexImageAddress = FindNews.IndexImageAddress,
                 VideoAddress = FindNews.VideoAddress == null ? null : FindNews.VideoAddress,
                 IndexImageAddressAlt = FindNews.IndexImageAddressAlt,
@@ -63,13 +65,26 @@ namespace Mag.ViewComponents
                 PublishNewsDatePersianYear = getYear(FindNews.PublishNewsDatePersian),
                 PublishNewsDatePersianTime = getTime(FindNews.PublishNewsDatePersian),
                 UserImage = FindUser.PicAddress,
+                UserName = FindUser.UserName,
                 UserFullName = FindUser.FirstName + " " + FindUser.LastName,
                 Comments = ListComments,
                 NewsSummary = FindNews.NewsSummary == null ? " " : FindNews.NewsSummary,
                 Tags = FindNews.Tags == null ? null : GetTags(FindNews.Tags),
-                LikeStatus = Like==null ? "" : Like.StatusLike.ToString(),
-                CountOfLike = NumberOfLike
+                LikeStatus = Like == null ? "" : Like.StatusLike.ToString(),
+                CountOfLike = NumberOfLike,
+                Gif1Address = listGif[0] == null ? "": listGif[0],
+                Gif2Address = listGif[1] == null ? "": listGif[1],
+                Gif3Address = listGif[2] == null ? "": listGif[2],
+                Gif4Address = listGif[3] == null ? "": listGif[3],
+                Gif5Address = listGif[4] == null ? "": listGif[4],
+                Gif6Address = listGif[5] == null ? "": listGif[5],
+                Gif7Address = listGif[6] == null ? "": listGif[6],
+                Gif8Address = listGif[7] == null ? "": listGif[7],
+                Gif9Address = listGif[8] == null ? "": listGif[8],
+                Gif10Address =listGif[9] == null ? "": listGif[9],
+                Gif11Address = listGif[10] == null ? "" : listGif[10]
             };
+
 
             return View(news);
         }

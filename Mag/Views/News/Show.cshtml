@@ -1,6 +1,7 @@
 ﻿@model Mag.Areas.Admin.Models.Dto.News.NewsCardDto
 @{
-    ViewData["Title"] = "لیست اخبار";
+    ViewData["Title"] = "خبر";
+    ViewData["NewsId"] = $"{Model.Id}";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row mt-8">

@@ -1,0 +1,312 @@
+﻿.imgNews {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+.container {
+    position: relative; 
+}
+.EditBannerBtn {
+    position: absolute;
+    top: 10px;
+    left: 20px; 
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+}
+.Date {
+    margin-top: 1.5%;
+    margin-right: 22%;
+}
+.FullName {
+    margin-top: 1.5%;
+    margin-right: 5%;
+}
+.about_user {
+    margin-top: 2%;
+}
+.about_user p {
+    font-size: 16px;
+    word-spacing: 2px;
+    line-height: 28px;
+}
+.ClassForBetween{
+    justify-content: space-between;
+}
+    .ClassForBetween .btnChange {
+        padding: 4px 7px 3px 4px !important
+    }
+    .ClassForBetween .btnSave {
+        padding-right: 10px !important;
+        padding-left: 10px !important;
+    }
+
+
+
+
+/*@media only screen and (max-width: 767px) {
+    
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .Date {
+        margin-top: 1.5%;
+        margin-right: 22%;
+    }
+
+    .imgProfile {
+        position: absolute;*/ /* تنظیم تصویر دوم به حالت مطلق */
+        /*top: 58%;*/ /* تنظیم موقعیت عمودی تصویر دوم */
+        /*left: 80%;*/ /* تنظیم موقعیت افقی تصویر دوم */
+        /*z-index: 1;
+    }
+
+        .imgProfile img {
+            width: 150px;
+            height: 150px
+        }
+
+    .BackimgProfile {
+        position: absolute;
+        top: 56%;
+        left: 79.5%;
+        z-index: 1;
+        background-color: white;
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (min-width: 992px) {
+    .Date {
+        margin-top: 1.5%;
+        margin-right: 22%;
+    }
+
+    .imgProfile {
+        position: absolute;*/ /* تنظیم تصویر دوم به حالت مطلق */
+        /*top: 58%;*/ /* تنظیم موقعیت عمودی تصویر دوم */
+        /*left: 80%;*/ /* تنظیم موقعیت افقی تصویر دوم */
+        /*z-index: 1;
+    }
+
+    .imgProfile img{
+        width:150px;
+        height:150px
+    }
+
+    .BackimgProfile {
+        position: absolute;
+        top: 56%;
+        left: 79.5%;
+        z-index: 1;
+        background-color: white;
+        width: 160px;
+        height: 160px;
+    }
+}*/
+@media (min-width: 320px) and (max-width: 376px) {
+    .Date {
+        margin-top: 20%;
+        margin-right: 20%;
+    }
+
+    .imgProfile img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .BackimgProfile {
+        position: absolute;
+        top: 80%; 
+        left: 35%;
+        z-index: 1;
+        background-color: white;
+        padding: 5px;
+        width: 90px;
+        height: 90px;
+    }
+}
+@media (min-width: 376px) and (max-width: 426px) {
+    .Date {
+        margin-top: 16%;
+        margin-right: 28%;
+    }
+
+    .imgProfile img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .BackimgProfile {
+        position: absolute;
+        top: 80%;
+        left: 40%;
+        z-index: 1;
+        background-color: white;
+        padding: 5px;
+        width: 95px;
+        height: 95px;
+    }
+}
+
+@media (min-width: 427px) and (max-width: 624px) {
+    .Date { 
+        margin-top: 1.5%;
+        margin-right: 60%;
+    }
+
+    .imgProfile img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .BackimgProfile {
+        position: absolute;
+        top: 73%;
+        left: 40%;
+        z-index: 1;
+        background-color: white;
+        padding: 5px;
+        width: 105px;
+        height: 105px;
+    }
+}
+
+@media (min-width: 625px) and (max-width: 768px) {
+    .Date {
+        margin-top: 1.5%;
+        margin-right: 70%;
+    }
+
+    .imgProfile img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .BackimgProfile {
+        position: absolute;
+        top: 73%;
+        left: 42%;
+        z-index: 1;
+        background-color: white;
+        padding: 5px;
+        width: 105px;
+        height: 105px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .Date {
+        margin-top: 1.5%;
+        margin-right: 22%;
+    }
+
+    .imgProfile img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .BackimgProfile {
+        position: absolute;
+        top: 73%;
+        left: 79%;
+        z-index: 1;
+        background-color: white;
+        padding: 5px;
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+    .Date {
+        margin-top: 1.5%;
+        margin-right: 22%;
+    }
+
+    .imgProfile img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .BackimgProfile {
+        position: absolute;
+        top: 72%;
+        left: 80%;
+        z-index: 1;
+        background-color: white;
+        padding: 5px;
+        width: 105px;
+        height: 105px; 
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1440px) {
+    .Date {
+        margin-top: 1.5%;
+        margin-right: 22%;
+    }
+
+    .imgProfile img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .BackimgProfile {
+        position: absolute;
+        top: 70%;  
+        left: 80%;
+        z-index: 1;
+        background-color: white;
+        padding: 5px;
+        width: 115px; 
+        height: 115px; 
+    }
+}
+
+@media (min-width: 1441px) {
+    .Date { 
+        margin-top: 1.5%;
+        margin-right: 22%;
+    }
+        .imgProfile img { 
+            width: 100%;
+            height: 100%;
+        }
+
+    .BackimgProfile {
+        position: absolute;
+        top: 66%;
+        left: 82%;
+        z-index: 1;
+        background-color: white;
+        padding:5px;
+        width: 135px;
+        height: 135px;
+    }
+}
+
+@media (min-width: 2560px) {
+    .Date {
+        margin-top: 1.5%;
+        margin-right: 22%;
+    }
+
+    .imgProfile img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .BackimgProfile {
+        position: absolute;
+        top: 66%;
+        left: 86%;
+        z-index: 1;
+        background-color: white;
+        padding: 5px;
+        width: 155px;
+        height: 155px;
+    }
+}

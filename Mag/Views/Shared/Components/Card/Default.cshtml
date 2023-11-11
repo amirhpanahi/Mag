@@ -19,14 +19,16 @@
                 @Model.NewsSummary
             </p>
             <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-center">
-                    <div class="symbol symbol-35px symbol-circle">
-                        <img alt="Pic" src="~/@Model.UserImage">
+                <a href="/@Model.UserName">
+                    <div class="d-flex align-items-center">
+                        <div class="symbol symbol-35px symbol-circle">
+                            <img alt="Pic" src="~/@Model.UserImage">
+                        </div>
+                        <p class="Detalis">
+                            نوشته شده توسط @Model.UserFullName | @Model.PublishNewsDatePersianDay @Model.PublishNewsDatePersianmonth @Model.PublishNewsDatePersianYear | @Model.PublishNewsDatePersianTime
+                        </p>
                     </div>
-                    <p class="Detalis">
-                        نوشته شده توسط @Model.UserFullName | @Model.PublishNewsDatePersianDay @Model.PublishNewsDatePersianmonth @Model.PublishNewsDatePersianYear | @Model.PublishNewsDatePersianTime
-                    </p>
-                </div>
+                </a>
                 <div class="d-flex align-items-center LikeColection">
                     @if (!User.Identity.IsAuthenticated)
                     {
@@ -91,28 +93,54 @@
                                     @item.Name
                                 </a>
                             </span>
-                            
+
                         }
                     </div>
                 }
+                <div class="Ads_Gif_Bottom row mt-3">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <video src="~/@Model.Gif4Address" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            </div>
+                            <div class="col-md-4">
+                                <video src="~/@Model.Gif5Address" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            </div>
+                            <div class="col-md-4">
+                                <video src="~/@Model.Gif6Address" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <video src="~/@Model.Gif8Address" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            </div>
+                            <div class="col-md-4">
+                                <video src="~/@Model.Gif9Address" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            </div>
+                            <div class="col-md-4">
+                                <video src="~/@Model.Gif10Address" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-2 ad-gif">
             <div class="row">
                 <div class="col-md-12">
-                    <video src="~/assets/media/Home/a1.webm" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                    <video src="~/@Model.Gif1Address" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
                 </div>
                 <div class="col-md-12">
-                    <video src="~/assets/media/Home/a3.webm" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                    <video src="~/@Model.Gif2Address" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
                 </div>
                 <div class="col-md-12">
-                    <video src="~/assets/media/Home/a2.webm" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                    <video src="~/@Model.Gif3Address" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
                 </div>
                 <div class="col-md-12">
-                    <video src="~/assets/media/Home/a4.webm" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                    <video src="~/@Model.Gif7Address" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
                 </div>
                 <div class="col-md-12">
-                    <video src="~/assets/media/Home/a2.webm" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
+                    <video src="~/@Model.Gif11Address" class="VideoAdv" preload="none" loop="" muted="" autoplay="" playsinline="" __idm_id__="155650"></video>
                 </div>
 
             </div>
@@ -122,9 +150,12 @@
             @if (Model.ParentCategoryId == null)
             {
                 @await Component.InvokeAsync("TenNewNewsCategory")
-            }else{
+            }
+            else
+            {
                 @await Component.InvokeAsync("TenNewNewsCategory",new { PId = Model.ParentCategoryId })
             }
+            @await Component.InvokeAsync("TenSelectedByAdmin")
         </div>
     </div>
     <div class="row mt-5  d-flex justify-content-center">
@@ -170,13 +201,13 @@
                     <div class="card-body">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <input type="hidden" value="@ViewBag.userIdVisitor" id="IdCommentWriter"  />
+                            <input type="hidden" value="@ViewBag.userIdVisitor" id="IdCommentWriter" />
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group pb-4">
-                                        <label asp-for="CommentText" class="control-label pb-1" style="font-size:16px">متن دیدگاه</label>
-                                        <textarea asp-for="CommentText" class="form-control" style="height:230px" id="textInput" oninput="updateCharacterCount()"></textarea>
-                                        <span asp-validation-for="CommentText" class="text-danger"></span>
+                                        <label asp-for="@Model.CommentText" class="control-label pb-1" style="font-size:16px">متن دیدگاه</label>
+                                        <textarea asp-for="@Model.CommentText" class="form-control" style="height:230px" id="textInput" oninput="updateCharacterCount()"></textarea>
+                                        <span asp-validation-for="@Model.CommentText" class="text-danger"></span>
                                         <label id="charCountLabel">0 / 1000</label>
                                     </div>
                                 </div>

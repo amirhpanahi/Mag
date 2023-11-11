@@ -1,4 +1,6 @@
-﻿using Mag.Areas.Admin.Models.Dto.Like;
+﻿using Mag.Areas.Admin.Models.Dto.Ads;
+using Mag.Areas.Admin.Models.Dto.Home;
+using Mag.Areas.Admin.Models.Dto.Like;
 using Mag.Areas.Admin.Models.Dto.News;
 using Mag.Common;
 using Mag.Data;
@@ -24,13 +26,73 @@ namespace Mag.Controllers
         }
         [HttpGet]
         [Route("News/index")]
-        public IActionResult Index(string slug)
+        public async Task<IActionResult> Index(string slug)
         {
-            var model = new NewsListDto
+            var baner1 = await _DbContext.Banners.FirstOrDefaultAsync(p => p.BannerName == "Banner1");
+            var baner2 = await _DbContext.Banners.FirstOrDefaultAsync(p => p.BannerName == "Banner2");
+            var baner3 = await _DbContext.Banners.FirstOrDefaultAsync(p => p.BannerName == "Banner3");
+            var baner4 = await _DbContext.Banners.FirstOrDefaultAsync(p => p.BannerName == "Banner4");
+            var baner5 = await _DbContext.Banners.FirstOrDefaultAsync(p => p.BannerName == "Banner5");
+            var baner6 = await _DbContext.Banners.FirstOrDefaultAsync(p => p.BannerName == "Banner6");
+            var baner7 = await _DbContext.Banners.FirstOrDefaultAsync(p => p.BannerName == "Banner7");
+
+            var banner = new BannersDto
             {
-                Slug = slug
+                Banner1Address = baner1 == null ? "" : baner1.BannerAddress,
+                Banner1PhotoText = baner1.PhotoText == null ? "" : baner1.PhotoText,
+                Banner1PhotoLink = baner1.PhotoLink == null ? "" : baner1.PhotoLink,
+                Banner2Address = baner2 == null ? "" : baner2.BannerAddress,
+                Banner2PhotoText = baner2.PhotoText == null ? "" : baner2.PhotoText,
+                Banner2PhotoLink = baner2.PhotoLink == null ? "" : baner2.PhotoLink,
+                Banner3Address = baner3 == null ? "" : baner3.BannerAddress,
+                Banner3PhotoText = baner3.PhotoText == null ? "" : baner3.PhotoText,
+                Banner3PhotoLink = baner3.PhotoLink == null ? "" : baner3.PhotoLink,
+                Banner4Address = baner4 == null ? "" : baner4.BannerAddress,
+                Banner4PhotoText = baner4.PhotoText == null ? "" : baner4.PhotoText,
+                Banner4PhotoLink = baner4.PhotoLink == null ? "" : baner4.PhotoLink,
+                Banner5Address = baner5 == null ? "" : baner5.BannerAddress,
+                Banner5PhotoText = baner5.PhotoText == null ? "" : baner5.PhotoText,
+                Banner5PhotoLink = baner5.PhotoLink == null ? "" : baner5.PhotoLink,
+                Banner6Address = baner6 == null ? "" : baner6.BannerAddress,
+                Banner6PhotoText = baner6.PhotoText == null ? "" : baner6.PhotoText,
+                Banner6PhotoLink = baner6.PhotoLink == null ? "" : baner6.PhotoLink,
+                Banner7Address = baner7 == null ? "" : baner7.BannerAddress,
+                Banner7PhotoText = baner7.PhotoText == null ? "" : baner7.PhotoText,
+                Banner7PhotoLink = baner7.PhotoLink == null ? "" : baner7.PhotoLink,
             };
-            return View(model);
+
+            var Ads1 = await _DbContext.Ads.FirstOrDefaultAsync(p => p.Name == "MP1");
+            var Ads2 = await _DbContext.Ads.FirstOrDefaultAsync(p => p.Name == "MP2");
+            var Ads3 = await _DbContext.Ads.FirstOrDefaultAsync(p => p.Name == "MP3");
+            var Ads4 = await _DbContext.Ads.FirstOrDefaultAsync(p => p.Name == "MP4");
+            var Ads5 = await _DbContext.Ads.FirstOrDefaultAsync(p => p.Name == "MP5");
+            var Ads6 = await _DbContext.Ads.FirstOrDefaultAsync(p => p.Name == "MP6");
+
+            var Ads = new AdsDto
+            {
+                Address1 = Ads1 == null ? "" : Ads1.Address,
+                Alt1 = Ads1 == null ? "" : Ads1.Alt,
+                Title1 = Ads1 == null ? "" : Ads1.Title,
+                Address2 = Ads2 == null ? "" : Ads2.Address,
+                Alt2 = Ads2 == null ? "" : Ads2.Alt,
+                Title2 = Ads2 == null ? "" : Ads2.Title,
+                Address3 = Ads3 == null ? "" : Ads3.Address,
+                Alt3 = Ads3 == null ? "" : Ads3.Alt,
+                Title3 = Ads3 == null ? "" : Ads3.Title,
+                Address4 = Ads4 == null ? "" : Ads4.Address,
+                Alt4 = Ads4 == null ? "" : Ads4.Alt,
+                Title4 = Ads4 == null ? "" : Ads4.Title,
+                Address5 = Ads5 == null ? "" : Ads5.Address,
+                Alt5 = Ads5 == null ? "" : Ads5.Alt,
+                Title5 = Ads5 == null ? "" : Ads5.Title,
+                Address6 = Ads6 == null ? "" : Ads6.Address,
+                Alt6 = Ads6 == null ? "" : Ads6.Alt,
+                Title6 = Ads6 == null ? "" : Ads6.Title,
+            };
+
+            var Result = new Tuple<BannersDto, AdsDto>(banner, Ads);
+
+            return View(Result);
         }
 
         #region TagsNews
@@ -65,7 +127,7 @@ namespace Mag.Controllers
 
         #region NotFound
         [HttpGet]
-        [Route("NotFound/News")]
+        [Route("NotFound/News/Not")]
         public IActionResult NotFound()
         {
             return View();
@@ -469,7 +531,7 @@ namespace Mag.Controllers
                 NewsFind.IndexImageAddressTitle = model.IndexImageTitle == null ? model.Title : model.IndexImageTitle;
                 NewsFind.DraftNewsDate = Draft == "Draft" && NewsFind.DraftNewsDate == null ? DateTime.Now : NewsFind.DraftNewsDate;
                 NewsFind.DraftNewsDatePersian = Draft == "Draft" && NewsFind.DraftNewsDatePersian == null ? Utility.ConvertToPersian(DateTime.Now) : NewsFind.DraftNewsDatePersian;
-                NewsFind.WriterId = userId;
+                NewsFind.WriterId = userId; 
                 NewsFind.IsActive = model.IsActive;
                 NewsFind.Status = Publish == "Publish" ? StatusName.WaitingForConfirm : StatusName.Draft;
                 NewsFind.CountSeeNews = model.CountSeeNews;
@@ -478,7 +540,7 @@ namespace Mag.Controllers
                 _DbContext.Entry(NewsFind).State = EntityState.Modified;
                 await _DbContext.SaveChangesAsync();
 
-                return RedirectToAction("Index", "Profile");
+                return Redirect("/Profile/Index/User"); 
             }
             return View(model);
         }
@@ -521,6 +583,74 @@ namespace Mag.Controllers
                 await _DbContext.SaveChangesAsync();
                 return $"fa-solid fa-heart text-danger,{CountOfLike+1}";
             }
+        }
+        #endregion
+
+        #region Details
+        [HttpGet]
+        [Authorize(Roles = "writer")]
+        [Route("User/NewsDetails/{id}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var FindNews = _DbContext.News.FirstOrDefault(p => p.Id == id);
+
+            if (FindNews.Status == StatusName.Publish || FindNews.Status == StatusName.Draft)
+            { }
+            else
+            {
+                return Redirect("/Profile/index");
+            }
+
+            var WriterName = await _DbContext.Users.Where(p => p.Id == FindNews.WriterId).Select(p => new FullnameUser
+            {
+                FirstName = p.FirstName,
+                LastName = p.LastName
+            }).FirstAsync();
+
+            var DetailsNews = new NewsListDto
+            {
+                Title = FindNews.Title,
+                Slug = FindNews.Slug,
+                IndexImageAddress = FindNews.IndexImageAddress,
+                KeyWords = FindNews.KeyWords,
+                IndexImageAddressAlt = FindNews.IndexImageAddressAlt,
+                IndexImageAddressTitle = FindNews.IndexImageAddressTitle,
+                WriterName = WriterName,
+                IsActive = FindNews.IsActive,
+                IsSelectBychiefEditor = FindNews.IsSelectBychiefEditor,
+                Status = FindNews.Status,
+                DraftTimePersain = FindNews.DraftNewsDatePersian,
+                RegisterDatePersian = FindNews.RegisterNewsDatePersian,
+                PublishTimePersain = FindNews.PublishNewsDatePersian,
+                DescriptionSeo = FindNews.DescriptionSeo,
+                DescriptionHtmlEditor = FindNews.DescriptionHtmlEditor,
+                NewsSummary = FindNews.NewsSummary == null ? " " : FindNews.NewsSummary,
+                VideoAddress = FindNews.VideoAddress
+            };
+
+            List<int> Categoies = new List<int>();
+            if (FindNews.Categories != "")
+            {
+                var TrimItem = FindNews.Categories.Trim(',');
+                var SplitCategoeies = TrimItem.Split(",").Select(int.Parse).ToList();
+                Categoies.AddRange(SplitCategoeies);
+            }
+            var Cats = _DbContext.CategoryTags.Where(p => Categoies.Contains(p.Id)).Select(p => p.Name).ToList();
+            ViewBag.Categories = Cats;
+
+
+
+            List<int> Tags = new List<int>();
+            if (FindNews.Tags != "")
+            {
+                var trimItem = FindNews.Tags.Trim(',');
+                var SplitTags = trimItem.Split(',').Select(int.Parse).ToList();
+                Tags.AddRange(SplitTags);
+            }
+            var Tag = _DbContext.CategoryTags.Where(p => Tags.Contains(p.Id)).Select(p => p.Name).ToList();
+            ViewBag.Tags = Tag;
+
+            return View(DetailsNews);
         }
         #endregion
 

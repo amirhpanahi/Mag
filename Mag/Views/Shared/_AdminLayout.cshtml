@@ -4,10 +4,9 @@
 <!--begin::Head-->
 <head>
     <base href="~/" />
-    <title>@ViewData["Title"] - مجله سیبو</title>
+    @await Component.InvokeAsync("GeneralSettings",new{SecendPart=@ViewData["Title"]})
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
     <!--begin::Fonts(mوatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <!--end::Fonts-->
@@ -51,7 +50,7 @@
                     <!--begin::Mobile logo-->
                     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                         <a href="../../demo1/dist/index.html" class="d-lg-none">
-                            <img alt="Logo" src="assets/media/logos/default-small.svg" class="h-30px" />
+                            @* <img alt="Logo" src="assets/media/logos/default-small.svg" class="h-30px" /> *@
                         </a>
                     </div>
                     <!--end::Mobile logo-->
@@ -153,10 +152,7 @@
                     <!--begin::Logo-->
                     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
                         <!--begin::Logo image-->
-                        <a href="../../demo1/dist/index.html">
-                            <img alt="Logo" src="assets/media/logos/default-dark.svg" class="h-25px app-sidebar-logo-default" />
-                            <img alt="Logo" src="assets/media/logos/default-small.svg" class="h-20px app-sidebar-logo-minimize" />
-                        </a>
+                        @await Component.InvokeAsync("LogoAdminPanel")
                         <!--end::Logo image-->
                         <!--begin::Sidebar toggle-->
                         <!--begin::به حداقل رساندن sidebar setup:
@@ -370,11 +366,11 @@
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
                                         <span class="menu-icon">
-												<i class="ki-duotone ki-file fs-2">
-													<span class="path1"></span>
-													<span class="path2"></span>
-												</i>
-									    </span>
+                                            <i class="ki-duotone ki-file fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                        </span>
                                         <span class="menu-title">دسته بندی و برچسب </span>
                                         <span class="menu-arrow"></span>
                                     </span>
@@ -461,11 +457,27 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link" href="/Admin/Banners">
+                                            <a class="menu-link" href="/Admin/NewsBanners">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">بنر های من</span>
+                                                <span class="menu-title">بنر های صفحه خبر</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu sub-->
+                                    <!--begin:Menu sub-->
+                                    <div class="menu-sub menu-sub-accordion">
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link" href="/Admin/MainBanners">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">بنر های صفحه اصلی</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
@@ -564,6 +576,59 @@
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
                                                 <span class="menu-title">تنظیمات</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu sub-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div class="menu-item pt-5">
+                                    <!--begin:Menu content-->
+                                    <div class="menu-content">
+                                        <span class="menu-heading fw-bold text-uppercase fs-7">تبلیغات</span>
+                                    </div>
+                                    <!--end:Menu content-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="ki-duotone ki-element-7 fs-2">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                        </span>
+                                        <span class="menu-title">تبلیغات کلی سایت</span>
+                                        <span class="menu-arrow"></span>
+                                    </span>
+                                    <!--end:Menu link-->
+                                    <!--begin:Menu sub-->
+                                    <div class="menu-sub menu-sub-accordion">
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link" href="/Admin/Ads/AdsMainPage">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">تبلیغات صفحه اصلی</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link" href="/Admin/Ads/AdsNewsPage">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">تبلیغات صفحه خبر</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>

@@ -29,9 +29,18 @@ namespace Mag.Areas.Admin.Controllers
         }
 
         #region Index
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            var ListNews = _DbContext.News.Where(p => p.Status == StatusName.Publish).Select(p => new NewsListDto
+            var CurentPage = (page == null || page==0) ? 1 :page.Value;
+            var PageSize = 5;
+            var SkipData = (CurentPage-1) * PageSize;
+            var CountData = await _DbContext.News.Where(p => p.Status == StatusName.Publish).CountAsync();
+            var ToalPage = (int)Math.Ceiling((double)CountData/ PageSize);
+
+            ViewBag.CurentPage = CurentPage;
+            ViewBag.ToalPage = ToalPage;
+
+            var ListNews = _DbContext.News.OrderBy(x=>x.PublishNewsDate).Where(p => p.Status == StatusName.Publish).Select(p => new NewsListDto
             {
                 Id = p.Id,
                 Title = p.Title,
@@ -44,7 +53,7 @@ namespace Mag.Areas.Admin.Controllers
                 Categories = p.Categories,
                 IsActive = p.IsActive,
                 Status = p.Status,
-            }).ToList();
+            }).Skip(SkipData).Take(PageSize).ToList();
 
             List<int> Categories = new List<int>();
             foreach (var item in ListNews)
@@ -64,9 +73,15 @@ namespace Mag.Areas.Admin.Controllers
         #endregion 
 
         #region Details
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var FindNews = _DbContext.News.FirstOrDefault(p => p.Id == id);
+            var WriterName = await _DbContext.Users.Where(p => p.Id == FindNews.WriterId).Select(p => new FullnameUser
+            {
+                FirstName = p.FirstName,
+                LastName = p.LastName
+            }).FirstAsync();
+
             var DetailsNews = new NewsListDto
             {
                 Title = FindNews.Title,
@@ -75,17 +90,40 @@ namespace Mag.Areas.Admin.Controllers
                 KeyWords = FindNews.KeyWords,
                 IndexImageAddressAlt = FindNews.IndexImageAddressAlt,
                 IndexImageAddressTitle = FindNews.IndexImageAddressTitle,
-                WriterId = FindNews.WriterId,
-                Categories = FindNews.Categories,
-                Tags = FindNews.Tags,
+                WriterName = WriterName,
                 IsActive = FindNews.IsActive,
+                IsSelectBychiefEditor = FindNews.IsSelectBychiefEditor,
                 Status = FindNews.Status,
                 DraftTimePersain = FindNews.DraftNewsDatePersian,
                 RegisterDatePersian = FindNews.RegisterNewsDatePersian,
+                PublishTimePersain = FindNews.PublishNewsDatePersian,
                 DescriptionSeo = FindNews.DescriptionSeo,
                 DescriptionHtmlEditor = FindNews.DescriptionHtmlEditor,
-                NewsSummary = FindNews.NewsSummary == null ? " " : FindNews.NewsSummary
+                NewsSummary = FindNews.NewsSummary == null ? " " : FindNews.NewsSummary, 
+                VideoAddress = FindNews.VideoAddress
             };
+
+            List<int> Categoies = new List<int>(); 
+            if (FindNews.Categories != "")
+            {
+                var TrimItem = FindNews.Categories.Trim(',');
+                var SplitCategoeies = TrimItem.Split(",").Select(int.Parse).ToList();
+                Categoies.AddRange(SplitCategoeies);
+            }
+            var Cats = _DbContext.CategoryTags.Where(p => Categoies.Contains(p.Id)).Select(p => p.Name).ToList();
+            ViewBag.Categories = Cats;
+
+            
+
+            List<int> Tags = new List<int>();
+            if (FindNews.Tags != "")
+            {
+                var trimItem = FindNews.Tags.Trim(',');
+                var SplitTags = trimItem.Split(',').Select(int.Parse).ToList();
+                Tags.AddRange(SplitTags);
+            }
+            var Tag = _DbContext.CategoryTags.Where(p => Tags.Contains(p.Id)).Select(p => p.Name).ToList();
+            ViewBag.Tags = Tag;
 
             ViewBag.StatusName = FindNews.Status.Value.ToString();
             return View(DetailsNews);
@@ -402,7 +440,6 @@ namespace Mag.Areas.Admin.Controllers
                 NewsFind.PublishNewsDatePersian = Publish == "Publish" && NewsFind.PublishNewsDatePersian == null ? Utility.ConvertToPersian(DateTime.Now) : NewsFind.RegisterNewsDatePersian;
                 NewsFind.DraftNewsDate = Draft == "Draft" && NewsFind.DraftNewsDate == null ? DateTime.Now : NewsFind.DraftNewsDate;
                 NewsFind.DraftNewsDatePersian = Draft == "Draft" && NewsFind.DraftNewsDatePersian == null ? Utility.ConvertToPersian(DateTime.Now) : NewsFind.DraftNewsDatePersian;
-                NewsFind.WriterId = userId;
                 NewsFind.IsActive = model.IsActive;
                 NewsFind.IsSelectBychiefEditor = model.IsSelectBychiefEditor;
                 NewsFind.Status = Draft == null ? StatusName.Publish : StatusName.Draft;
